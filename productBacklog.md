@@ -8,11 +8,11 @@
 7. As a user, I want to be able to filter jobs / connections by certain traits so that I can find more preferable connections easier.
 8. 7. As a company, I want to be able to filter potential employers by certain traits so that I can find more preferable connections easier.
 
-##Spikes
+## Spikes
 1. Set up database and python Framework for web development.
 2. Set up HTML template for web development. 
 
-##Acceptance Criteria
+## Acceptance Criteria
 1.As an user, I want to sign in or register so that I can utilize the application.
   1. User name is captured and saved
   2. User email is captured and saved
@@ -25,4 +25,4 @@
   3. Company password is captured and saved
   4. Invalid name, email, and passwords are rejected.  
 
-##Estimation of Work
+## Estimation of Work
