@@ -6,7 +6,7 @@
 5. As a company, I want to see a list of users to connect to so that I can offer employment.
 6. As a user/company, I want to be able to end connections so that I can remove a connection.
 7. As a user, I want to be able to filter jobs / connections by certain traits so that I can find more preferable connections easier.
-8. 7. As a company, I want to be able to filter potential employers by certain traits so that I can find more preferable connections easier.
+8. As a company, I want to be able to filter potential employers by certain traits so that I can find more preferable connections easier.
 
 ## Spikes
 1. Set up database and python Framework for web development.
@@ -26,3 +26,19 @@
   * Invalid name, email, and passwords are rejected.  
 
 ## Estimation of Work
+1. As an user, I want see clearly a list of other users or jobs so that I can find a job or make connections.
+* ten
+2. As an user, I want to sign in or register so that I can utilize the application.
+* six
+3. As a company, I want to sign in or register so that I can utilize the application.
+* six
+4. As a company, I want to list job offers so that I can show users who are looking for jobs.
+* eight
+5. As a company, I want to see a list of users to connect to so that I can offer employment.
+* eight
+6. As a user/company, I want to be able to end connections so that I can remove a connection.
+* three
+7. As a user, I want to be able to filter jobs / connections by certain traits so that I can find more preferable connections easier.
+* ten
+8. As a company, I want to be able to filter potential employers by certain traits so that I can find more preferable connections easier.
+* ten
