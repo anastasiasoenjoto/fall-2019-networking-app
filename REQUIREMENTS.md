@@ -79,3 +79,5 @@ Actor: Company**
 
 Scenario: Companies will be able to edit their profile such as adding new job positions or removing filled positions. Once they have saved the new details the system will update the company’s data to reflect the new changes. 
 
+## Domain Model
+![](images/domainModel.png)
