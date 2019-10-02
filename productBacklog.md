@@ -14,15 +14,15 @@
 
 ## Acceptance Criteria
 1.As an user, I want to sign in or register so that I can utilize the application.
-  1. User name is captured and saved
-  2. User email is captured and saved
-  3. User password is captured and saved
-  4. Invalid name, email, and passwords are rejected.
+  * User name is captured and saved
+  * User email is captured and saved
+  * User password is captured and saved
+  * Invalid name, email, and passwords are rejected.
   
 2.  As a company, I want to sign in or register so that I can utilize the application.
-  1. Company name is captured and saved
-  2. Company email is captured and saved
-  3. Company password is captured and saved
-  4. Invalid name, email, and passwords are rejected.  
+  * Company name is captured and saved
+  * Company email is captured and saved
+  * Company password is captured and saved
+  * Invalid name, email, and passwords are rejected.  
 
 ## Estimation of Work
