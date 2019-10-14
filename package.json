@@ -2,7 +2,7 @@
   "name": "fall-2019-networking-app",
   "version": "1.0.0",
   "description": "an app used to connect individuals with each other and companies",
-  "main": "index.jsx",
+  "main": "index.js",
   "scripts": {
     "test": "test",
     "dev": "webpack -d --watch",
@@ -34,7 +34,6 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9"
