@@ -78,7 +78,6 @@ export default class CreateUser extends Component {
       password: this.state.password,
       city: this.state.city, 
       major: this.state.major
-      // add more here
     }
 
     console.log(user);
@@ -104,8 +103,6 @@ export default class CreateUser extends Component {
         <form onSubmit={this.onSubmit} >
           <fieldset>
           <legend class="formHeader"> Sign up Information</legend>
-          {/* on submit link to homepage?*/}
-          {/* how to use js file? */}
           <label>
             First Name: 
             <input type="text" value={this.state.firstName} onChange= {this.onChangefirstName} placeholder="Enter first name"/>
@@ -166,36 +163,11 @@ export default class CreateUser extends Component {
             </select>
           </label>
           <br></br><br></br>
-{/*           <label>
-            Please select up to 3 interests: <br></br>
-            Animation <input type="checkbox" value="animation"/>
-            Film <input type="checkbox" value="film"/>
-            Machine Learning <input type="checkbox" value="machineLearning"/>
-            Mobile Development <input type="checkbox" value="mobileDevelopment"/>
-            Piano <input type="checkbox" value="piano"/>
-          </label> */}
           </fieldset>
           <input type="submit"></input>
         </form>
 
       </div> 
-      // <div>
-      //   <h3>Create New User</h3>
-      //   <form onSubmit={this.onSubmit}>
-      //     <div className="form-group"> 
-      //       <label>Username: </label>
-      //       <input  type="text"
-      //           required
-      //           className="form-control"
-      //           value={this.state.username}
-      //           onChange={this.onChangeUsername}
-      //           />
-      //     </div>
-      //     <div className="form-group">
-      //       <input type="submit" value="Create User" className="btn btn-primary" />
-      //     </div>
-      //   </form>
-      // </div>
     )
   }
 }
