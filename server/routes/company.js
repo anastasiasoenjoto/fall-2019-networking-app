@@ -9,15 +9,14 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
   const companyName = req.body.companyName;
+  const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
   const city = req.body.city;
-  const field = req.body.field;
 
 
-  const newCompany = new Company({username, companyName, email, password, city, field});
+  const newCompany = new Company({companyName, username, email, password, city });
 
   newCompany.save()
     .then(() => res.json('Company added!'))

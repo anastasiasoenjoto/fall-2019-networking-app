@@ -6,11 +6,10 @@ export default class CreateCompany extends Component {
     super(props);
 
     this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeCompanyName = this.onChangefirstName.bind(this);
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
-    this.onChangeField = this.onChangeMajor.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -18,9 +17,7 @@ export default class CreateCompany extends Component {
       companyName: '', 
       email: '',
       password: '', 
-      city: '', 
-      major: '',
-      field: ''
+      city: ''
     }
   }
 
@@ -54,12 +51,6 @@ export default class CreateCompany extends Component {
     })
   }
 
-  onChangeField(e) {
-    this.setState({
-      field: e.target.value
-    })
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
@@ -69,7 +60,6 @@ export default class CreateCompany extends Component {
       email: this.state.email,
       password: this.state.password,
       city: this.state.city, 
-      field: this.state.field
     }
 
     console.log(company);
@@ -82,8 +72,7 @@ export default class CreateCompany extends Component {
       companyName: '', 
       email: '', 
       password: '',
-      city: '', 
-      field: ''
+      city: '' 
     })
   }
 
@@ -134,20 +123,6 @@ export default class CreateCompany extends Component {
           </label>
           </fieldset>
           <br></br>
-          <fieldset>
-            <legend class="formHeader"> Interest </legend>
-            <label>
-            Field: 
-            <select value={this.state.major} onChange= {this.onChangeMajor}>
-              <option>----Select your major-----</option>
-              <option value="anthropology">Anthropology</option>
-              <option value="businessManagement">Business Management</option>
-              <option value="computerScience">Computer Science</option>
-              <option value="dataScience">Data Science</option>
-            </select>
-          </label>
-          <br></br><br></br>
-          </fieldset>
           <input type="submit"></input>
         </form>
       </div> 
