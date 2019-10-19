@@ -5,6 +5,7 @@ import './App.css';
 
 import Navbar from "./components/Navbar.js"
 import CreateUser from "./components/CreateUser.js"
+import UsersList from "./components/Signup.js"
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
         <Navbar />
         <br/>
         <Route path="/user" component={CreateUser} />
+        <Route path="/activeUsers" component={UsersList} />
+
       </Router>
   );
 }
