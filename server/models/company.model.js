@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const companySchema = new Schema({
  companyName:{
     type: String,
     required: true,
@@ -48,6 +48,6 @@ const userSchema = new Schema({
   timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
+const company = mongoose.model('Company', companySchema);
 
-module.exports = User;
+module.exports = company;
