@@ -5,6 +5,7 @@ import './App.css';
 
 import Navbar from "./components/Navbar.js"
 import CreateUser from "./components/CreateUser.js"
+import CreateCompany from "./components/CreateCompany"
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Navbar />
         <br/>
         <Route path="/user" component={CreateUser} />
-        <Route path="/company" component={CompSignUp} />
+        <Route path="/company" component={CreateCompany} />
       </Router>
   );
 }
