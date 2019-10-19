@@ -12,6 +12,7 @@ function App() {
         <Navbar />
         <br/>
         <Route path="/user" component={CreateUser} />
+        <Route path="/company" component={CompSignUp} />
       </Router>
   );
 }
