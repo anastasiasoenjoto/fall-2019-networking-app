@@ -20,7 +20,7 @@ router.route('/add').post((req, res) => {
   const newCompany = new Company({username, companyName, email, password, city, field});
 
   newCompany.save()
-    .then(() => res.json('User added!'))
+    .then(() => res.json('Company added!'))
     .catch(err => res.status(400).json('Error: ' + err));
   console.log("success!")
 
