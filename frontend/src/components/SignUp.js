@@ -16,10 +16,21 @@ export default class UserList extends Component {
           .then(results => {
               return results.json();})
             .then(data=> {
-                this.setState({users: data});
-                console.log(this.state.users);
+                let users = data.map((u) => {
+                    return(
+                        <div key={u.username}>
+                            <h2>Name: {u.firstName} {u.lastName}</h2>
+                            <p><i>{u.email}</i></p>
+                            <p><i>City: {u.city}</i></p>
+                            <p><b><i>Major: {u.major}</i></b></p>
+                            <p><b>GPA: {u.GPA}</b></p>
+
+
+                        </div>
+                    )
+                })
+                this.setState({users: users});
             })
-        //   console.log(this.state.users);
       }
     
 
@@ -27,6 +38,7 @@ export default class UserList extends Component {
     return (
         <div> 
             <h1> User List</h1>
+            {this.state.users}
             
         </div>
    
