@@ -50,6 +50,13 @@ const userSchema = new Schema({
     trim: true,
 
   },
+
+  GPA: {
+    type: String,
+    required: true,
+    trim: true,
+
+  },
 }, {
   timestamps: true,
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 export default class CreateUser extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,7 @@ export default class CreateUser extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeMajor = this.onChangeMajor.bind(this);
+    this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
 
@@ -22,7 +24,8 @@ export default class CreateUser extends Component {
       email: '',
       password: '', 
       city: '', 
-      major: ''
+      major: '', 
+      GPA: ''
     }
   }
 
@@ -67,6 +70,12 @@ export default class CreateUser extends Component {
     })
   }
 
+  onChangeGPA(e) {
+    this.setState({
+      GPA: e.target.value
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -77,7 +86,8 @@ export default class CreateUser extends Component {
       email: this.state.email,
       password: this.state.password,
       city: this.state.city, 
-      major: this.state.major
+      major: this.state.major,
+      GPA: this.state.GPA
     }
 
     console.log(user);
@@ -92,8 +102,11 @@ export default class CreateUser extends Component {
       email: '', 
       password: '',
       city: '', 
-      major: ''
+      major: '', 
+      GPA: ''
+
     })
+
   }
 
   render() {
@@ -164,6 +177,11 @@ export default class CreateUser extends Component {
           </label>
           <br></br><br></br>
           </fieldset>
+          <label>
+            GPA: 
+            <input type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
+          </label>
+          <br></br>
           <input type="submit"></input>
         </form>
 
