@@ -42,12 +42,15 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^24.9.0",
     "babel-preset-env": "^1.7.0",
+<<<<<<< HEAD
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "expect.js": "^0.3.1",
     "jest": "^24.9.0",
     "should": "^13.2.3",
     "webpack": "^4.41.1",
+=======
+>>>>>>> 09f7ee41ab150fe5f9dcc8449cba3e02728b16dc
     "webpack-cli": "^3.3.9"
   }
 }
