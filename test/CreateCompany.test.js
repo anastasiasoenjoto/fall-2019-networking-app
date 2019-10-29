@@ -43,7 +43,7 @@ describe('Create Company User Page', () => {
 
   });
 
-  it('test for onChangeUsername', () => {
+    it('test for onChangeUsername', () => {
     const event = {
       target: { value: 'usernameTest'}
     }
@@ -93,6 +93,41 @@ describe('Create Company User Page', () => {
     expect(wrapper.state('city')).toEqual('losAngeles');
   });
 
+  it('test for company name length greater than required', () => {
+    const event = {
+      target: { value: 'companyNameTest'}
+    }
+    const wrapper = shallow(
+      <CreateCompany/>
+    );
+    wrapper.find('#companyName').props().onChange(event);
+    expect(wrapper.state('companyName').length).toBeGreaterThan(3);
+
+  });
+
+  it('test for email length greater than required', () => {
+    const event = {
+      target: { value: 'email'}
+    }
+    const wrapper = shallow(
+      <CreateCompany/>
+    );
+    wrapper.find('#email').props().onChange(event);
+    expect(wrapper.state('email').length).toBeGreaterThan(3);
+
+  });
+
+  it('test for user length greater than required', () => {
+    const event = {
+      target: { value: 'username'}
+    }
+    const wrapper = shallow(
+      <CreateCompany/>
+    );
+    wrapper.find('#username').props().onChange(event);
+    expect(wrapper.state('username').length).toBeGreaterThan(3);
+
+  });
 
 
 })
