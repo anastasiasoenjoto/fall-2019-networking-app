@@ -5,6 +5,6 @@ module.exports = {
         "^.+\\.js$": "<rootDir>/jest-transformer.js"
     }, 
     transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"]
-    
+    verbose: true,    
     
 }
