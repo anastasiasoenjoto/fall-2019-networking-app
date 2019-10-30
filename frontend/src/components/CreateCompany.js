@@ -80,7 +80,7 @@ export default class CreateCompany extends Component {
         <h1> Sign Up </h1>
         <form id="CompanySignUpForm" onSubmit={this.onSubmit} >
           <fieldset>
-          <legend class="formHeader"> Sign up Information</legend>
+          <legend className="formHeader"> Sign up Information</legend>
           <label>
             Company Name: 
             <input id = "companyName" type="text" value={this.state.companyName} onChange= {this.onChangeCompanyName} placeholder="Enter company name"/>
