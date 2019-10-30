@@ -29,11 +29,6 @@ router.route('/add').post((req, res) => {
       }
     ))
     .catch(err => res.status(400).json('Error: ' + err));
-  console.log(companyName,
-    username,
-    email,
-    password,
-    city)
   });
 
 module.exports = router;
