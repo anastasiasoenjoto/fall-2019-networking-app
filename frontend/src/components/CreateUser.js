@@ -90,7 +90,6 @@ export default class CreateUser extends Component {
       GPA: this.state.GPA
     }
 
-    console.log(user);
 
     axios.post('http://localhost:3001/users/add', user)
       .then(res => console.log(res.data));

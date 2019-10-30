@@ -62,8 +62,6 @@ export default class CreateCompany extends Component {
       city: this.state.city, 
     }
 
-    console.log(company);
-
     axios.post('http://localhost:3001/company/add', company)
       .then(res => console.log(res.data));
 
