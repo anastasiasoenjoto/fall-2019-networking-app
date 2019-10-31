@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 
 
 export default class CreateUser extends Component {
@@ -17,6 +18,7 @@ export default class CreateUser extends Component {
     this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
+    
 
     this.state = {
       username: '',
@@ -26,7 +28,9 @@ export default class CreateUser extends Component {
       password: '', 
       city: '', 
       major: '', 
-      GPA: ''
+      GPA: '', 
+      redirectToHome: false
+      
     }
   }
 
@@ -77,8 +81,15 @@ export default class CreateUser extends Component {
     })
   }
 
+  setRedirectToHome() {
+    this.setState({
+      redirectToHome: true
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
+   
 
     const user = {
       username: this.state.username,
@@ -106,10 +117,14 @@ export default class CreateUser extends Component {
       GPA: ''
 
     })
+  {this.setRedirectToHome()}
 
   }
 
   render() {
+    if (this.state.redirectToHome === true) {
+      return <Redirect to="/home" />
+    }
     return (
       <div>
         <h1> Sign Up </h1>
@@ -183,6 +198,7 @@ export default class CreateUser extends Component {
           </label>
           <br></br>
           <input type="submit"></input>
+          
         </form>
        Already have an account? <Link to="/LoginUser">Login</Link>!
 
