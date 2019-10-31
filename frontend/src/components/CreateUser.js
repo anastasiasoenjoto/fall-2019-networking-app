@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
@@ -198,9 +197,8 @@ export default class CreateUser extends Component {
           </label>
           <br></br>
           <input type="submit"></input>
-          
         </form>
-       Already have an account? <Link to="/LoginUser">Login</Link>!
+       Already have an account? <a href="/LoginUser">Login</a>
 
       </div> 
     )
