@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/nyu-software-engineering/fall-2019-networking-app.svg?branch=master)](https://travis-ci.com/nyu-software-engineering/fall-2019-networking-app)
+
+
 # README
 
 ## Description 
