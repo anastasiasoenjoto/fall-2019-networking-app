@@ -2,7 +2,14 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const companySchema = new Schema({
+ companyName:{
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    minlength: 3
+  },
   username: {
     type: String,
     required: true,
@@ -10,57 +17,29 @@ const userSchema = new Schema({
     trim: true,
     minlength: 3
   },
-  firstName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  }, 
-  lastName: {
+  email:{
     type: String,
     required: true,
     unique: true,
     trim: true,
     minlength: 3
   },
-  email: {
+  password:{
     type: String,
     required: true,
-    unique: true,
+    unique: false,
     trim: true,
     minlength: 3
   },
-  password: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  major: {
+  city:{
     type: String,
     required: true,
     trim: true,
-
-  },
-  city: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-
-  GPA: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
+  }
 }, {
   timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
+const company = mongoose.model('Company', companySchema);
 
-module.exports = User;
+module.exports = company;

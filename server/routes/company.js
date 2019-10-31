@@ -1,31 +1,39 @@
   
 const router = require('express').Router();
-let User = require('../models/user.model');
+let Company = require('../models/company.model');
 
 router.route('/').get((req, res) => {
-  User.find()
+  Company.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {
+  const companyName = req.body.companyName;
   const username = req.body.username;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
   const city = req.body.city;
-  const major = req.body.major;
-  const GPA = req.body.GPA;
 
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA});
+  const newCompany = new Company({companyName, username, email, password, city });
 
-  newUser.save()
-    .then(() => res.json('User added!'))
+  newCompany.save()
+    .then(() => res.json(
+      {
+        companyName,
+        username,
+        email,
+        password,
+        city
+      }
+    ))
     .catch(err => res.status(400).json('Error: ' + err));
-  console.log("success!")
-
+  console.log(companyName,
+    username,
+    email,
+    password,
+    city)
   });
 
 module.exports = router;
