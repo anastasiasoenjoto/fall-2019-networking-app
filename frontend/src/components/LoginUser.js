@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -70,7 +69,7 @@ export default class LoginUser extends Component {
           <br></br>
           <input type="submit"></input>
         </form>
-        Dont have an account? Click <Link to="/user">here</Link> to signup!
+        Dont have an account? Click <a href="/user">here </a> to signup!
 
       </div> 
     )
