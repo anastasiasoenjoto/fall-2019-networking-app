@@ -34,7 +34,6 @@ const companySchema = new Schema({
   city:{
     type: String,
     required: true,
-    unique: true,
     trim: true,
   }
 }, {

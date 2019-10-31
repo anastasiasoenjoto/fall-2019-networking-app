@@ -19,10 +19,21 @@ router.route('/add').post((req, res) => {
   const newCompany = new Company({companyName, username, email, password, city });
 
   newCompany.save()
-    .then(() => res.json('Company added!'))
+    .then(() => res.json(
+      {
+        companyName,
+        username,
+        email,
+        password,
+        city
+      }
+    ))
     .catch(err => res.status(400).json('Error: ' + err));
-  console.log("success!")
-
+  console.log(companyName,
+    username,
+    email,
+    password,
+    city)
   });
 
 module.exports = router;
