@@ -64,3 +64,4 @@ typings/
 .history
 frontend/package-lock.json
 server/package-lock.json
+frontend/package-lock.json
