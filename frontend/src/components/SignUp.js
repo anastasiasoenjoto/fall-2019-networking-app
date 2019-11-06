@@ -12,6 +12,7 @@ export default class UserList extends Component {
     }
     
     componentDidMount() {
+        const fetch = require("node-fetch");
         fetch('http://localhost:3001/users/')
           .then(results => {
               return results.json();})

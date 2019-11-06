@@ -10,7 +10,7 @@ import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
 import LoginUser from "./components/LoginUser.js"
 import HomePage from "./components/HomePage.js"
-
+import CompanyList from "./components/displayCompany"
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
         <Route path="/activeUsers" component={UsersList} />
         <Route path="/loginUser" component={LoginUser}/>
         <Route path="/home" component={HomePage}/>
+        <Route path="/activeCompanies" component={CompanyList} />
       </Router>
   );
 }
