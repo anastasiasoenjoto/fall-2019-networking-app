@@ -5,6 +5,7 @@ import './App.css';
 
 import Navbar from "./components/Navbar.js"
 import UsersList from "./components/SignUp.js"
+import HomeScreenBar from "./components/HomeScreenNavBar.js"
 
 import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
@@ -15,6 +16,7 @@ import HomePage from "./components/HomePage.js"
 function App() {
   return (
       <Router>
+        <HomeScreenBar />
         <Navbar />
         <br/>
         <Route path="/user" component={CreateUser} />
