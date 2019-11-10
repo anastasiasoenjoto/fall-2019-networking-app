@@ -12,18 +12,13 @@ import CreateCompany from "./components/CreateCompany"
 import LoginUser from "./components/LoginUser.js"
 import HomePage from "./components/HomePage.js"
 
+import HomeScreenGrid from './components/HomeScreenGrid';
 
 function App() {
   return (
       <Router>
         <HomeScreenBar />
-        <Navbar />
-        <br/>
-        <Route path="/user" component={CreateUser} />
-        <Route path="/company" component={CreateCompany} />
-        <Route path="/activeUsers" component={UsersList} />
-        <Route path="/loginUser" component={LoginUser}/>
-        <Route path="/home" component={HomePage}/>
+        <HomeScreenGrid />
       </Router>
   );
 }

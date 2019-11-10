@@ -6,6 +6,8 @@ import { classes } from 'istanbul-lib-coverage';
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import { mergeClasses } from '@material-ui/styles';
+import LoginMenu from './UserLoginMenu';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,8 +31,7 @@ export default function HomeScreenBar() {
                         Networking App 
                     </Typography>
 
-                    <Button color = 'inherit'>Login as User</Button>
-                    <Button color = 'inherit'>Login as Company</Button>
+                    <LoginMenu></LoginMenu>
 
                 </ToolBar>
             </AppBar>
