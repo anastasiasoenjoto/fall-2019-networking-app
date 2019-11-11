@@ -10,7 +10,8 @@ export default class LoginUser extends Component {
 
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitUser = this.onSubmitUser.bind(this);
+    this.onSubmitCompany = this.onSubmitCompany.bind(this);
 
 
     this.state = {
@@ -39,7 +40,7 @@ export default class LoginUser extends Component {
   }
   
 
-  onSubmit(e) {
+  onSubmitUser(e) {
     e.preventDefault();
 
     const user = {
@@ -65,10 +66,6 @@ export default class LoginUser extends Component {
         }
       })
       
-      
-
-   
-
     this.setState({
       username: '',
       password: ''
@@ -76,7 +73,38 @@ export default class LoginUser extends Component {
 
   }
 
- 
+  onSubmitCompany(e) {
+    e.preventDefault();
+
+    const company = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    
+    axios.post('http://localhost:3001/company/validateCompany', company)
+      .then(res => {
+        return res.data;
+      })
+      .then(data=> {
+        return data.message;
+      })
+      .then(validity => {
+        if (validity == "valid") {
+          console.log('valid user!')
+          {this.setRedirectToHome()}
+        }
+        else {
+          console.log('invalid user')
+        }
+      })
+      
+    this.setState({
+      username: '',
+      password: ''
+    })
+
+  }
 
   render() {
 
@@ -86,7 +114,7 @@ export default class LoginUser extends Component {
 
     return (
       <div>
-        <form id="signUpForm" onSubmit={this.onSubmit} >
+        <form id="signUpForm">
           <fieldset>
           <legend className="formHeader"> Login</legend>
           <label >
@@ -100,9 +128,13 @@ export default class LoginUser extends Component {
           </label>
           </fieldset>
           <br></br>
-          <input type="submit"></input>
+          <input type="submit" value="Login User" name="userSubmit" onClick= {this.onSubmitUser}></input>
+          <input type="submit" value="Login Company" name="companySubmit" onClick= {this.onSubmitCompany}></input>
+
         </form>
-        Dont have an account? Click <a href="/user">here </a> to signup!
+        Dont have an account? <br></br>
+        Click <a href="/user">here </a> to signup as a user! <br></br>
+        Click <a href="/company">here </a> to signup as a company!
 
       </div> 
     )

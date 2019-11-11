@@ -8,7 +8,7 @@ import UsersList from "./components/SignUp.js"
 
 import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
-import LoginUser from "./components/LoginUser.js"
+import LoginUser from "./components/Login.js"
 import HomePage from "./components/HomePage.js"
 
 

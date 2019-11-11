@@ -1,4 +1,3 @@
-  
 const router = require('express').Router();
 let Company = require('../models/company.model');
 
@@ -35,5 +34,27 @@ router.route('/add').post((req, res) => {
     password,
     city)
   });
+
+  router.post('/validateCompany', (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    Company.findOne({username: username, password: password}, function(err, user){
+        if(err) {
+            console.log(err);
+        }
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
+        }
+        res.json({"message": message, "username": username, "password": password});
+    })
+
+});
 
 module.exports = router;
