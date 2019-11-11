@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
+
 
 
 export default class LoginUser extends Component {
@@ -15,7 +15,8 @@ export default class LoginUser extends Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      redirectToHome: false
     }
   }
 
@@ -30,6 +31,12 @@ export default class LoginUser extends Component {
       password: e.target.value
     })
   }
+
+  setRedirectToHome() {
+    this.setState({
+      redirectToHome: true
+    })
+  }
   
 
   onSubmit(e) {
@@ -40,14 +47,27 @@ export default class LoginUser extends Component {
       password: this.state.password
     }
 
-    try {
-      axios.get('http://localhost:3001/users/validateUser', user)
-      .then(res => console.log(res.data));
-
-    } catch (error) {
-      console.log(error)
-    }
     
+    axios.post('http://localhost:3001/users/validateUser', user)
+      .then(res => {
+        return res.data;
+      })
+      .then(data=> {
+        return data.message;
+      })
+      .then(validity => {
+        if (validity == "valid") {
+          console.log('valid user!')
+          {this.setRedirectToHome()}
+        }
+        else {
+          console.log('invalid user')
+        }
+      })
+      
+      
+
+   
 
     this.setState({
       username: '',
@@ -59,29 +79,28 @@ export default class LoginUser extends Component {
  
 
   render() {
-    const lableStyle = {
-      margin: '10px', 
-      textAlign: 'center'
-    };
+
+    if (this.state.redirectToHome === true) {
+      return <Redirect to="/home" />
+    }
 
     return (
       <div>
         <form id="signUpForm" onSubmit={this.onSubmit} >
           <fieldset>
           <legend className="formHeader"> Login</legend>
-          <label style={lableStyle}>
+          <label >
             Username:  
             <input id="userName" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Enter username"/>
           </label>
           <br></br>
-            <label style={lableStyle}>
+            <label >
             Password: 
             <input id="password" type="password" value={this.state.password} onChange= {this.onChangePassword} placeholder="Enter password"/>
           </label>
           </fieldset>
           <br></br>
           <input type="submit"></input>
-        {/* <Button variant="contained" color="primary"> Reset</Button> */}
         </form>
         Dont have an account? Click <a href="/user">here </a> to signup!
 
