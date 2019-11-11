@@ -1,0 +1,50 @@
+aside ul li{
+    list-style-type: none;
+    border: solid 1px black;
+    font-size: 25pt;
+    text-align: center;
+    padding: 20px;
+
+}
+
+aside {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#mainContent {
+    float: right;
+    width: 70%;
+    padding-right: 50px;
+}
+
+#homePageTitle {
+    margin-left: 55px;
+}
+
+#recommended {
+    border: solid 1px black;
+    height: 250px;
+}
+
+#all {
+    border: solid 1px black;
+    height: 250px;
+    margin-top: 25px;
+}
+
+#optionList {
+    display: flex;
+}
+
+.userModeOption {
+    width: 50%;
+    font-size: 30px;
+    list-style-type: none;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    
+}
