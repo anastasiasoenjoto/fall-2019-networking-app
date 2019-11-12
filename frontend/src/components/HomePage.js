@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './HomePage.css';
 
 
 export default class HomePage extends Component {
@@ -34,9 +35,42 @@ export default class HomePage extends Component {
   render() {
     return (
         <div> 
-            <h1> HomePage</h1>
-            {this.state.users}
-            <h3>What do you want to do today? </h3>
+             <h1 id="homePageTitle"> HomePage</h1>
+            <aside> 
+                <nav>
+                    <ul> 
+                        <li> <a href=""> Profile</a></li>
+                        <li> <a href=""> Message History</a></li>
+                        <li> <a href=""> Messaging</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+
+
+            <div id="mainContent">
+                {this.state.users}
+                <h3>What do you want to do today? </h3>
+                <nav> 
+                    <ul id="optionList">
+                        <li className="userModeOption"> <a  href="">Network </a> </li>
+                        <li className="userModeOption"><a  href="">Job Search</a></li>
+
+                    </ul>
+                </nav>
+
+                <div id="recommended">
+                    <h2> <u>Recommended </u></h2> 
+
+                </div>
+                <div id="all"> 
+                <h2> <u>All </u></h2> 
+
+
+                </div>
+
+            </div>
+
             
         </div>
    
