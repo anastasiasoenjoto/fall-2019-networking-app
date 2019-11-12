@@ -16,7 +16,8 @@ export default class LoginUser extends Component {
     this.state = {
       username: '',
       password: '',
-      redirectToHome: false
+      redirectToHomeUser: false,
+      redirectToHomeCompany: false
     }
   }
 
@@ -32,9 +33,15 @@ export default class LoginUser extends Component {
     })
   }
 
-  setRedirectToHome() {
+  setRedirectToHomeUser() {
     this.setState({
-      redirectToHome: true
+      redirectToHomeUser: true
+    })
+  }
+
+  setRedirectToHomeCompany() {
+    this.setState({
+      redirectToHomeCompany: true
     })
   }
   
@@ -58,7 +65,7 @@ export default class LoginUser extends Component {
     .then(validity => {
       if (validity == "valid") {
         console.log('valid user!')
-        {this.setRedirectToHome()}
+        {this.setRedirectToHomeUser()}
       }
       else {
         console.log('invalid user')
@@ -66,10 +73,10 @@ export default class LoginUser extends Component {
     })
 
 
-      this.setState({
-        username: '',
-        password: ''
-      })
+      // this.setState({
+      //   username: '',
+      //   password: ''
+      // })
   
     }
   
@@ -92,23 +99,37 @@ export default class LoginUser extends Component {
         .then(validity => {
           if (validity == "valid") {
             console.log('valid user!')
-            {this.setRedirectToHome()}
+            {this.setRedirectToHomeCompany()}
           }
           else {
             console.log('invalid user')
           }
         })
 
-        this.setState({
-          username: '',
-          password: ''
-        })
+        // this.setState({
+        //   username: '',
+        //   password: ''
+        // })
   }
 
   render() {
 
-    if (this.state.redirectToHome === true) {
-      return <Redirect to="/home" />
+    if (this.state.redirectToHomeCompany == true) {
+      return <Redirect to= {{
+        pathname: "/homeCompany", 
+        state: {username: this.state.username}
+      }}
+
+        />
+    }
+
+    else if (this.state.redirectToHomeUser == true) {
+      return <Redirect to= {{
+        pathname: "/home", 
+        state: {username: this.state.username}
+      }}
+
+        />
     }
 
 
