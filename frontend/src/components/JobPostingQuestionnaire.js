@@ -20,7 +20,7 @@ export default class JobPostingQuestionnaire extends Component {
         workExperienceRequirement: '',
         workLocation: '',
         estimatedSalaryPerHour: '',
-        applicationDeadline: '',
+        applicationDeadline: ''
 
     }  
 }
@@ -89,7 +89,7 @@ export default class JobPostingQuestionnaire extends Component {
         applicationDeadline: this.state.applicationDeadline
     }
 
-    axios.post('http://localhost:3001/jobPostingQuestionnaire/add', newJob)
+    axios.post('http://localhost:3001/jobs/add', newJob)
       .then(res => console.log(res.data));
 
     this.setState({

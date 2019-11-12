@@ -20,9 +20,12 @@ connection.once('open', () => {
 
 const usersRouter = require('./routes/users');
 const companyRouter = require('./routes/company');
+const jobsRouter = require('./routes/jobs');
+
 
 app.use('/users', usersRouter);
 app.use('/company', companyRouter);
+app.use('/jobs', jobsRouter);
 
 
 app.listen(port, () => {
