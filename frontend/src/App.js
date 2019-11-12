@@ -10,7 +10,7 @@ import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
 import LoginUser from "./components/LoginUser.js"
 import HomePage from "./components/HomePage.js"
-import CompanyList from "./components/displayCompany"
+import CompanyList from "./components/DisplayCompany.js"
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         <Route path="/loginUser" component={LoginUser}/>
         <Route path="/home" component={HomePage}/>
         <Route path="/activeCompanies" component={CompanyList} />
+
       </Router>
   );
 }
