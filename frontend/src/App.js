@@ -10,6 +10,7 @@ import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
 import LoginUser from "./components/Login.js"
 import HomePage from "./components/HomePage.js"
+import HomePageCompany from "./components/HomePageCompany.js"
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         <Route path="/activeUsers" component={UsersList} />
         <Route path="/loginUser" component={LoginUser}/>
         <Route path="/home" component={HomePage}/>
+        <Route path="/homeCompany" component={HomePageCompany}/>
+
       </Router>
   );
 }

@@ -57,4 +57,31 @@ router.route('/add').post((req, res) => {
 
 });
 
+router.post('/getCurrentCompany', (req, res) => {
+  var username = req.body.username;
+  
+  
+  Company.findOne({username: username}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(user) {
+          console.log(user)
+          message = 'found User!';
+          console.log(message)
+          res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        res.json({"user": []});
+      }
+
+      
+      
+  })
+
+});
+
 module.exports = router;
