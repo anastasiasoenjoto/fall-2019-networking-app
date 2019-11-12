@@ -8,9 +8,9 @@ import UsersList from "./components/SignUp.js"
 
 import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
-import LoginUser from "./components/LoginUser.js"
+import LoginUser from "./components/Login.js"
 import HomePage from "./components/HomePage.js"
-import CompanyList from "./components/DisplayCompany.js"
+import CompanyList from "./components/displayCompany.js"
 import JobPostingQuestionnaire from "./components/JobPostingQuestionnaire.js"
 
 function App() {

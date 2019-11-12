@@ -28,4 +28,26 @@ router.route('/add').post((req, res) => {
 
   });
 
+  router.post('/validateUser', (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    User.findOne({username: username, password: password}, function(err, user){
+        if(err) {
+            console.log(err);
+        }
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
+        }
+        res.json({"message": message, "username": username, "password": password});
+    })
+
+});
+
 module.exports = router;
