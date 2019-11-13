@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -71,7 +72,7 @@ export default function HomeScreenGrid() {
                     If you're a company, sign up here!
                 </ListItem>
                 <ListItem>
-                    <Button color='primary'>Sign Up as Company</Button>
+                    <Button component={Link} to="../SignUpPage.js" color='primary'>Sign Up as Company</Button>
                 </ListItem>
             </List>
 

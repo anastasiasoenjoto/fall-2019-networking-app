@@ -109,8 +109,8 @@ const StyledMenu = withStyles({
 
         <Button>Forgot Username or Password?</Button>
 
-        <Button onClick="onSubmit()" >Log In</Button>
-
+        <Button onClick="onSubmit()" >Log In as User</Button>
+        <Button>Log In as Company</Button>
 
         </StyledMenu>
       </div>
