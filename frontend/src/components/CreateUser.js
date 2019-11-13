@@ -105,24 +105,28 @@ export default class CreateUser extends Component {
     axios.post('http://localhost:3001/users/add', user)
       .then(res => console.log(res.data));
 
-    this.setState({
-      username: '',
-      firstName: '', 
-      lastName: '', 
-      email: '', 
-      password: '',
-      city: '', 
-      major: '', 
-      GPA: ''
+    // this.setState({
+    //   username: '',
+    //   firstName: '', 
+    //   lastName: '', 
+    //   email: '', 
+    //   password: '',
+    //   city: '', 
+    //   major: '', 
+    //   GPA: ''
 
-    })
+    // })
   {this.setRedirectToHome()}
 
   }
 
   render() {
-    if (this.state.redirectToHome === true) {
-      return <Redirect to="/home" />
+    if (this.state.redirectToHome == true) {
+      return <Redirect to= {{
+        pathname: "/home", 
+        state: {username: this.state.username}
+      }}
+      />
     }
     return (
       <div>

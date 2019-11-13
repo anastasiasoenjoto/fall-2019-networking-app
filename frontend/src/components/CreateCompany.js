@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 
 export default class CreateCompany extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class CreateCompany extends Component {
       companyName: '', 
       email: '',
       password: '', 
-      city: ''
+      city: '', 
+      redirectToHome: false
     }
   }
 
@@ -51,6 +53,12 @@ export default class CreateCompany extends Component {
     })
   }
 
+  setRedirectToHomeCompany() {
+    this.setState({
+      redirectToHome: true
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -65,16 +73,28 @@ export default class CreateCompany extends Component {
     axios.post('http://localhost:3001/company/add', company)
       .then(res => console.log(res.data));
 
-    this.setState({
-      username: '',
-      companyName: '', 
-      email: '', 
-      password: '',
-      city: '' 
-    })
+    // this.setState({
+    //   username: '',
+    //   companyName: '', 
+    //   email: '', 
+    //   password: '',
+    //   city: '' 
+    // })
+
+    {this.setRedirectToHomeCompany()}
   }
 
   render() {
+
+    if (this.state.redirectToHome == true) {
+      return <Redirect to= {{
+        pathname: "/homeCompany", 
+        state: {username: this.state.username}
+      }}
+
+        />
+    }
+
     return (
       <div>
         <h1> Sign Up </h1>
