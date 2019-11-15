@@ -69,6 +69,7 @@ export default class LoginUser extends Component {
       }
       else {
         console.log('invalid user')
+        alert("INVALID USERNAME OR PASSWORD!")
       }
     })
 
@@ -103,6 +104,7 @@ export default class LoginUser extends Component {
           }
           else {
             console.log('invalid user')
+            alert("INVALID USERNAME OR PASSWORD!")
           }
         })
 
