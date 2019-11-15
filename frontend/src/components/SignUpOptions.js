@@ -34,17 +34,16 @@ class SignUpBox extends React.Component {
             GPA: '',
             companyName: '',
             optionState: 0,
+            redirectToHome: false
         }
 
-        this.handleChange = this.handleChange.bind(this);
-        //this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
+    handleChange(e) {
+        this.setState({ [e.target.id] : e.target.value });
     }
 
-    onSubmit(e) {
+    onSubmitUser(e) {
         e.preventDefault();
 
 
@@ -66,6 +65,29 @@ class SignUpBox extends React.Component {
         { this.setRedirectToHome() }
 
     }
+
+    onSubmitCompany(e) {
+        e.preventDefault();
+    
+        const company = {
+          username: this.state.username,
+          companyName: this.state.companyName, 
+          email: this.state.email,
+          password: this.state.password,
+          city: this.state.city, 
+        }
+    
+        axios.post('http://localhost:3001/company/add', company)
+          .then(res => console.log(res.data));
+    
+        { this.setRedirectToHome() }
+      }
+
+      setRedirectToHome() {
+        this.setState({
+          redirectToHome: true
+        })
+      }
 
 
     render() {
@@ -92,7 +114,7 @@ class SignUpBox extends React.Component {
                             <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
                             </ListItemText>
                         </ListItem>
-                        <ListItem button>
+                        <ListItem button onClick={() => this.setState({ optionState: 2 })}>
                             <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
                             </ListItemText>
                         </ListItem>
@@ -109,31 +131,31 @@ class SignUpBox extends React.Component {
                         </ListItem>
 
                         <ListItem>
-                            <input id="firstName" type="text" value={this.state.firstName} onChange={this.handleChange} placeholder="Enter first name" />
+                            <input id="firstName" type="text" value={this.state.firstName} onChange={this.handleChange.bind(this)} placeholder="Enter first name" />
                         </ListItem>
                         <ListItem>
-                            <input id="lastName" type="text" value={this.state.lastName} onChange={this.handleChange} placeholder="Enter last name" />
+                            <input id="lastName" type="text" value={this.state.lastName} onChange={this.handleChange.bind(this)} placeholder="Enter last name" />
                         </ListItem>
                         <ListItem>
-                            <input id="username" type="text" value={this.state.username} onChange={this.handleChange} placeholder="Enter username" />
+                            <input id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
                         </ListItem>
                         <ListItem>
-                            <input id="password" type="text" value={this.state.password} onChange={this.handleChange} placeholder="Enter password" />
+                            <input id="password" type="text" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
                         </ListItem>
                         <ListItem>
-                            <input id="email" type="text" value={this.state.email} onChange={this.handleChange} placeholder="Enter email" />
+                            <input id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
                         </ListItem>
                         <ListItem>
-                            <input id="city" type="text" value={this.state.city} onChange={this.handleChange} placeholder="Enter city" />
+                            <input id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />
                         </ListItem>
                         <ListItem>
-                            <input id="major" type="text" value={this.state.major} onChange={this.handleChange} placeholder="Enter your major" />
+                            <input id="major" type="text" value={this.state.major} onChange={this.handleChange.bind(this)} placeholder="Enter your major" />
                         </ListItem>
                         <ListItem>
-                            <input id="gpa" type="text" value={this.state.GPA} onChange={this.handleChange} placeholder="Enter your current GPA" />
+                            <input id="gpa" type="text" value={this.state.GPA} onChange={this.handleChange.bind(this)} placeholder="Enter your current GPA" />
                         </ListItem>
                         <ListItem>
-                            <Button onClick={this.onSubmit}>Sign Up</Button>
+                            <Button onClick={this.onSubmitUser.bind(this)}>Sign Up</Button>
                         </ListItem>
                     </List>
                 </div>
@@ -148,22 +170,22 @@ class SignUpBox extends React.Component {
                         </ListItem>
 
                         <ListItem>
-                            <input id="companyName" type="text" value={this.state.companyName} onChange={this.handleChange} placeholder="Enter company name" />
+                            <input id="companyName" type="text" value={this.state.companyName} onChange={this.handleChange.bind(this)} placeholder="Enter company name" />
                         </ListItem>
                         <ListItem>
-                            <input id="username" type="text" value={this.state.username} onChange={this.handleChange} placeholder="Enter username" />
+                            <input id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
                         </ListItem>
                         <ListItem>
-                            <input id="password" type="text" value={this.state.password} onChange={this.handleChange} placeholder="Enter password" />
+                            <input id="password" type="text" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
                         </ListItem>
                         <ListItem>
-                            <input id="email" type="text" value={this.state.email} onChange={this.handleChange} placeholder="Enter email" />
+                            <input id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
                         </ListItem>
                         <ListItem>
-                            <input id="city" type="text" value={this.state.city} onChange={this.handleChange} placeholder="Enter city" />
+                            <input id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />
                         </ListItem>
                         <ListItem>
-                            <Button onClick={this.onSubmit}>Sign Up</Button>
+                            <Button onClick={this.onSubmitCompany.bind(this)}>Sign Up</Button>
                         </ListItem>
                     </List>
                 </div>
