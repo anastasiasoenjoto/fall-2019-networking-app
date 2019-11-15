@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
 
+
 export default class CreateUser extends Component {
   constructor(props) {
     super(props);
@@ -86,9 +87,66 @@ export default class CreateUser extends Component {
     })
   }
 
+  checkFields() {
+    if (this.state.username == '') {
+      alert("Enter username")
+      return false
+    }
+    else if (this.state.firstName == '') {
+      alert("Enter firstname")
+      return false
+    }
+    else if (this.state.lastName == '') {
+      alert("Enter lastname")
+      return false
+    }
+    else if (this.state.email == '') {
+      alert("Enter email")
+      return false
+    }
+    else if (this.state.password == '') {
+      alert("Enter password")
+      return false
+    }
+    else if (this.state.city == '') {
+      alert("Enter city")
+      return false
+    }
+    else if (this.state.major == '') {
+      alert("Enter major")
+      return false
+    }
+    else if (this.state.GPA == '') {
+      alert("Enter GPA")
+      return false
+    }
+    else if (this.state.firstName.length < 3) {
+      alert("First name has to be atleast 3 letters")
+      return false
+    }
+    else if (this.state.username.length < 3) {
+      alert("Username has to be atleast 3 letters")
+      return false
+    }
+    else if (this.state.lastName.length < 3) {
+      alert("Last name has to be atleast 3 letters")
+      return false
+    }
+    else if(this.state.password < 8) {
+      alert("Password has to be atleast 8 letters")
+      return false
+    }
+    return true
+
+  }
+
   onSubmit(e) {
     e.preventDefault();
-   
+
+   var check = this.checkFields()
+   if (check == false) {
+     return 
+   }
 
     const user = {
       username: this.state.username,
@@ -103,7 +161,25 @@ export default class CreateUser extends Component {
 
 
     axios.post('http://localhost:3001/users/add', user)
-      .then(res => console.log(res.data));
+      .then(res => {
+        console.log(res.data)
+        return res.data
+      });
+
+      {this.setRedirectToHome()}
+
+      // .then(data => {
+      //   if (data !="User added!") {
+      //     alert("Invalid!")
+      //     return
+          
+      //   }
+
+      //   {this.setRedirectToHome()}
+
+      // });
+
+      
 
     // this.setState({
     //   username: '',
@@ -116,7 +192,7 @@ export default class CreateUser extends Component {
     //   GPA: ''
 
     // })
-  {this.setRedirectToHome()}
+  
 
   }
 

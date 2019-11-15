@@ -29,14 +29,13 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     trim: true,
-    minlength: 3
   },
   password: {
     type: String,
     required: true,
     unique: true,
     trim: true,
-    minlength: 3
+    minlength: 8
   },
   major: {
     type: String,
