@@ -72,7 +72,9 @@ export default function HomeScreenGrid() {
                     If you're a company, sign up here!
                 </ListItem>
                 <ListItem>
-                    <Button component={Link} to="../SignUpPage.js" color='primary'>Sign Up as Company</Button>
+                    <Link to="../SignUpPage">
+                        <Button color='primary'>Sign Up as Company</Button>
+                    </Link>
                 </ListItem>
             </List>
 

@@ -9,41 +9,39 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+var optionState = 0;
+
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow : 1,
-        alignSelf: 'center',
         border: '2px solid black',
-        height: '50%',
-        width: '50%',
+        height: '40%',
     },
 }));
 
-export default function HomeScreenBar() {
+export default function SignUpBox() {
 
     const classes = useStyles();
 
-    return (
-        <div className = {classes.root} align = 'center'>
-            <List>
-                <ListItem button>
-                    <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
-                    </ListItemText>
-                </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
-                    </ListItemText>
-                </ListItem>
-            </List>
-        </div>
-    )
+    if(true) {
+        return (
+            <div className = {classes.root}>
+                <List>
+                    <ListItem>
+                        <ListItemText primary = "Networking App Sign Up"></ListItemText>
+                    </ListItem>
 
-
-
-
-
-
-
+                    <ListItem button>
+                        <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
+                        </ListItemText>
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Sign Up as User" secondary="Using own email or google account login">
+                        </ListItemText>
+                    </ListItem>
+                </List>
+            </div>
+        )
+    }
 
 
 

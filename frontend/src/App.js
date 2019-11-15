@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route , Switch} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css';
 
@@ -13,13 +13,16 @@ import LoginUser from "./components/LoginUser.js"
 import HomePage from "./components/HomePage.js"
 
 import HomeScreenGrid from './components/HomeScreenGrid';
+import SignUp from'./SignUpPage.js';
+
 
 function App() {
   return (
-      <Router>
+      <div>
         <HomeScreenBar />
         <HomeScreenGrid />
-      </Router>
+      </div>
+      
   );
 }
 

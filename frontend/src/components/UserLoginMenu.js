@@ -31,6 +31,67 @@ const StyledMenu = withStyles({
     />
   ));
 
+  function onSubmitUser(e) {
+    e.preventDefault();
+
+    const user = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+
+    axios.post('http://localhost:3001/users/validateUser', user)
+    .then(res => {
+      return res.data;
+    })
+    .then(data=> {
+      return data.message;
+    })
+    .then(validity => {
+      if (validity == "valid") {
+        console.log('valid user!')
+        {this.setRedirectToHomeUser()}
+      }
+      else {
+        console.log('invalid user')
+      }
+    })
+
+
+      usern = '';
+      pw = '';
+  
+    }
+  
+    function onSubmitCompany(e) {
+      e.preventDefault();
+
+      const company = {
+        username: this.state.username,
+        password: this.state.password
+      }
+  
+  
+      axios.post('http://localhost:3001/company/validateCompany', company)
+        .then(res => {
+          return res.data;
+        })
+        .then(data=> {
+          return data.message;
+        })
+        .then(validity => {
+          if (validity == "valid") {
+            console.log('valid user!')
+            {this.setRedirectToHomeCompany()}
+          }
+          else {
+            console.log('invalid user')
+          }
+        })
+
+      usern = '';
+      pw = '';
+  }
 
   const StyledMenuItem = withStyles(theme => ({
     root: {
@@ -42,24 +103,6 @@ const StyledMenu = withStyles({
       },
     },
   }))(MenuItem);
-
-  function onSubmit(e) {
-    e.preventDefault();
-
-    const user = {
-      username: usern,
-      password: pw
-    }
-
-
-    axios.post('', user)
-      .then(res => console.log(res.data));
-
-    
-    usern = '';
-    pw = '';
-
-  }
 
 
   export default function LoginMenu() {
@@ -95,22 +138,27 @@ const StyledMenu = withStyles({
 
         <ListItem>
             <label>
-            Username:  
+            Username:
             <input id="userName" type="text" value={usern} placeholder="Enter username"/>
             </label>
         </ListItem>
 
         <ListItem>
             <label>
-            Password:  
+            Password:
             <input id="password" type="password" value={pw} placeholder="Enter password"/>
             </label>
         </ListItem>
 
-        <Button>Forgot Username or Password?</Button>
+        <ListItem>
+          <Button>Forgot Username or Password?</Button>
+        </ListItem>
 
-        <Button onClick="onSubmit()" >Log In as User</Button>
-        <Button>Log In as Company</Button>
+        <ListItem>
+          <Button onClick="onSubmitUser()">Log In as User</Button>
+          <Button onClick="onSubmitComapny()">Log In as Company</Button>
+        </ListItem>
+        
 
         </StyledMenu>
       </div>
