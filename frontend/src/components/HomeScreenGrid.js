@@ -86,7 +86,9 @@ export default function HomeScreenGrid() {
                     If you're a user (not representing a company), sign up here!
                 </ListItem>
                 <ListItem>
+                    <Link to="../SignUpPage">
                     <Button color='primary'>Sign Up as User</Button>
+                    </Link>
                 </ListItem>
             </List>
 
