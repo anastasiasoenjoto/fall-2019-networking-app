@@ -13,7 +13,7 @@ export default class Navbar extends Component {
           <Link to="/LoginUser" className="nav-link">Login</Link>
           </li>
           <li className="navbar-item"> 
-          <Link to="/activeUsers" className="nav-link">Display Users</Link>
+          <Link to="/displayUsers" className="nav-link">Display Users</Link>
           </li>
           <li className="navbar-item">
           <Link to="/company" className="nav-link">Create Company User</Link>
@@ -21,6 +21,7 @@ export default class Navbar extends Component {
           <li className="navbar-item">
           <Link to="/activeCompanies" className="nav-link">Display Company User</Link>
           </li>
+          
 
         </ul>
         </div>

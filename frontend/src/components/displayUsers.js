@@ -12,9 +12,33 @@ export default class displayUsers extends Component {
     this.state = {
       major: '', 
       GPA: '', 
-      city: ''
+      city: '',
+      users: []
     }
   }
+
+  // componentDidMount() {
+  //   const fetch = require("node-fetch");
+  //   fetch('http://localhost:3001/users/')
+  //     .then(results => {
+  //         return results.json();})
+  //       .then(data=> {
+  //           let users = data.map((u) => {
+  //               return(
+  //                   <div key={u.username}>
+  //                       <h2>Name: {u.firstName, u.lastName}</h2>
+  //                       <p><i>Email: {u.email}</i></p>
+  //                       <p><i>City: {u.city}</i></p>
+  //                       <p><i>Major: {u.major}</i></p>
+  //                       <p><i>GPA: {u.GPA}</i></p>
+                        
+
+  //                   </div>
+  //               )
+  //           })
+  //           this.setState({users: users});
+  //       })
+  // }
 
   onChangeMajor(e) {
     this.setState({
@@ -40,20 +64,40 @@ export default class displayUsers extends Component {
     const displayUsers = {
       city: this.state.city, 
       major: this.state.major,
-      GPA: this.state.GPA
+      GPA: this.state.GPA,
+    }
+    axios.post('http://localhost:3001/users/queryUsers', displayUsers)
+    .then(res => {
+      console.log(res.data.users);
+      return res.data.users
+    })
+    .then(data=> {
+            let users = data.map((u) => {
+                return(
+                    <div key={u.username}>
+                        <h4>Name: {u.firstName} {u.lastName}</h4>
+                        <p><i>Email: {u.email}</i></p>
+
+                    </div>
+                )
+            })
+            this.setState({users: users});
+        })
+
+    this.state = {
+      major: displayUsers.major, 
+      GPA: displayUsers.GPA, 
+      city: displayUsers.city,
+      users: []
     }
 
-    this.setState({
-        major: '', 
-        GPA: '', 
-        city: '' 
-    })
   }
 
   render() {
     return (
       <div>
-          <form>
+           {this.state.users}
+          <form onSubmit={this.onSubmit}>
         <h1> Filter Users </h1>
         <fieldset>
           <label>
@@ -78,7 +122,6 @@ export default class displayUsers extends Component {
           </fieldset>
           <br></br>
           <fieldset>
-            <legend className="formHeader"> Interest </legend>
             <label>
             Major: 
             <select id="major" value={this.state.major} onChange= {this.onChangeMajor}>
@@ -104,68 +147,3 @@ export default class displayUsers extends Component {
     )
   }
 }
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  firstName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  }, 
-  lastName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  password: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  major: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-  city: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-
-  GPA: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-}, {
-  timestamps: true,
-});
-
-const Users = mongoose.model('Users', userSchema)
-
-Users.find({'GPA': this.state.GPA, 'city': this.state.city, 'major': this.city.major})
