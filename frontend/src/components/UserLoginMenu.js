@@ -35,8 +35,8 @@ const StyledMenu = withStyles({
     e.preventDefault();
 
     const user = {
-      username: this.state.username,
-      password: this.state.password
+      username: this.state.usern,
+      password: this.state.pw
     }
 
 
@@ -67,8 +67,8 @@ const StyledMenu = withStyles({
       e.preventDefault();
 
       const company = {
-        username: this.state.username,
-        password: this.state.password
+        username: usern,
+        password: pw
       }
   
   
