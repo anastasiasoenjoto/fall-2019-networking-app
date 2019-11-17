@@ -11,10 +11,10 @@ import LoginMenu from './UserLoginMenu';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow : 1,
+        flexGrow: 1,
     },
     pageTitle: {
-        flexGrow : 1,
+        flexGrow: 1,
     },
 }));
 
@@ -24,15 +24,13 @@ export default function HomeScreenBar() {
 
 
     return (
-        <div className = {classes.root}>
-            <AppBar position = "static">
-                <ToolBar variant = "title" color = "inherit">
-                    <Typography variant="h5" className = {classes.pageTitle}>
-                        Networking App 
+        <div className={classes.root}>
+            <AppBar position="static">
+                <ToolBar variant="title" color="inherit">
+                    <Typography variant="h5" className={classes.pageTitle}>
+                        Networking App
                     </Typography>
-
                     <LoginMenu></LoginMenu>
-
                 </ToolBar>
             </AppBar>
         </div>

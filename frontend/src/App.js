@@ -15,7 +15,6 @@ import HomePage from "./components/HomePage.js"
 import HomeScreenGrid from './components/HomeScreenGrid';
 import SignUp from'./SignUpPage.js';
 
-
 function App() {
   return (
       <div>
