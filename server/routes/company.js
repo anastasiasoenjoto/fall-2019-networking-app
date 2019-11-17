@@ -36,4 +36,55 @@ router.route('/add').post((req, res) => {
     city)
   });
 
+  router.post('/validateCompany', (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    Company.findOne({username: username, password: password}, function(err, user){
+        if(err) {
+            console.log(err);
+        }
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
+        }
+        res.json({"message": message, "username": username, "password": password});
+    })
+
+});
+
+router.post('/getCurrentCompany', (req, res) => {
+  var username = req.body.username;
+
+
+  Company.findOne({username: username}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(user) {
+          console.log(user)
+          message = 'found User!';
+          console.log(message)
+          res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        res.json({"user": []});
+      }
+
+
+
+  })
+
+});
+
+
+
 module.exports = router;

@@ -9,7 +9,7 @@ import HomeScreenBar from "./components/HomeScreenNavBar.js"
 
 import CreateUser from "./components/CreateUser.js"
 import CreateCompany from "./components/CreateCompany"
-import LoginUser from "./components/LoginUser.js"
+import LoginUser from "./components/Login.js"
 import HomePage from "./components/HomePage.js"
 
 import HomeScreenGrid from './components/HomeScreenGrid';
@@ -21,7 +21,6 @@ function App() {
         <HomeScreenBar />
         <HomeScreenGrid />
       </div>
-      
   );
 }
 

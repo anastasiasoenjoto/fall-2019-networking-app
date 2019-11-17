@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-export default class UserList extends Component {
+export default class CompanyList extends Component {
 
 
     constructor(props) {
@@ -13,19 +13,17 @@ export default class UserList extends Component {
     
     componentDidMount() {
         const fetch = require("node-fetch");
-        fetch('http://localhost:3001/users/')
+        fetch('http://localhost:3001/company/')
           .then(results => {
               return results.json();})
             .then(data=> {
                 let users = data.map((u) => {
                     return(
                         <div key={u.username}>
-                            <h2>Name: {u.firstName} {u.lastName}</h2>
+                            <h2>Name: {u.companyName}</h2>
                             <p><i>{u.email}</i></p>
                             <p><i>City: {u.city}</i></p>
-                            <p><b><i>Major: {u.major}</i></b></p>
-                            <p><b>GPA: {u.GPA}</b></p>
-
+                            
 
                         </div>
                     )
