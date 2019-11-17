@@ -133,7 +133,7 @@ const StyledMenu = withStyles({
 
       <>
       {toHomeUser ? <Redirect to={{
-                pathname: "/HomePageUser",
+                pathname: "/HomePage",
                 state: { username: userName, password: password }
             }}/> : null}
       {toHomeCompany ? <Redirect to={{
