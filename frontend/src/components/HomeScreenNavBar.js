@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function HomeScreenBar() {
+export default function HomeScreenBar(props) {
 
     const classes = useStyles();
 
@@ -30,7 +30,7 @@ export default function HomeScreenBar() {
                     <Typography variant="h5" className={classes.pageTitle}>
                         Networking App
                     </Typography>
-                    <LoginMenu></LoginMenu>
+                    <LoginMenu props={props}></LoginMenu>
                 </ToolBar>
             </AppBar>
         </div>

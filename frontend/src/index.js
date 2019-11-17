@@ -5,6 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import SignUpPage from './SignUpPage';
+import HomePageCompany from './components/HomePageCompany';
+import HomePage from './components/HomePage';
 
 
 const routing = (
@@ -13,6 +15,8 @@ const routing = (
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/SignUpPage" component={SignUpPage}/>
+        <Route path="/HomePageCompany" component={HomePageCompany}/>
+        <Route exact path="/HomePage" component={HomePage}/>
       </Switch>
       </div>
     </Router>

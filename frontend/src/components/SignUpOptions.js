@@ -140,7 +140,7 @@ class SignUpBox extends React.Component {
                             <input style={{width: "40%"}} id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
                         </ListItem>
                         <ListItem>
-                            <input style={{width: "40%"}} id="password" type="text" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
+                            <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
                         </ListItem>
                         <ListItem>
                             <input style={{width: "40%"}} id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
@@ -152,7 +152,7 @@ class SignUpBox extends React.Component {
                             <input style={{width: "40%"}} id="major" type="text" value={this.state.major} onChange={this.handleChange.bind(this)} placeholder="Enter your major" />
                         </ListItem>
                         <ListItem>
-                            <input style={{width: "40%"}} id="gpa" type="text" value={this.state.GPA} onChange={this.handleChange.bind(this)} placeholder="Enter your current GPA" />
+                            <input style={{width: "40%"}} id="GPA" type="text" value={this.state.GPA} onChange={this.handleChange.bind(this)} placeholder="Enter your current GPA" />
                         </ListItem>
                         <ListItem>
                             <Button onClick={this.onSubmitUser.bind(this)}>Sign Up</Button>
@@ -176,7 +176,7 @@ class SignUpBox extends React.Component {
                             <input style={{width: "40%"}} id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
                         </ListItem>
                         <ListItem>
-                            <input style={{width: "40%"}} id="password" type="text" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
+                            <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
                         </ListItem>
                         <ListItem>
                             <input style={{width: "40%"}} id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />

@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItem from '@material-ui/core/ListItem';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
-var usern = '';
-var pw = '';
 
 const StyledMenu = withStyles({
     paper: {
@@ -29,67 +28,6 @@ const StyledMenu = withStyles({
     />
   ));
 
-  function onSubmitUser(e) {
-    e.preventDefault();
-
-    const user = {
-      username: this.state.usern,
-      password: this.state.pw
-    }
-
-
-    axios.post('http://localhost:3001/users/validateUser', user)
-    .then(res => {
-      return res.data;
-    })
-    .then(data=> {
-      return data.message;
-    })
-    .then(validity => {
-      if (validity == "valid") {
-        console.log('valid user!')
-        {this.setRedirectToHomeUser()}
-      }
-      else {
-        console.log('invalid user')
-      }
-    })
-
-
-      usern = '';
-      pw = '';
-  
-    }
-  
-    function onSubmitCompany(e) {
-      e.preventDefault();
-
-      const company = {
-        username: usern,
-        password: pw
-      }
-  
-  
-      axios.post('http://localhost:3001/company/validateCompany', company)
-        .then(res => {
-          return res.data;
-        })
-        .then(data=> {
-          return data.message;
-        })
-        .then(validity => {
-          if (validity == "valid") {
-            console.log('valid user!')
-            {this.setRedirectToHomeCompany()}
-          }
-          else {
-            console.log('invalid user')
-          }
-        })
-
-      usern = '';
-      pw = '';
-  }
 
   const StyledMenuItem = withStyles(theme => ({
     root: {
@@ -103,9 +41,86 @@ const StyledMenu = withStyles({
   }))(MenuItem);
 
 
-  export default function LoginMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+  export default function LoginMenu(props) {
+
+
+    const onSubmitUser = event => {
+
   
+      if(userName === '' || password === '') {
+        return;
+      }
+  
+      const user = {
+        username: userName,
+        password: password
+      }
+      
+  
+      axios.post('http://localhost:3001/users/validateUser', user)
+      .then(res => {
+        return res.data;
+      })
+      .then(data=> {
+        return data.message;
+      })
+      .then(validity => {
+        if (validity == "valid") {
+          console.log('valid user!');
+          setHomeUser(true);
+        }
+        else {
+          console.log('invalid user')
+        }
+      })
+  
+    
+      }
+    
+      const onSubmitCompany = event => {
+        
+  
+        if(userName === '' || password === '') {
+          return;
+        }
+  
+        const company = {
+          username: userName,
+          password: password
+        }
+    
+    
+        axios.post('http://localhost:3001/company/validateCompany', company)
+          .then(res => {
+            return res.data;
+          })
+          .then(data=> {
+            return data.message;
+          })
+          .then(validity => {
+            if (validity == "valid") {
+              console.log('valid user!');
+              setHomeCompany(true);
+            }
+            else {
+              console.log('invalid user')
+            }
+          })
+
+
+  
+    }
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [toHomeUser, setHomeUser] = useState(false);
+    const [toHomeCompany, setHomeCompany] = useState(false);
+
     const handleClick = event => {
       setAnchorEl(event.currentTarget);
     };
@@ -114,8 +129,18 @@ const StyledMenu = withStyles({
       setAnchorEl(null);
     };
 
-  
     return (
+
+      <>
+      {toHomeUser ? <Redirect to={{
+                pathname: "/HomePageUser",
+                state: { username: userName, password: password }
+            }}/> : null}
+      {toHomeCompany ? <Redirect to={{
+                pathname: "/HomePageCompany",
+                state: { username: userName, password: password }
+            }}/> : null}
+
       <div>
         <Button
           aria-controls="login-menu"
@@ -137,14 +162,14 @@ const StyledMenu = withStyles({
         <ListItem>
             <label>
             Username:
-            <input id="userName" type="text" value={usern} placeholder="Enter username"/>
+            <input id="userN" type="text" value={userName} placeholder="Enter username" onChange={e => setUserName(e.target.value)}/>
             </label>
         </ListItem>
 
         <ListItem>
             <label>
             Password:
-            <input id="password" type="password" value={pw} placeholder="Enter password"/>
+            <input id="pw" type="password" placeholder="Enter password" onChange={e => setPassword(e.target.value)}/>
             </label>
         </ListItem>
 
@@ -153,12 +178,13 @@ const StyledMenu = withStyles({
         </ListItem>
 
         <ListItem>
-          <Button onClick="onSubmitUser()">Log In as User</Button>
-          <Button onClick="onSubmitComapny()">Log In as Company</Button>
+          <Button onClick={onSubmitUser}>Log In as User</Button>
+          <Button onClick={onSubmitCompany}>Log In as Company</Button>
         </ListItem>
         
 
         </StyledMenu>
       </div>
+      </>
     );
   }
