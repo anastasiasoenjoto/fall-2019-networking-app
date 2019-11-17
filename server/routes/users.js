@@ -77,4 +77,28 @@ router.post('/getCurrentUser', (req, res) => {
 
 });
 
+router.post('/getRecommendedUser', (req, res) => {
+  // var username = req.body.username;
+  var major = req.body.major;
+  var city = req.body.city;
+
+
+  User.find({major: major, city: city}, function(err, user){
+    if(err) {
+      console.log(err);
+    }
+    var message; 
+    if(user) {
+        console.log(user)
+        message = 'found User';
+        console.log(message)
+    } else {
+        message = 'invalid';
+        console.log(message)
+    }
+
+    res.json({"message": message, "users" : user});
+  })
+});
+
 module.exports = router;

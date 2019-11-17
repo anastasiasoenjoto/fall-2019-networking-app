@@ -1,17 +1,63 @@
+@font-face {
+    font-family: 'custom_Calistoga';
+    src: url(../fonts/Calistoga/Calistoga-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'custom_OldStandard';
+    src: url(../fonts/Old_Standard_TT/OldStandardTT-Regular.ttf);
+}
+@font-face {
+    font-family: 'custom_fira';
+    src: url(../fonts/Fira_Sans_Condensed/FiraSansCondensed-Regular.ttf);
+}
+
 aside ul li{
     list-style-type: none;
-    border: solid 1px black;
+    /* border: solid 1px black; */
     font-size: 25pt;
-    text-align: center;
-    padding: 20px;
+    text-align: left;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+   
 
+}
+
+/* aside {
+    box-shadow: 3px 5px #888888; 
+} */
+
+html, body {
+    /* background: url(../background/oriental.png); */
+    background-color: #e6e4e4;
+}
+
+    
+
+.home-nav-item {
+    font-family: 'custom_fira';
+    text-shadow: 1px 1px #000;
+    color: white;
+    
+}
+
+.networkCarouselItem {
+    font-family: 'custom_OldStandard';
+}
+
+.carousel-header {
+    font-family: 'custom_OldStandard';
+    
 }
 
 aside {
     float: left;
     width: 25%;
-    padding: 10px;
+    padding: 5px;
     margin: 10px;
+    position: relative;
+    top: 100px;
 }
 
 #mainContent {
@@ -21,30 +67,33 @@ aside {
 }
 
 #homePageTitle {
-    margin-left: 55px;
+    text-align: left;
+    font-family: 'custom_Calistoga';
+    font-size: 40pt;
+    padding-bottom: 25px;
+    color: rgba(16, 86, 177, 0.75)
 }
 
 #recommended {
     border: solid 1px black;
-    height: 250px;
+    height: 300px;
+    box-shadow: 3px 5px #888888; 
+    padding-bottom: 5px;
 }
 
 #all {
     border: solid 1px black;
-    height: 250px;
+    height: 300px;
     margin-top: 25px;
+    box-shadow: 3px 5px #888888; 
 }
 
 #optionList {
     display: flex;
 }
 
-.userModeOption {
-    width: 50%;
-    font-size: 30px;
-    list-style-type: none;
-    margin-left: 50px;
-    margin-right: 50px;
 
-
+.home-nav-item a:visited {
+    color: rgba(16, 86, 177, 0.75);
 }
+
