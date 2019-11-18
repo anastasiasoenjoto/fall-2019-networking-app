@@ -7,6 +7,7 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import SignUpPage from './SignUpPage';
 import HomePageCompany from './components/HomePageCompany';
 import HomePage from './components/HomePage';
+import displayUsers from './components/displayUsers';
 
 
 const routing = (
