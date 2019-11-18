@@ -17,6 +17,7 @@ const routing = (
         <Route path="/SignUpPage" component={SignUpPage}/>
         <Route path="/HomePageCompany" component={HomePageCompany}/>
         <Route exact path="/HomePage" component={HomePage}/>
+        <Route path="/displayUsers" component={displayUsers}/>
       </Switch>
       </div>
     </Router>
