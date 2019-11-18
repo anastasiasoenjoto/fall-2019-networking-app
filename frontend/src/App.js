@@ -20,8 +20,6 @@ function App() {
       <div>
         <HomeScreenBar />
         <HomeScreenGrid />
-        <Route path="/displayUsers" component={displayUsers}/>
-
       </div>
   );
 }
