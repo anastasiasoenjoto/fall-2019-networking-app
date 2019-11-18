@@ -23,6 +23,7 @@ function App() {
         <Route path="/user" component={CreateUser} />
         <Route path="/company" component={CreateCompany} />
         <Route path="/loginUser" component={LoginUser}/>
+        <Route path="/activeUsers" component={UsersList} />
         <Route path="/home" component={HomePage}/>
         <Route path="/activeCompanies" component={CompanyList} />
         <Route path="/jobQuestionnaire" component = {JobPostingQuestionnaire}/>
