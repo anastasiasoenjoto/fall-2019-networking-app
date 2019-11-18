@@ -12,9 +12,33 @@ export default class displayUsers extends Component {
     this.state = {
       major: '', 
       GPA: '', 
-      city: ''
+      city: '',
+      users: []
     }
   }
+
+  // componentDidMount() {
+  //   const fetch = require("node-fetch");
+  //   fetch('http://localhost:3001/users/')
+  //     .then(results => {
+  //         return results.json();})
+  //       .then(data=> {
+  //           let users = data.map((u) => {
+  //               return(
+  //                   <div key={u.username}>
+  //                       <h2>Name: {u.firstName, u.lastName}</h2>
+  //                       <p><i>Email: {u.email}</i></p>
+  //                       <p><i>City: {u.city}</i></p>
+  //                       <p><i>Major: {u.major}</i></p>
+  //                       <p><i>GPA: {u.GPA}</i></p>
+                        
+
+  //                   </div>
+  //               )
+  //           })
+  //           this.setState({users: users});
+  //       })
+  // }
 
   onChangeMajor(e) {
     this.setState({
@@ -40,132 +64,96 @@ export default class displayUsers extends Component {
     const displayUsers = {
       city: this.state.city, 
       major: this.state.major,
-      GPA: this.state.GPA
+      GPA: this.state.GPA,
+    }
+    axios.post('http://localhost:3001/users/queryUsers', displayUsers)
+    .then(res => {
+      console.log(res.data.users);
+      return res.data.users
+    })
+    .then(data=> {
+            let users = data.map((u) => {
+                return(
+                    <div key={u.username}>
+                        <h4>Name: {u.firstName} {u.lastName}</h4>
+                        <p><i>Email: {u.email}</i></p>
+
+                    </div>
+                )
+            })
+            this.setState({users: users});
+        })
+
+    this.state = {
+      major: displayUsers.major, 
+      GPA: displayUsers.GPA, 
+      city: displayUsers.city,
+      users: []
     }
 
-    this.setState({
-        major: '', 
-        GPA: '', 
-        city: '' 
-    })
   }
 
   render() {
     return (
-      <div>
-          <form>
-        <h1> Filter Users </h1>
+      <div
+      style={{
+        fontFamily: "Arial",
+        backgroundColor: 'blue',
+        width: '500',
+        height: '500',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: "10px"
+    }}>
+           {this.state.users}
+          <form onSubmit={this.onSubmit}>
+        <h1>  style={{color: "white"}} Filter Users </h1>
         <fieldset>
-          <label>
-            City: 
-            <select id="city" value={this.state.city} onChange= {this.onChangeCity}>
-              <option>----Select a city-----</option>
-              <optgroup label="California">
-                <option value="losAngeles">Los Angeles</option>
-                <option value="sanFrancisico">San Francisco</option>
-              </optgroup>
-              <optgroup label="New York">
-              <option value="albany">Albany</option>
-                <option value="newYork">New York </option>
-              </optgroup>
-              <optgroup label="Texas">
-              <option value="austin">Austin</option>
-                <option value="dallas">Dallas</option>
-              </optgroup>
+          <label style={{color: "white"}}>
+            City: 
+            <select id="city" value={this.state.city} onChange= {this.onChangeCity}>
+              <option>----Select a city-----</option>
+              <optgroup label="California">
+                <option value="losAngeles">Los Angeles</option>
+                <option value="sanFrancisico">San Francisco</option>
+              </optgroup>
+              <optgroup label="New York">
+              <option value="albany">Albany</option>
+                <option value="newYork">New York </option>
+              </optgroup>
+              <optgroup label="Texas">
+              <option value="austin">Austin</option>
+                <option value="dallas">Dallas</option>
+              </optgroup>
 
-            </select>
-          </label>
-          </fieldset>
-          <br></br>
-          <fieldset>
-            <legend className="formHeader"> Interest </legend>
-            <label>
-            Major: 
-            <select id="major" value={this.state.major} onChange= {this.onChangeMajor}>
-              <option>----Select your major-----</option>
-              
-              <option value="anthropology">Anthropology</option>
-              <option value="businessManagement">Business Management</option>
-              <option value="computerScience">Computer Science</option>
-              <option value="dataScience">Data Science</option>
-            </select>
-          </label>
-          <br></br><br></br>
-          </fieldset>
-          <label>
-            GPA: 
-            <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
-          </label>
-          <br></br>
-          <input type="submit"></input>
-        </form>
+            </select>
+          </label>
+          </fieldset>
+          <br></br>
+          <fieldset>
+            <label style={{color: "white"}}>
+            Major: 
+            <select id="major" value={this.state.major} onChange= {this.onChangeMajor}>
+              <option>----Select your major-----</option>
+              
+              <option value="anthropology">Anthropology</option>
+              <option value="businessManagement">Business Management</option>
+              <option value="computerScience">Computer Science</option>
+              <option value="dataScience">Data Science</option>
+            </select>
+          </label>
+          <br></br><br></br>
+          </fieldset>
+          <label style={{color: "white"}}>
+            GPA: 
+            <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
+          </label>
+          <br></br>
+          <input type="submit"></input>
+        </form>
 
-      </div> 
+      </div> 
     )
   }
 }
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  firstName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  }, 
-  lastName: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  password: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-  major: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-  city: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-
-  GPA: {
-    type: String,
-    required: true,
-    trim: true,
-
-  },
-}, {
-  timestamps: true,
-});
-
-const Users = mongoose.model('Users', userSchema)
-
-Users.find({'GPA': this.state.GPA, 'city': this.state.city, 'major': this.city.major})
