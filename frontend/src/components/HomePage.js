@@ -16,9 +16,9 @@ export default class HomePage extends Component {
     }
     
     componentDidMount() {
-        console.log(this.props.location.state.username)
+        console.log(this.props.location.state)
         const user = {
-            username: this.props.location.state.username
+            username: this.props.location.state
         }
         axios.post('http://localhost:3001/users/getCurrentUser', user)
         .then(res => {
