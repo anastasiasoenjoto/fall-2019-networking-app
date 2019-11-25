@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-
+import LoggedInNavBar from './LoggedInNavBar';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 import './HomePage.css';
 
 
@@ -14,8 +18,8 @@ export default class HomePage extends Component {
             users: [],
         };
     }
-    
-    componentDidMount() {
+
+    /* componentDidMount() {
         console.log(this.props.location.state.username)
         const user = {
             username: this.props.location.state.username
@@ -34,51 +38,40 @@ export default class HomePage extends Component {
             })
             this.setState({users: users})
         })
-      }
-    
-
-  render() {
-    return (
-        <div> 
-             <h1 id="homePageTitle"> HomePage</h1>
-            <aside> 
-                <nav>
-                    <ul> 
-                        <li> <a href=""> Profile</a></li>
-                        <li> <a href=""> Message History</a></li>
-                        <li> <a href=""> Messaging</a></li>
-                    </ul>
-                </nav>
-            </aside>
+      } */
 
 
-
-            <div id="mainContent">
-                {this.state.users}
-                <h3>What do you want to do today? </h3>
-                <nav> 
-                    <ul id="optionList">
-                        <li className="userModeOption"> <a  href="">Network </a> </li>
-                        <li className="userModeOption"><a  href="">Job Search</a></li>
-
-                    </ul>
-                </nav>
-
-                <div id="recommended">
-                    <h2> <u>Recommended </u></h2> 
-
+    render() {
+        return (
+            <div>
+                <div>
+                    <LoggedInNavBar />
                 </div>
-                <div id="all"> 
-                <h2> <u>All </u></h2> 
 
 
+
+                <div id="mainContent">
+                    <Grid container spacing={1}>
+                        <Grid container item xs={12} spacing={3}>
+                            <Grid item xs={4}>
+                                <Paper>item</Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper>item</Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper>item</Paper>
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12} spacing={3}>
+
+                        </Grid>
+                    </Grid>
                 </div>
+
 
             </div>
 
-            
-        </div>
-   
-    );
-  }
+        );
+    }
 }
