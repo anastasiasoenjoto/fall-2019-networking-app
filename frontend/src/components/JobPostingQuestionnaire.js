@@ -1,5 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
 
 export default class JobPostingQuestionnaire extends Component {
   constructor(props) {
@@ -117,8 +131,8 @@ export default class JobPostingQuestionnaire extends Component {
           </label>
           <br></br>
           <label>
-            Number Of Total Open Positions: 
-            <input id = "numOfOpenPositions" type = "text" value = {this.state.numOfOpenPositions} onChange = {this.onUpdatenumOfOpenPositions} placeholder="Enter total number positions offered"/>
+            Number Of Employees Recruiting: 
+            <input id = "numOfOpenPositions" type = "text" value = {this.state.numOfOpenPositions} onChange = {this.onUpdatenumOfOpenPositions} placeholder="Enter number of employees needed"/>
           </label>
           <br></br>
           <label>

@@ -8,6 +8,7 @@ import SignUpPage from './SignUpPage';
 import HomePageCompany from './components/HomePageCompany';
 import HomePage from './components/HomePage';
 import displayUsers from './components/displayUsers';
+import JobPostingQuestionnaire from './components/JobPostingQuestionnaire';
 
 
 const routing = (
@@ -19,6 +20,7 @@ const routing = (
         <Route path="/HomePageCompany" component={HomePageCompany}/>
         <Route exact path="/HomePage" component={HomePage}/>
         <Route path="/displayUsers" component={displayUsers}/>
+        <Route path="/jobPost" component={JobPostingQuestionnaire}/>
       </Switch>
       </div>
     </Router>
