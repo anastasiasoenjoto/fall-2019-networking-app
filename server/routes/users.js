@@ -86,7 +86,7 @@ router.post('/queryUsers', (req, res) => {
   var city = req.body.city;
   console.log('message received')
 
-  User.find({username: username, major: major, GPA: GPA, city: city}, function(err, user){
+  User.find({username: username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
       if(err) {
           console.log(err);
       }

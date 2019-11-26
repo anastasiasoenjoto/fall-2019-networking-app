@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 
 import './HomePage.css';
 
@@ -60,13 +60,12 @@ export default class HomePage extends Component {
                     <ul id="optionList">
                         <li className="userModeOption"> <a  href="">Network </a> </li>
                         <li className="userModeOption"><a  href="">Job Search</a></li>
-
                     </ul>
                 </nav>
 
                 <div id="recommended">
                     <h2> <u>Recommended </u></h2> 
-
+                    <Link to="/displayUsers" className="nav-link">Display Users</Link>
                 </div>
                 <div id="all"> 
                 <h2> <u>All </u></h2> 
