@@ -4,12 +4,14 @@ import axios from 'axios';
 export default class displayUsers extends Component {
   constructor(props) {
     super(props);
+    this.onChangeUsername = this.state.username;
     this.onChangeMajor = this.onChangeMajor.bind(this);
     this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      username: '',
       major: '', 
       GPA: '', 
       city: '',
@@ -40,6 +42,11 @@ export default class displayUsers extends Component {
   //       })
   // }
 
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    })
+  }
   onChangeMajor(e) {
     this.setState({
       major: e.target.value
@@ -62,6 +69,7 @@ export default class displayUsers extends Component {
     e.preventDefault();
 
     const displayUsers = {
+      username: this.state.username,
       city: this.state.city, 
       major: this.state.major,
       GPA: this.state.GPA,
@@ -85,6 +93,7 @@ export default class displayUsers extends Component {
         })
 
     this.state = {
+      username: displayUsers.username,
       major: displayUsers.major, 
       GPA: displayUsers.GPA, 
       city: displayUsers.city,
@@ -109,6 +118,10 @@ export default class displayUsers extends Component {
            {this.state.users}
           <form onSubmit={this.onSubmit}>
         <h1>  style={{color: "white"}} Filter Users </h1>
+        <label>
+            Username: 
+            <input id="Username" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Enter Username"/>
+          </label>
         <fieldset>
           <label style={{color: "white"}}>
             City: 

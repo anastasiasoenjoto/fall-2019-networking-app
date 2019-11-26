@@ -80,12 +80,13 @@ router.post('/getCurrentUser', (req, res) => {
 
 
 router.post('/queryUsers', (req, res) => {
+  var username = req.body.username;
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
   console.log('message received')
 
-  User.find({major: major, GPA: GPA, city: city}, function(err, user){
+  User.find({username: username, major: major, GPA: GPA, city: city}, function(err, user){
       if(err) {
           console.log(err);
       }

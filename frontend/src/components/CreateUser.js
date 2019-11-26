@@ -123,7 +123,7 @@ export default class CreateUser extends Component {
   render() {
     if (this.state.redirectToHome == true) {
       return <Redirect to= {{
-        pathname: "/home", 
+        pathname: "/HomePage", 
         state: {username: this.state.username}
       }}
       />
