@@ -17,9 +17,10 @@ router.route('/add').post((req, res) => {
   const city = req.body.city;
   const major = req.body.major;
   const GPA = req.body.GPA;
+  const friends = [];
 
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA});
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -50,6 +51,27 @@ router.route('/add').post((req, res) => {
 
 });
 
+router.post('/validateFriend', (req, res) => {
+  var friendName = req.body.searchUsername;
+
+  User.findOne(searchUsername), function(err, user){
+    if(err){
+      console.log(err);
+    }
+    var message;
+    if(user){
+      message = 'Request has been submitted';
+      console.log(message)
+    }
+    else{
+      message = 'Sorry, no such user exists';
+      console.log(message)
+    }
+    res.json({'message': message, 'friendName': friendName});
+  }
+});
+
+
 router.post('/getCurrentUser', (req, res) => {
   var username = req.body.username;
 
@@ -70,11 +92,7 @@ router.post('/getCurrentUser', (req, res) => {
         message = 'not found!';
         res.json({"user": []});
       }
-
-
-
   })
-
 });
 
 
