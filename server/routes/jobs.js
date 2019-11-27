@@ -39,5 +39,30 @@ router.route('/add').post((req, res) => {
 });
 
 
+router.post('/queryJobs', (req, res) => {
+  var nameOfOpenPosition = req.body.nameOfOpenPosition;
+  var GPA = req.body.GPA;
+  var city = req.body.city;
+  console.log('message received')
+
+  User.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+      } else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "jobs" : jobs});
+  })
+
+});
+
 
 module.exports = router;

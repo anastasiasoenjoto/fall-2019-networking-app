@@ -64,11 +64,12 @@ export default class HomePage extends Component {
                 </nav>
 
                 <div id="recommended">
-                    <h2> <u>Recommended </u></h2> 
-                    <Link to="/displayUsers" className="nav-link">Display Users</Link>
+                    <h2> <u>Recommended Users</u></h2>
+                    <Link to="/displayUsers" className="nav-link">Display All Users</Link>
                 </div>
                 <div id="all"> 
-                <h2> <u>All </u></h2> 
+                <h2> <u>Recommended Jobs </u></h2> 
+                <Link to="/displayJobs" className="nav-link">Display All Jobs</Link>
 
 
                 </div>
