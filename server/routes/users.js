@@ -68,9 +68,13 @@ router.post('/getCurrentUser', (req, res) => {
         message = 'not found!';
       }
 
+
+
+
+
+      
       res.json({"message": message, "user": Array(user)})
   })
-  
 
 });
 
@@ -93,11 +97,6 @@ router.post('/queryUsers', (req, res) => {
           message = 'invalid';
           console.log(message)
       }
-
-      
-      
-      
-      
       res.json({"message": message, "users" : user});
   })
 
