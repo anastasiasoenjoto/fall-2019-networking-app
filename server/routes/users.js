@@ -68,13 +68,37 @@ router.post('/getCurrentUser', (req, res) => {
         message = 'not found!';
       }
 
-     
-  
       res.json({"message": message, "user": Array(user)})
   })
   
 
 });
+
+router.post('/queryUsers', (req, res) => {
+  var major = req.body.major;
+  var GPA = req.body.GPA;
+  var city = req.body.city;
+  console.log('message received')
+
+  User.find({major: major, GPA: GPA, city: city}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+      } else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "users" : user});
+  })
+
+});
+
 
 router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
@@ -103,30 +127,6 @@ router.post('/getRecommendedUser', (req, res) => {
 
 
 
-router.post('/queryUsers', (req, res) => {
-  var major = req.body.major;
-  var GPA = req.body.GPA;
-  var city = req.body.city;
-  console.log('message received')
-
-  User.find({major: major, GPA: GPA, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
-      } else {
-          message = 'invalid';
-          console.log(message)
-      }
-
-      res.json({"message": message, "users" : user});
-  })
-
-});
 
 
 module.exports = router;
