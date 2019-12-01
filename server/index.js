@@ -27,7 +27,7 @@ const notificationRouter = require('./routes/notifications');
 app.use('/users', usersRouter);
 app.use('/company', companyRouter);
 app.use('/jobs', jobsRouter);
-app.use('/notifications', notificationRouter)
+//app.use('/notifications', notificationRouter)
 
 
 app.listen(port, () => {
