@@ -55,6 +55,13 @@ const jobSchema = new Schema({
     trim: true,
 
   },
+
+  applicants: {
+    type: Array,
+    // required: true,
+    // trim: true,
+
+  },
 }, {
   timestamps: true,
 });

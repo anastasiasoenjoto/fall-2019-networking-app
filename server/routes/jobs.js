@@ -16,10 +16,11 @@ router.route('/add').post((req, res) => {
   const workLocation = req.body.workLocation;
   const estimatedSalaryPerHour = req.body.estimatedSalaryPerHour;
   const applicationDeadline = req.body.applicationDeadline;
+  const applicants = []
 
   const newJob = new Job({nameOfOpenPosition, numOfOpenPositions, jobDescription, 
     gpaRequirement, workExperienceRequirement, workLocation, estimatedSalaryPerHour,
-    applicationDeadline });
+    applicationDeadline, applicants});
 
   newJob.save()
     .then(() => res.json(
@@ -39,19 +40,19 @@ router.route('/add').post((req, res) => {
 });
 
 
-router.post('/queryJobs', (req, res) => {
+router.post('/queryJobs', async (req, res) => {
   var nameOfOpenPosition = req.body.nameOfOpenPosition;
   var GPA = req.body.GPA;
   var city = req.body.city;
   console.log('message received')
 
-  User.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, async function(err, jobs){
       if(err) {
           console.log(err);
       }
       var message; 
-      if(user) {
-          console.log(user)
+      if(jobs) {
+          console.log(jobs)
           message = 'valid';
           console.log(message)
       } else {
@@ -60,6 +61,39 @@ router.post('/queryJobs', (req, res) => {
       }
 
       res.json({"message": message, "jobs" : jobs});
+  })
+
+});
+
+router.post('/addApplicants', (req, res) => {
+  var jobId = req.body.jobId;
+  const userDetails = {
+    name: req.body.nameOfApplicant, 
+    email: req.body.email,
+    major: req.body.major, 
+    GPA: req.body.GPA
+  }
+  // var GPA = req.body.GPA;
+  // var city = req.body.city;
+  // console.log('message received')
+
+  Job.findOne({_id: ObjectId(jobId)}, function(err, jobs){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(job) {
+          console.log(job)
+          message = 'added job';
+          console.log(message)
+      } else {
+          message = 'job not available';
+          console.log(message)
+      }
+      job.applicants.append(userDetails)
+
+      await job.save()
+      // res.json({"message": message});
   })
 
 });

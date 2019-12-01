@@ -16,6 +16,7 @@ export default class JobApplicationForm extends Component {
       this.onSubmit = this.onSubmit.bind(this);
   
       this.state = {
+          jobId: '',
           nameOfApplicant: '',
           email: '',
           major: '', 
@@ -38,7 +39,7 @@ export default class JobApplicationForm extends Component {
 
     onUpdateMajor(e){
         this.setState(
-            {email: e.target.value}
+            {major: e.target.value}
         )
     }
 
@@ -58,11 +59,14 @@ export default class JobApplicationForm extends Component {
         e.preventDefault();
 
         const newJob = {
+            jobId: this.state.jobId,
             nameOfApplicant: this.state.nameOfApplicant,
             email: this.state.email,
             major: this.state.major,
             GPA: this.state.GPA
         }
+
+        
 
         this.setState({
             nameOfApplicant: '',
@@ -86,12 +90,12 @@ export default class JobApplicationForm extends Component {
               <br></br>
               <label>
                 Phone Number: 
-                <input id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.state.PhoneNumber} placeholder="Enter phone number"/>
+                <input id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
               </label>
               <br></br>
               <label>
                 Email: 
-                <input id = "email" type = "text" value = {this.state.email} onChange = {this.state.email} placeholder="Enter your email"/>
+                <input id = "email" type = "text" value = {this.state.email} onChange = {this.onUpdateEmail} placeholder="Enter your email"/>
               </label>
               <br></br>
               <label>
