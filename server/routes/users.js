@@ -52,8 +52,7 @@ router.route('/add').post((req, res) => {
 
 router.post('/getCurrentUser', (req, res) => {
   var username = req.body.username;
-
-
+  
   User.findOne({username: username}, function(err, user){
       if(err) {
           console.log(err);
@@ -63,18 +62,43 @@ router.post('/getCurrentUser', (req, res) => {
           console.log(user)
           message = 'found User!';
           console.log(message)
-          res.json({"user": Array(user)});
       }
 
       else {
         message = 'not found!';
-        res.json({"user": []});
       }
 
-
-
+     
+  
+      res.json({"message": message, "user": Array(user)})
   })
+  
 
+});
+
+router.post('/getRecommendedUser', (req, res) => {
+  var major = req.body.major;
+  var city = req.body.city;
+
+
+  User.find({major: major, city: city}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(user) {
+          console.log(user)
+          message = 'found User!';
+          console.log(message)
+          // res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        // res.json({"user": []});
+      }
+      res.json({"users": Array(user), message: message})
+  })
 });
 
 

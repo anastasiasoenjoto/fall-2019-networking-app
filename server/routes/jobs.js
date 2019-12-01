@@ -38,6 +38,31 @@ router.route('/add').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.post('/getRecommendedJobs', (req, res) => {
+  // var major = req.body.major;
+  var city = req.body.city;
+
+
+  Job.find({city: city}, function(err, job){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(job) {
+          // console.log(user)
+          message = 'found Job!';
+          console.log(message)
+          // res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        // res.json({"user": []});
+      }
+      res.json({"jobs": Array(job), message: message})
+  })
+});
+
 
 
 module.exports = router;
