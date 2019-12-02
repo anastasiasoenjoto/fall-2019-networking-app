@@ -146,6 +146,22 @@ router.post('/getRecommendedUser', (req, res) => {
   })
 });
 
+router.post('/editProfile', async (req, res) => {
+  var username = req.body.username
+  const doc = await User.findOne({username: username});
+  doc.firstName = req.body.firstName;
+  doc.lastName = req.body.lastName;
+  doc.email = req.body.email;
+  doc.password = req.body.password;
+  doc.city = req.body.city;
+  doc.major = req.body.major;
+  doc.GPA = req.body.GPA;
+
+  await doc.save();
+
+})
+module.exports = router;
+
 
 
 
