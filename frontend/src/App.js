@@ -14,6 +14,7 @@ import CompanyList from "./components/displayCompany.js"
 import JobPostingQuestionnaire from "./components/JobPostingQuestionnaire.js"
 import HomePageCompany from "./components/HomePageCompany.js"
 import UserProfile from "./components/UserProfile.js"
+import CompanyProfile from "./components/CompanyProfile.js"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/jobQuestionnaire" component = {JobPostingQuestionnaire}/>
         <Route path="/homeCompany" component={HomePageCompany}/>
         <Route path="/userProfile" component={UserProfile}/>
+        <Route path="/companyProfile" component={CompanyProfile}/>
       </Router>
   );
 }

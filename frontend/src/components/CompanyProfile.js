@@ -3,42 +3,27 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
 
-export default class UserProfile extends Component {
+export default class CompanyProfile extends Component {
   constructor(props) {
     super(props);
-    this.onChangefirstName = this.onChangefirstName.bind(this);
-    this.onChangelastName = this.onChangelastName.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
-    this.onChangeMajor = this.onChangeMajor.bind(this);
-    this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    
-
     this.state = {
-      firstName: this.props.location.state.firstName, 
-      lastName: this.props.location.state.lastName, 
+      companyName: this.props.location.state.companyName, 
       email: this.props.location.state.email,
       password: this.props.location.state.password, 
-      city: this.props.location.state.city, 
-      major: this.props.location.state.major, 
-      GPA: this.props.location.state.GPA
-      
+      city: this.props.location.state.city  
     }
 
   }
 
-  onChangefirstName(e) {
+  onChangeName(e) {
     this.setState({
-      firstName: e.target.value
-    })
-  }
-
-  onChangelastName(e) {
-    this.setState({
-      lastName: e.target.value
+      companyName: e.target.value
     })
   }
 
@@ -58,54 +43,29 @@ export default class UserProfile extends Component {
       city: e.target.value
     })
   }
-
-  onChangeMajor(e) {
-    this.setState({
-      major: e.target.value
-    })
-  }
-
-  onChangeGPA(e) {
-    this.setState({
-      GPA: e.target.value
-    })
-  }
-
   onSubmit(e) {
     e.preventDefault();
    
 
-    const user = {
+    const company = {
       username: this.props.location.state.username,
-      firstName: this.state.firstName, 
-      lastName: this.state.lastName, 
+      companyName: this.state.companyName, 
       email: this.state.email,
       password: this.state.password,
-      city: this.state.city, 
-      major: this.state.major,
-      GPA: this.state.GPA
+      city: this.state.city
     }
-    // console.log(this.state.username)
-    console.log(user)
-    axios.post('http://localhost:3001/users/editProfile', user)
+    console.log(company)
+    axios.post('http://localhost:3001/company/editProfile', company)
       .then(res => console.log(res.data));
 
     this.setState({
-      firstName: '', 
-      lastName: '', 
-      email: '', 
-      password: '',
-      city: '', 
-      major: '', 
-      GPA: ''
-
+        companyName: '', 
+        email: '',
+        password: '', 
+        city: '' 
     })
-
-
   }
   
-
-
   render() {
    
     return (
@@ -113,16 +73,10 @@ export default class UserProfile extends Component {
         <h1> Edit Profile </h1>
         <form id="editProfile" onSubmit={this.onSubmit} >
           <label>
-            First Name: 
-            <input id="firstName" type="text" value={this.state.firstName} onChange= {this.onChangefirstName} placeholder= {this.props.location.state.firstName}/>
+            Company Name: 
+            <input id="firstName" type="text" value={this.state.companyName} onChange= {this.onChangeName} placeholder= {this.props.location.state.companyName}/>
           </label>
           <br></br>
-            <label>
-            Last Name: 
-            <input id="lastName" type="text" value={this.state.lastName} onChange= {this.onChangelastName} placeholder={this.props.location.state.lastName}/>
-          </label>
-          
-          <br></br>
           <label>
             E-mail: 
             <input id="email" type="email" value={this.state.email} onChange= {this.onChangeEmail} placeholder={this.props.location.state.email}/>
@@ -153,25 +107,6 @@ export default class UserProfile extends Component {
             </select>
           </label>
 
-          <br></br>
-          
-           
-            <label>
-            Major: 
-            <select id="major" value={this.state.major} onChange= {this.onChangeMajor}>
-              <option>----Select your major-----</option>
-              
-              <option value="anthropology">Anthropology</option>
-              <option value="businessManagement">Business Management</option>
-              <option value="computerScience">Computer Science</option>
-              <option value="dataScience">Data Science</option>
-            </select>
-          </label>
-          <br></br><br></br>
-          <label>
-            GPA: 
-            <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder={this.props.location.state.GPA}/>
-          </label>
           <br></br>
           <input type="submit"></input>
         </form>

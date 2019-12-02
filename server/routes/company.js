@@ -85,6 +85,17 @@ router.post('/getCurrentCompany', (req, res) => {
 
 });
 
+router.post('/editProfile', async (req, res) => {
+  var username = req.body.username
+  const doc = await Company.findOne({username: username});
+  doc.companyName = req.body.companyName
+  doc.email = req.body.email;
+  doc.password = req.body.password;
+  doc.city = req.body.city;
+
+  await doc.save();
+
+})
 
 
 module.exports = router;
