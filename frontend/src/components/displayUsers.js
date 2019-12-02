@@ -54,6 +54,7 @@ const styles = theme => ({
 class displayUsers extends Component {
   constructor(props) {
     super(props);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeMajor = this.onChangeMajor.bind(this);
     this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
@@ -61,8 +62,9 @@ class displayUsers extends Component {
     this.onChangeCompOp = this.onChangeCompOp.bind(this);
 
     this.state = {
-      major: '',
-      GPA: '',
+      username: '',
+      major: '', 
+      GPA: '', 
       city: '',
       users: [],
       cities: [],
@@ -137,6 +139,11 @@ class displayUsers extends Component {
     '>'
   ]
 
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    })
+  }
   onChangeMajor(e) {
     this.setState({
       majors: e.target.value
@@ -165,7 +172,8 @@ class displayUsers extends Component {
     e.preventDefault();
 
     const displayUsers = {
-      city: this.state.city,
+      username: this.state.username,
+      city: this.state.city, 
       major: this.state.major,
       GPA: this.state.GPA,
     }
@@ -188,8 +196,9 @@ class displayUsers extends Component {
       })
 
     this.state = {
-      major: displayUsers.major,
-      GPA: displayUsers.GPA,
+      username: displayUsers.username,
+      major: displayUsers.major, 
+      GPA: displayUsers.GPA, 
       city: displayUsers.city,
       users: []
     }
