@@ -46,7 +46,9 @@ export default class HomePage extends Component {
                     <ul> 
                         <li> <a href=""> Profile</a></li>
                         <li> <a href=""> Message History</a></li>
-                        <li> <a href=""> Messaging</a></li>
+                        <li>
+                        <Link to="/chatRoom" className="nav-link">Messaging</Link>
+                        </li>
                     </ul>
                 </nav>
             </aside>

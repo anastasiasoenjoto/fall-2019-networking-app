@@ -11,6 +11,8 @@ import displayUsers from './components/displayUsers';
 import displayJobs from './components/displayJobs';
 import JobPostingQuestionnaire from './components/JobPostingQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
+import chatRoom from './components/chatRoom';
+
 
 
 const routing = (
@@ -23,6 +25,7 @@ const routing = (
         <Route exact path="/HomePage" component={HomePage}/>
         <Route path="/displayUsers" component={displayUsers}/>
         <Route path="/displayJobs" component={displayJobs}/>
+        <Route path="/chatRoom" component={chatRoom}/>
         <Route path="/jobPost" component={JobPostingQuestionnaire}/>
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
       </Switch>
