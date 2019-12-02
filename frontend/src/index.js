@@ -11,6 +11,8 @@ import displayUsers from './components/displayUsers';
 import displayJobs from './components/displayJobs';
 import JobPostingQuestionnaire from './components/JobPostingQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
+import UserProfile from "./components/UserProfile.js"
+import CompanyProfile from "./components/CompanyProfile.js"
 
 
 const routing = (
@@ -25,6 +27,8 @@ const routing = (
         <Route path="/displayJobs" component={displayJobs}/>
         <Route path="/jobPost" component={JobPostingQuestionnaire}/>
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
+        <Route path="/userProfile" component={UserProfile}/>
+        <Route path="/companyProfile" component={CompanyProfile}/>
       </Switch>
       </div>
     </Router>
