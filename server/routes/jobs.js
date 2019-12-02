@@ -65,37 +65,20 @@ router.post('/queryJobs', async (req, res) => {
 
 });
 
-router.post('/addApplicants', (req, res) => {
+router.post('/addApplicants', async (req, res) => {
   var jobId = req.body.jobId;
-  const userDetails = {
+  const applicantDetails = {
     name: req.body.nameOfApplicant, 
     email: req.body.email,
     major: req.body.major, 
     GPA: req.body.GPA
   }
-  // var GPA = req.body.GPA;
-  // var city = req.body.city;
-  // console.log('message received')
+  const doc = await Job.findOne({_id: ObjectId(jobId)});
+  doc.applicants.append(applicantDetails)
 
-  Job.findOne({_id: ObjectId(jobId)}, function(err, jobs){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(job) {
-          console.log(job)
-          message = 'added job';
-          console.log(message)
-      } else {
-          message = 'job not available';
-          console.log(message)
-      }
-      job.applicants.append(userDetails)
-
-      await job.save()
-      // res.json({"message": message});
-  })
-
+  await doc.save();
+  res.json({"message": "applicant added"})
+  
 });
 
 

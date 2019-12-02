@@ -66,6 +66,11 @@ export default class JobApplicationForm extends Component {
             GPA: this.state.GPA
         }
 
+        axios.post('http://localhost:3001/jobs/addApplicants', newJob)
+        .then(res => {
+            return res.data.message
+        })
+
         
 
         this.setState({
