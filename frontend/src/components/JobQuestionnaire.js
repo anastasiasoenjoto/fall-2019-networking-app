@@ -110,17 +110,17 @@ export default class JobQuestionnaire extends Component {
                     <fieldset>
                         <legend className = "formHeader"> </legend>
                         <label>
-                             Company Username:
+                             Company Username: 
                              <input id = "companyUsername" type = "text" value = {this.state.companyUsername} onChange = {this.onChangeCompanyUsername} placeholder = "Enter Your Username" />
                         </label>
                         <br></br>
                         <label>
-                            Job Title:
+                            Job Title: 
                             <input id = "jobTitle" type = "text" value = {this.state.jobTitle} onChange = {this.onChangeJobTitle} placeholder = "Enter job title" />
                         </label>
                         <br></br>
                         <label>
-                            Number of Employees Recruiting:
+                            Number of Employees Recruiting: 
                             <input id = "numOfPositions" type = "text" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
                         </label>
                         <br></br>

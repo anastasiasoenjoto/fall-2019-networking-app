@@ -139,7 +139,7 @@ export default class CreateUser extends Component {
             <input id="firstName" type="text" value={this.state.firstName} onChange= {this.onChangefirstName} placeholder="Enter first name"/>
           </label>
           <br></br>
-            <label>
+          <label>
             Last Name: 
             <input id="lastName" type="text" value={this.state.lastName} onChange= {this.onChangelastName} placeholder="Enter last name"/>
           </label>

@@ -6,56 +6,56 @@ const jobSchema = new Schema({
     companyUsername:{
         type: String,
         required: true,
-        unique: true,
+        //unique: true,
         trim: true,
         minlength: 1 
     },
     jobTitle:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     numOfPositions:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     jobDescription:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     jobLocation:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     jobSalary:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     gpaReq:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     },
     applicationDeadline:{
         type: String,
         required: true,
-        unique: false,
+        //unique: false,
         trim: true,
         minlength: 1 
     }
@@ -63,6 +63,6 @@ const jobSchema = new Schema({
     timestamps: true,
 })
 
-const Job = mongoose.model('Job', jobSchema);
+const Job = mongoose.model('Jobs', jobSchema);
 
 module.exports = Job;
