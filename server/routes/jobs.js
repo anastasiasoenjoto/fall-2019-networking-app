@@ -28,4 +28,57 @@ router.route('/add').post((req, res) => {
   
     });
 
-    module.exports = router;
+router.post('/getRecommendedJobs', (req, res) => {
+  // var major = req.body.major;
+  var city = req.body.city;
+
+
+  Job.find({city: city}, function(err, job){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(job) {
+          // console.log(user)
+          message = 'found Job!';
+          console.log(message)
+          // res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        // res.json({"user": []});
+      }
+      res.json({"jobs": Array(job), message: message})
+  })
+});
+
+
+router.post('/queryJobs', (req, res) => {
+  var nameOfOpenPosition = req.body.nameOfOpenPosition;
+  var GPA = req.body.GPA;
+  var city = req.body.city;
+  console.log('message received')
+
+  User.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+      } else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "jobs" : jobs});
+  })
+
+});
+
+
+module.exports = router;
+

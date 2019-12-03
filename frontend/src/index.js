@@ -8,7 +8,11 @@ import SignUpPage from './SignUpPage';
 import HomePageCompany from './components/HomePageCompany';
 import HomePage from './components/HomePage';
 import displayUsers from './components/displayUsers';
+import displayJobs from './components/displayJobs';
 import JobQuestionnaire from './components/JobQuestionnaire';
+import JobApplicationForm from './components/JobApplicationForm';
+import UserProfile from "./components/UserProfile.js"
+import CompanyProfile from "./components/CompanyProfile.js"
 
 
 const routing = (
@@ -20,7 +24,12 @@ const routing = (
         <Route path="/HomePageCompany" component={HomePageCompany}/>
         <Route exact path="/HomePage" component={HomePage}/>
         <Route path="/displayUsers" component={displayUsers}/>
-        <Route path="/jobPost" component={JobQuestionnaire}/>
+        <Route path="/displayJobs" component={displayJobs}/>
+        <Route path="/chatRoom" component={chatRoom}/>
+         <Route path="/jobPost" component={JobQuestionnaire}/>
+        <Route path = '/jobApplication' component = {JobApplicationForm}/>
+        <Route path="/userProfile" component={UserProfile}/>
+        <Route path="/companyProfile" component={CompanyProfile}/>
       </Switch>
       </div>
     </Router>
