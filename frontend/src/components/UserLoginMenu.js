@@ -74,8 +74,7 @@ const StyledMenu = withStyles({
           setHomeUser(true);
         }
         else {
-          alert('invalid login')
-          console.log('invalid user')
+          alert('invalid username or password')
         }
       })
   
@@ -108,8 +107,7 @@ const StyledMenu = withStyles({
               setHomeCompany(true);
             }
             else {
-              alert('invalid login')
-              console.log('invalid user')
+              alert('invalid username or password')
             }
           })
 
