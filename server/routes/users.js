@@ -102,23 +102,128 @@ router.post('/queryUsers', (req, res) => {
   var city = req.body.city;
   console.log('message received')
 
-  User.find({username: username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+  if (username == ''){
+    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
+        }
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
+        }
+
+        res.json({"message": message, "users" : user});
+    })
+  }
+  else if (major = ''){
+    User.find({username : username, GPA: {$gt :GPA}, city: city}, function(err, user){
       if(err) {
           console.log(err);
       }
       var message; 
       if(user) {
+        if (user = []){
+          console.log(user)
+          message = 'No Users Found';
+          console.log(message)
+        }
+        else {
           console.log(user)
           message = 'valid';
           console.log(message)
+        }
       } else {
           message = 'invalid';
           console.log(message)
       }
+
       res.json({"message": message, "users" : user});
   })
+}
+  else if (GPA = ''){
+    User.find({username : username, major : major, city: city}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+        if (user = []){
+          console.log(user)
+          message = 'No Users Found';
+          console.log(message)
+        }
+        else {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+        }
+      } else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "users" : user});
+    })
+  }
+  else if (city = ''){
+    User.find({username : username, major : major,GPA: {$gt :GPA} }, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+        if (user = []){
+          console.log(user)
+          message = 'No Users Found';
+          console.log(message)
+        }
+        else {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+        }
+      } else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "users" : user});
+    })
+  }
+  else {
+    User.find({username : username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message; 
+      if(user) {
+        if (user = []){
+          console.log(user)
+          message = 'No Users Found';
+          console.log(message)
+        }
+        else {
+          console.log(user)
+          message = 'valid';
+          console.log(message)
+        }
+      }
+      else {
+          message = 'invalid';
+          console.log(message)
+      }
+
+      res.json({"message": message, "users" : user});
+  })
+}
 
 });
+
 
 
 router.post('/getRecommendedUser', (req, res) => {
