@@ -109,9 +109,16 @@ router.post('/queryUsers', (req, res) => {
         }
         var message; 
         if(user) {
+          if (user = []){
+            console.log(user)
+            message = 'No Users Found';
+            console.log(message)
+          }
+          else {
             console.log(user)
             message = 'valid';
             console.log(message)
+          }
         } else {
             message = 'invalid';
             console.log(message)
