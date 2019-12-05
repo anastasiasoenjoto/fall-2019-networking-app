@@ -72,12 +72,6 @@ export default class LoginUser extends Component {
       }
     })
 
-
-      // this.setState({
-      //   username: '',
-      //   password: ''
-      // })
-  
     }
   
     onSubmitCompany(e) {
@@ -106,10 +100,6 @@ export default class LoginUser extends Component {
           }
         })
 
-        // this.setState({
-        //   username: '',
-        //   password: ''
-        // })
   }
 
   render() {
