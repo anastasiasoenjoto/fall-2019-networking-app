@@ -1,4 +1,3 @@
-  
 const router = require('express').Router();
 let User = require('../models/user.model');
 
@@ -266,4 +265,3 @@ router.post('/editProfile', async (req, res) => {
 
 })
 module.exports = router;
-
