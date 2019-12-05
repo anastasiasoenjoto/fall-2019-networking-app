@@ -17,9 +17,10 @@ router.route('/add').post((req, res) => {
     const gpaReq = req.body.gpaReq;
     const majorReq = req.body.majorReq;
     const applicationDeadline = req.body.applicationDeadline;
+    const applicants = []
   
   
-    const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline});
+    const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline, applicants});
   
     newJob.save()
       .then(() => res.json('Job added!'))

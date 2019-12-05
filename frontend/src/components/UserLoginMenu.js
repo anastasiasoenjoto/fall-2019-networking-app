@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItem from '@material-ui/core/ListItem';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import SignUp from '../SignUpPage';
+import { Link } from 'react-router-dom';
 
 
 const StyledMenu = withStyles({
@@ -72,6 +74,7 @@ const StyledMenu = withStyles({
           setHomeUser(true);
         }
         else {
+          alert('invalid login')
           console.log('invalid user')
         }
       })
@@ -105,6 +108,7 @@ const StyledMenu = withStyles({
               setHomeCompany(true);
             }
             else {
+              alert('invalid login')
               console.log('invalid user')
             }
           })
@@ -180,6 +184,9 @@ const StyledMenu = withStyles({
         <ListItem>
           <Button onClick={onSubmitUser}>Log In as User</Button>
           <Button onClick={onSubmitCompany}>Log In as Company</Button>
+        </ListItem>
+        <ListItem>
+          &nbsp;Dont have an account yet? <Link to="../SignUpPage"> &nbsp;Sign Up</Link>
         </ListItem>
         
 
