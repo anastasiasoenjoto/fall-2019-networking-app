@@ -95,6 +95,12 @@ class displayUsers extends Component {
     })
   }
 
+  onChangeGPA(e) {
+    this.setState({
+      GPA: e.target.value
+    })
+  }
+
   onChangeCity(e) {
     this.setState({
       cities: e.target.value
@@ -137,24 +143,25 @@ class displayUsers extends Component {
     }
 
   }
-
   render() {
-
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
-        <LoggedInNavBar />
-
-        <Grid container spacing={1} justify="center">
-
-          <Grid container item xs={12} spacing={3}>
+      <LoggedInNavBar />
+      <Grid container spacing={1} justify="center"></Grid>
+      <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}><Typography variant='h4'>User Search Options</Typography></Paper>
             </Grid>
           </Grid>
-
-          <Grid container item xs={9} spacing={1}>
+           {this.state.users}
+          <form onSubmit={this.onSubmit}>
+        <Grid container item xs={9} spacing={1}>
+        <Grid item xs={3}>
+          <br></br>
+            <input id="Username" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Search Username"/>
+        </Grid>
+        <Grid container item xs={9} spacing={1}>
             <Grid item xs={3}>
               <FormControl className={classes.formControl}>
                 <InputLabel id="select-city">City</InputLabel>
@@ -200,120 +207,23 @@ class displayUsers extends Component {
               </FormControl>
             </Grid>
             <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-major" float='left'>Operator</InputLabel>
-                <Select
-                  labelId="select-op-label"
-                  id="op-box"
-                  value={this.state.comparisonOp}
-                  onChange={this.onChangeCompOp}
-                  input={<Input />}
-                // MenuProps={MenuProps}
-                >
-                  {this.comparisonOperators.map(op => (
-                    <MenuItem key={op} value={op}>
-                      <ListItemText primary={op} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
               </FormControl>
+            </Grid>  
+            <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-gpa" float='left'>GPA</InputLabel>
-                <Select
-                  labelId="select-gpa-label"
-                  id="gpa-box"
-                  value={this.state.GPA}
-                  onChange={this.onChangeGPA}
-                  input={<Input />}
-                // MenuProps={MenuProps}
-                >
-                  {this.GPAOptions.map(gpa => (
-                    <MenuItem key={gpa} value={gpa}>
-                      <ListItemText primary={gpa} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input type="submit"></input>
               </FormControl>
-            </Grid>
-
-          </Grid>
-
-          <Grid container item xs={12}>
-            <Grid item xs={12}>
-              <List className={classes.root}>
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Bruce Wayne"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Computer Science
-              </Typography>
-                        {" - Average millionaire from Gotham"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Tony Stark"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Mechanical Engineering
-              </Typography>
-                        {" - Iron Man from New York"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Clark Kent"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Journalism
-              </Typography>
-                        {' - Journalist from Los Angeles'}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-          </Grid>
+            </Grid>     
+        </Grid>
         </Grid>
 
-      </div>
+        </form>
 
-
+      </div> 
     )
   }
 }

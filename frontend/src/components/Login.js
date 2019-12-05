@@ -115,7 +115,7 @@ export default class LoginUser extends Component {
 
     else if (this.state.redirectToHomeUser == true) {
       return <Redirect to= {{
-        pathname: "/home", 
+        pathname: "/homepage", 
         state: {username: this.state.username}
       }}
 

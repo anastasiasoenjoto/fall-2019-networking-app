@@ -15,6 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     search: {
@@ -121,8 +122,8 @@ export default function LoggedInNavBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <Button>Search Jobs</Button>
-                        <Button>Search Users</Button>
+                        <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
+                        <Button> <Link to="/displayJobs" className="nav-link">Search Jobs </Link></Button>
                         <IconButton aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <MailIcon />
