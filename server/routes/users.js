@@ -17,9 +17,10 @@ router.route('/add').post((req, res) => {
   const city = req.body.city;
   const major = req.body.major;
   const GPA = req.body.GPA;
+  const friends = [];
 
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA});
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -50,10 +51,30 @@ router.route('/add').post((req, res) => {
 
 });
 
+router.post('/validateFriend', (req, res) => {
+  var friendName = req.body.searchUsername;
+
+  User.findOne(searchUsername), function(err, user){
+    if(err){
+      console.log(err);
+    }
+    var message;
+    if(user){
+      message = 'Request has been submitted';
+      console.log(message)
+    }
+    else{
+      message = 'Sorry, no such user exists';
+      console.log(message)
+    }
+    res.json({'message': message, 'friendName': friendName});
+  }
+});
+
+
 router.post('/getCurrentUser', (req, res) => {
   var username = req.body.username;
-
-
+  
   User.findOne({username: username}, function(err, user){
       if(err) {
           console.log(err);
@@ -63,21 +84,16 @@ router.post('/getCurrentUser', (req, res) => {
           console.log(user)
           message = 'found User!';
           console.log(message)
-          res.json({"user": Array(user)});
       }
 
       else {
         message = 'not found!';
-        res.json({"user": []});
       }
 
-
-
+      res.json({"message": message, "user": Array(user)})
   })
 
 });
-
-
 
 router.post('/queryUsers', (req, res) => {
   var username = req.body.username;
@@ -207,6 +223,52 @@ router.post('/queryUsers', (req, res) => {
 }
 
 });
+
+
+
+router.post('/getRecommendedUser', (req, res) => {
+  var major = req.body.major;
+  var city = req.body.city;
+
+
+  User.find({major: major, city: city}, function(err, user){
+      if(err) {
+          console.log(err);
+      }
+      var message;
+      if(user) {
+          console.log(user)
+          message = 'found User!';
+          console.log(message)
+          // res.json({"user": Array(user)});
+      }
+
+      else {
+        message = 'not found!';
+        // res.json({"user": []});
+      }
+      res.json({"users": Array(user), message: message})
+  })
+});
+
+router.post('/editProfile', async (req, res) => {
+  var username = req.body.username
+  const doc = await User.findOne({username: username});
+  doc.firstName = req.body.firstName;
+  doc.lastName = req.body.lastName;
+  doc.email = req.body.email;
+  doc.password = req.body.password;
+  doc.city = req.body.city;
+  doc.major = req.body.major;
+  doc.GPA = req.body.GPA;
+
+  await doc.save();
+
+})
+module.exports = router;
+
+
+
 
 
 module.exports = router;
