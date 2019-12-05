@@ -94,7 +94,7 @@ class SignUpBox extends React.Component {
 
         if (this.state.redirectToHome == true) {
             return <Redirect to={{
-                pathname: "/home",
+                pathname: "/homepage",
                 state: { username: this.state.username }
             }}
             />

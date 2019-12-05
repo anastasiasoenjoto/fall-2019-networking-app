@@ -76,6 +76,7 @@ export default class displayUsers extends Component {
     }
     axios.post('http://localhost:3001/users/queryUsers', displayUsers)
     .then(res => {
+      console.log(res.data.message)
       console.log(res.data.users);
       return res.data.users
     })
