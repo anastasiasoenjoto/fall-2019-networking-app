@@ -13,7 +13,7 @@ import JobQuestionnaire from './components/JobQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
-
+import chatRoom from "./components/chatRoom.js"
 
 const routing = (
     <Router>
