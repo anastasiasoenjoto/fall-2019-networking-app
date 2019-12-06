@@ -22,7 +22,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
     card: {
-        minWidth: 275,
         minHeight: 200,
         maxHeight: 200,
         outline: '1px solid gray',
@@ -121,7 +120,7 @@ class HomePage extends Component {
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar />
+                <LoggedInNavBar username={this.props.username} />
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>
