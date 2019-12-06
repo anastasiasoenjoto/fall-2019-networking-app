@@ -62,12 +62,12 @@ class HomePage extends Component {
         super(props);
         this.state = {
             users: [],
-            recUsers: [],
-            recJobs:[]
+            recUsers: [[]],
+            recJobs:[[]]
         };
     }
 
-    /* componentDidMount() {
+    componentDidMount() {
         console.log(this.props.location.state)
         
         const user = {
@@ -109,14 +109,12 @@ class HomePage extends Component {
             this.setState({users: users})
         })
 
-      } */
+      } 
 
 
     render() {
-
+        console.log(this.state.recJobs)
         const { classes } = this.props;
-
-
         return (
 
             <div className={classes.enclosing}>
@@ -151,71 +149,33 @@ class HomePage extends Component {
                             <Card className={classes.listCard}>
                                 <CardContent>
                                     <List className={classes.enclosing}>
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Bruce Wayne"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Computer Science
-                                                        </Typography>
-                                                        {" - Average millionaire from Gotham"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Tony Stark"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Mechanical Engineering
-                                                        </Typography>
-                                                      {" - Iron Man from New York"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Clark Kent"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Journalism
-                                                        </Typography>
-                                                        {' - Journalist from Los Angeles'}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
+                                             {this.state.recUsers[0].map((u) => (
+                                                <ListItem button alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar src={anon} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary= {u.firstName}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {u.major}
+                                                            </Typography>
+                                                            <br></br>
+                                                          {u.city}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                                <input type="button" id={u.username} value="Add"></input>
+                                            </ListItem>
+    
+                                            ))
+                                        }
                                     </List>
                                 </CardContent>
                             </Card>
@@ -248,43 +208,32 @@ class HomePage extends Component {
                             <Card className={classes.listCard}>
                                 <CardContent>
                                     <List className={classes.enclosing}>
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemText
-                                                primary="Software Programmer"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Microsoft
-                                                        </Typography>
-                                                        {" - New York, New York"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemText
-                                                primary="Frontend Developer"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Startup
-                                                        </Typography>
-                                                      {" - Los Angeles, California"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
+                                    {this.state.recJobs[0].map((u) => (
+                                                <ListItem button alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar src={anon} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary= {u.firstName}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {u.major}
+                                                            </Typography>
+                                                            <br></br>
+                                                          {u.city}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                            </ListItem>
+    
+                                            ))
+                                        }
                                     </List>
                                 </CardContent>
                             </Card>

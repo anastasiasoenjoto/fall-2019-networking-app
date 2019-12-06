@@ -13,7 +13,9 @@ export default class JobQuestionnaire extends Component {
         this.onChangeGpaReq = this.onChangeGpaReq.bind(this);
         this.onChangeMajorReq = this.onChangeMajorReq.bind(this);
         this.onChangeApplicationDeadline = this.onChangeApplicationDeadline.bind(this);
+        this.onChangeSkills = this.onChangeSkills.bind(this);
         this.onSumbit = this.onSumbit.bind(this);
+        this.onSubmitNext = this.onSubmitNext.bind(this);
 
         this.state = {
             companyUsername: '',
@@ -24,7 +26,9 @@ export default class JobQuestionnaire extends Component {
             jobSalary: '',
             gpaReq: '',
             majorReq: '',
-            applicationDeadline: ''
+            skills: '',
+            applicationDeadline: '', 
+            redirectToHome: false
         }
     }
 
@@ -82,6 +86,12 @@ export default class JobQuestionnaire extends Component {
         })
     }
 
+    onChangeSkills(e){
+        this.setState({
+            skills: e.target.value
+        })
+    }
+
     onSumbit(e){
         e.preventDefault();
 
@@ -99,6 +109,39 @@ export default class JobQuestionnaire extends Component {
 
         axios.post('http://localhost:3001/jobs/add', job)
             .then(res => console.log(res.data));
+        this.setState({redirectToHome: false});
+    }
+
+    onSubmitNext(e){
+        e.preventDefault();
+
+        const job = {
+            companyUsername: this.state.companyUsername,
+            jobTitle: this.state.jobTitle,
+            numOfPositions: this.state.numOfPositions,
+            jobDescription: this.state.jobDescription,
+            jobLocation: this.state.jobLocation,
+            jobSalary: this.state.jobSalary,
+            gpaReq: this.state.gpaReq,
+            majorReq: this.state.majorReq,
+            applicationDeadline: this.state.applicationDeadline
+        }
+
+        axios.post('http://localhost:3001/jobs/add', job)
+            .then(res => console.log(res.data));
+
+        this.setState({
+            companyUsername: '',
+            jobTitle: '',
+            numOfPositions: '',
+            jobDescription: '',
+            jobLocation: '',
+            jobSalary: '',
+            gpaReq: '',
+            majorReq: '',
+            applicationDeadline: '', 
+            redirectToHome: false
+        })
     }
 
     render(){
@@ -126,7 +169,8 @@ export default class JobQuestionnaire extends Component {
                         <br></br>
                         <label>
                             Job Description:
-                            <input id = "jobDescription" type = "text" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description" />
+                            <textarea id = "jobDescription" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description"></textarea>
+                            {/* <input id = "jobDescription" type = "text" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description" /> */}
                         </label>
                         <br></br>
                         <label>
@@ -150,12 +194,22 @@ export default class JobQuestionnaire extends Component {
                         </label>
                         <br></br>
                         <label>
-                            application Deadline:
-                            <input id = "applicationDeadline" type = "text" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
+                            Application Deadline:
+                            <input id = "applicationDeadline" type = "date" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
                         </label>
                         <br></br>
+                        <label>
+                            Skills Needed(seperated by comma):<br></br>
+                            <i>ex. Java, C, Python</i><br></br>
+                            <input id = "skills" type = "text" value = {this.state.skills} onChange = {this.onChangeSkills} placeholder = "Enter your skills" />
+                        </label>
+                       
+                        <br></br>
+                        
                     </fieldset>
-                    <input type="submit"></input>
+                    {/* <input type='submit'></input> */}
+                    <input type="button" value="Save and Exit" onClick={this.onSubmit}></input>
+                    <input type="button" value="Save and Add Another" onClick={this.onSubmitNext}></input>
                 </form>
             </div>
         )
