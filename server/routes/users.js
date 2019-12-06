@@ -18,9 +18,10 @@ router.route('/add').post((req, res) => {
   const major = req.body.major;
   const GPA = req.body.GPA;
   const friends = [];
+  const pending = [];
 
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends});
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -50,6 +51,7 @@ router.route('/add').post((req, res) => {
     })
 
 });
+
 
 router.post('/validateFriend', (req, res) => {
   var friendName = req.body.searchUsername;
@@ -100,7 +102,7 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
-  console.log('message received')
+  
 
   User.find({username: username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
       if(err) {
@@ -159,11 +161,25 @@ router.post('/editProfile', async (req, res) => {
 
   await doc.save();
 
-})
-module.exports = router;
+});
 
+router.post('/requestFriend', async(req, res) => {
+  var requestedName = req.body.friendName;
+  var requestingName = "hc@gmail.com";
+  console.log(requestedName);
 
+  const requested = await User.findOne({username: requestedName});
+  console.log("Requested:", requested.username)
+  requested.pending.push(requestingName);
+  await requested.save();
+  res.json({"message": "Received a friend request from: " + requestingName});
 
+  const requesting = await User.findOne({username: requestingName});
+  requesting.pending.push(requestedName);
+  await requesting.save()
+  res.json({"message": "A friend request to: " + requestingName + " is submitted"});
+});
 
+ 
 
 module.exports = router;

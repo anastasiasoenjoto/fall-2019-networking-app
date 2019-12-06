@@ -67,7 +67,7 @@ class HomePage extends Component {
         };
     }
 
-    /* componentDidMount() {
+    componentDidMount() {
         console.log(this.props.location.state)
         
         const user = {
@@ -109,7 +109,7 @@ class HomePage extends Component {
             this.setState({users: users})
         })
 
-      } */
+      } 
 
 
     render() {
