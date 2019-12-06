@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+
 
 export default class JobQuestionnaire extends Component {
     constructor(props) {
@@ -24,7 +26,8 @@ export default class JobQuestionnaire extends Component {
             jobSalary: '',
             gpaReq: '',
             majorReq: '',
-            applicationDeadline: ''
+            applicationDeadline: '', 
+            redirectToHome: false
         }
     }
 
@@ -99,9 +102,40 @@ export default class JobQuestionnaire extends Component {
 
         axios.post('http://localhost:3001/jobs/add', job)
             .then(res => console.log(res.data));
+        // this.setState({
+        //     redirectToQuestions: true
+        // })
     }
 
+    // onSumbitNext(e){
+    //     e.preventDefault();
+
+    //     const job = {
+    //         companyUsername: this.state.companyUsername,
+    //         jobTitle: this.state.jobTitle,
+    //         numOfPositions: this.state.numOfPositions,
+    //         jobDescription: this.state.jobDescription,
+    //         jobLocation: this.state.jobLocation,
+    //         jobSalary: this.state.jobSalary,
+    //         gpaReq: this.state.gpaReq,
+    //         majorReq: this.state.majorReq,
+    //         applicationDeadline: this.state.applicationDeadline
+    //     }
+
+    //     axios.post('http://localhost:3001/jobs/add', job)
+    //         .then(res => console.log(res.data));
+    // }
+
     render(){
+
+        if (this.state.redirectToHome == true) {
+            return <Redirect to={{
+                pathname: "/HomePageCompany",
+                state: { username: this.state.username }
+            }}
+            />
+        }
+
         return(
             <div>
                 <h1> Welcome! </h1>
@@ -121,7 +155,7 @@ export default class JobQuestionnaire extends Component {
                         <br></br>
                         <label>
                             Number of Employees Recruiting: 
-                            <input id = "numOfPositions" type = "text" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
+                            <input id = "numOfPositions" type = "number" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
                         </label>
                         <br></br>
                         <label>
@@ -151,11 +185,13 @@ export default class JobQuestionnaire extends Component {
                         <br></br>
                         <label>
                             application Deadline:
-                            <input id = "applicationDeadline" type = "text" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
+                            <input id = "applicationDeadline" type = "date" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
                         </label>
                         <br></br>
                     </fieldset>
-                    <input type="submit"></input>
+                    <input type='submit'></input>
+                    {/* <input type="button" value="Save and Exit" onClick={this.onSubmit}></input> */}
+                    {/* <input type="button" value="Save and Add Another"></input> */}
                 </form>
             </div>
         )

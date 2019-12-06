@@ -18,13 +18,13 @@ export default class UserProfile extends Component {
 
 
     this.state = {
-      firstName: this.props.location.state.firstName, 
-      lastName: this.props.location.state.lastName, 
-      email: this.props.location.state.email,
-      password: this.props.location.state.password, 
-      city: this.props.location.state.city, 
-      major: this.props.location.state.major, 
-      GPA: this.props.location.state.GPA
+      firstName: 'anastasia', 
+      lastName: 'soenjoto', 
+      email: 'adfsfd@gmail.com',
+      password: 'anastasia', 
+      city: 'newYork', 
+      major: 'computerScience', 
+      GPA: '3.8'
 
     }
 
@@ -76,7 +76,8 @@ export default class UserProfile extends Component {
 
 
     const user = {
-      username: this.props.location.state.username,
+      // username: this.props.location.state.username,
+      username: 'anastasia',
       firstName: this.state.firstName, 
       lastName: this.state.lastName, 
       email: this.state.email,
@@ -114,18 +115,18 @@ export default class UserProfile extends Component {
         <form id="editProfile" onSubmit={this.onSubmit} >
           <label>
             First Name: 
-            <input id="firstName" type="text" value={this.state.firstName} onChange= {this.onChangefirstName} placeholder= {this.props.location.state.firstName}/>
+            <input id="firstName" type="text" value={this.state.firstName} onChange= {this.onChangefirstName} placeholder= 'anastasia'/>
           </label>
           <br></br>
             <label>
             Last Name: 
-            <input id="lastName" type="text" value={this.state.lastName} onChange= {this.onChangelastName} placeholder={this.props.location.state.lastName}/>
+            <input id="lastName" type="text" value={this.state.lastName} onChange= {this.onChangelastName} placeholder='soenjoto'/>
           </label>
 
           <br></br>
           <label>
             E-mail: 
-            <input id="email" type="email" value={this.state.email} onChange= {this.onChangeEmail} placeholder={this.props.location.state.email}/>
+            <input id="email" type="email" value={this.state.email} onChange= {this.onChangeEmail} placeholder='adfsfd@gmail.com'/>
           </label>
           <br></br>
           <label>
@@ -170,7 +171,7 @@ export default class UserProfile extends Component {
           <br></br><br></br>
           <label>
             GPA: 
-            <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder={this.props.location.state.GPA}/>
+            <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder='3.8'/>
           </label>
           <br></br>
           <input type="submit"></input>
