@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+
 
 export default class JobQuestionnaire extends Component {
     constructor(props) {
@@ -109,7 +111,7 @@ export default class JobQuestionnaire extends Component {
 
         axios.post('http://localhost:3001/jobs/add', job)
             .then(res => console.log(res.data));
-        this.setState({redirectToHome: false});
+        this.setState({redirectToHome: true});
     }
 
     onSubmitNext(e){
@@ -143,8 +145,16 @@ export default class JobQuestionnaire extends Component {
             redirectToHome: false
         })
     }
-
     render(){
+
+        if (this.state.redirectToHome == true) {
+            return <Redirect to={{
+                pathname: "/HomePageCompany",
+                state: { username: this.state.username }
+            }}
+            />
+        }
+
         return(
             <div>
                 <h1> Welcome! </h1>
@@ -164,7 +174,7 @@ export default class JobQuestionnaire extends Component {
                         <br></br>
                         <label>
                             Number of Employees Recruiting: 
-                            <input id = "numOfPositions" type = "text" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
+                            <input id = "numOfPositions" type = "number" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
                         </label>
                         <br></br>
                         <label>

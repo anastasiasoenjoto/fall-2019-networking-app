@@ -100,6 +100,7 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  console.log(username, major, GPA, city)
   console.log('message received')
 
   if (username == ''){
@@ -172,13 +173,13 @@ router.post('/queryUsers', (req, res) => {
       } else {
           message = 'invalid';
           console.log(message)
-      }
+      } 
 
       res.json({"message": message, "users" : user});
     })
   }
   else if (city = ''){
-    User.find({username : username, major : major,GPA: {$gt :GPA} }, function(err, user){
+    User.find({username : username, major : major,GPA: {$gt : GPA} }, function(err, user){
       if(err) {
           console.log(err);
       }
