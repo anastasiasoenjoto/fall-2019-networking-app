@@ -66,24 +66,9 @@ class displayUsers extends Component {
       GPA: '', 
       city: '',
       users: [],
-      cities: [],
-      majors: [],
     }
   }
 
-  cityOptions = [
-    'Los Angeles',
-    'San Francisco',
-    'Albany',
-    'New York'
-  ];
-
-  majorOptions = [
-    'Anthropology',
-    'Business Management',
-    'Computer Science',
-    'Data Science'
-  ];
   onChangeUsername(e) {
     this.setState({
       username: e.target.value
@@ -91,7 +76,7 @@ class displayUsers extends Component {
   }
   onChangeMajor(e) {
     this.setState({
-      majors: e.target.value
+      major: e.target.value
     })
   }
 
@@ -103,7 +88,7 @@ class displayUsers extends Component {
 
   onChangeCity(e) {
     this.setState({
-      cities: e.target.value
+      city: e.target.value
     })
   }
 
@@ -159,53 +144,23 @@ class displayUsers extends Component {
         <Grid container item xs={9} spacing={1}>
         <Grid item xs={3}>
           <br></br>
+          <FormControl className={classes.formControl}>
             <input id="Username" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Search Username"/>
+            </FormControl>
         </Grid>
         <Grid container item xs={9} spacing={1}>
             <Grid item xs={3}>
+            <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-city">City</InputLabel>
-                <Select
-                  labelId="select-city-label"
-                  id="city-box"
-                  multiple
-                  value={this.state.cities}
-                  onChange={this.onChangeCity}
-                  input={<Input />}
-                  renderValue={selected => selected.join(', ')}
-                // MenuProps={MenuProps}
-                >
-                  {this.cityOptions.map(city => (
-                    <MenuItem key={city} value={city}>
-                      <Checkbox checked={this.state.cities.indexOf(city) > -1} />
-                      <ListItemText primary={city} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="City" type="text" value={this.state.city} onChange= {this.onChangeCity} placeholder="Enter City"/>
               </FormControl>
             </Grid>
             <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-major">Majors</InputLabel>
-                <Select
-                  labelId="select-major-label"
-                  id="majors-box"
-                  multiple
-                  value={this.state.majors}
-                  onChange={this.onChangeMajor}
-                  input={<Input />}
-                  renderValue={selected => selected.join(', ')}
-                // MenuProps={MenuProps}
-                >
-                  {this.majorOptions.map(major => (
-                    <MenuItem key={major} value={major}>
-                      <Checkbox checked={this.state.majors.indexOf(major) > -1} />
-                      <ListItemText primary={major} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="Major" type="text" value={this.state.major} onChange= {this.onChangeMajor} placeholder="Enter Major"/>
               </FormControl>
-            </Grid>
+            </Grid>  
             <Grid item xs={3}>
               <br></br>
               <FormControl className={classes.formControl}>
