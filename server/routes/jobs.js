@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Job = require('../models/job.model');
+const {ObjectId} = require('mongodb'); 
 
 router.route('/').get((req, res) => {
   Job.find()
@@ -54,20 +55,19 @@ router.post('/getRecommendedJobs', (req, res) => {
   })
 });
 
-
 router.post('/queryJobs', (req, res) => {
   var nameOfOpenPosition = req.body.nameOfOpenPosition;
   var GPA = req.body.GPA;
   var city = req.body.city;
   console.log('message received')
 
-  User.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
       if(err) {
           console.log(err);
       }
       var message; 
-      if(user) {
-          console.log(user)
+      if(jobs) {
+          console.log(jobs)
           message = 'valid';
           console.log(message)
       } else {
@@ -80,6 +80,33 @@ router.post('/queryJobs', (req, res) => {
 
 });
 
+router.post('/addApplicants', async (req, res) => {
+    var jobId = req.body.jobId;
+    skills_string = req.body.skill
+    var skills_array = skills_string.split(',')
+    for (i=0; i<skills_array.length; i++) {
+      skills_array[i] = skills_array[i].toLowerCase();
+      skills_array[i] = skills_array[i].replace(/\s/g,'')
+    }
+    
+    const applicantDetails = {
+      name: req.body.nameOfApplicant, 
+      email: req.body.email,
+      major: req.body.major, 
+      GPA: req.body.GPA, 
+      skills: skills_array
+    }
+
+    // const doc = await Job.findOne({_id: ObjectId('5de97ec89cb4c2836ccf5bc1')});
+    const doc = await Job.findOne({_id: ObjectId(jobId)});
+    doc.applicants.push(applicantDetails)
+    await doc.save();
+    res.json({"message": "applicant added"})
+    
+});
+
 
 module.exports = router;
+
+
 

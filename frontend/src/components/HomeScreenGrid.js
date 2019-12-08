@@ -62,7 +62,7 @@ export default function HomeScreenGrid() {
             </Typography></div>
         </div>
 
-        <div className = {classes.company} align='center'>
+        {/* <div className = {classes.company} align='center'>
             <List className={classes.list}>
                 <ListItem>
                     If you're a company, sign up here!
@@ -88,7 +88,7 @@ export default function HomeScreenGrid() {
                 </ListItem>
             </List>
 
-        </div>
+        </div> */}
         </div>
 
     )
