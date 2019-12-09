@@ -58,7 +58,14 @@ const jobSchema = new Schema({
         //unique: false,
         trim: true,
         minlength: 1 
-    }
+    },
+    applicants:{
+      type: Array,
+      required: true,
+      //unique: false,
+      // trim: true,
+      // minlength: 1 
+  }
 }, {
     timestamps: true,
 })

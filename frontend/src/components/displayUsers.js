@@ -59,7 +59,6 @@ class displayUsers extends Component {
     this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChangeCompOp = this.onChangeCompOp.bind(this);
 
     this.state = {
       username: '',
@@ -67,77 +66,8 @@ class displayUsers extends Component {
       GPA: '', 
       city: '',
       users: [],
-      cities: [],
-      majors: [],
-      comparisonOp: '',
     }
   }
-
-  cityOptions = [
-    'Los Angeles',
-    'San Francisco',
-    'Albany',
-    'New York'
-  ];
-
-  majorOptions = [
-    'Anthropology',
-    'Business Management',
-    'Computer Science',
-    'Data Science'
-  ];
-
-  GPAOptions = [
-    0,
-    0.1,
-    0.2,
-    0.3,
-    0.4,
-    0.5,
-    0.6,
-    0.7,
-    0.8,
-    0.9,
-    1.0,
-    1.1,
-    1.2,
-    1.3,
-    1.4,
-    1.5,
-    1.6,
-    1.7,
-    1.8,
-    1.9,
-    2.0,
-    2.1,
-    2.2,
-    2.3,
-    2.4,
-    2.5,
-    2.6,
-    2.7,
-    2.8,
-    2.9,
-    3.0,
-    3.1,
-    3.2,
-    3.3,
-    3.4,
-    3.5,
-    3.6,
-    3.7,
-    3.8,
-    3.9,
-    4.0
-  ];
-
-  comparisonOperators = [
-    '<',
-    '<=',
-    '=',
-    '>=',
-    '>'
-  ]
 
   onChangeUsername(e) {
     this.setState({
@@ -146,7 +76,7 @@ class displayUsers extends Component {
   }
   onChangeMajor(e) {
     this.setState({
-      majors: e.target.value
+      major: e.target.value
     })
   }
 
@@ -156,15 +86,9 @@ class displayUsers extends Component {
     })
   }
 
-  onChangeCompOp(e) {
-    this.setState({
-      comparisonOp: e.target.value
-    })
-  }
-
   onChangeCity(e) {
     this.setState({
-      cities: e.target.value
+      city: e.target.value
     })
   }
 
@@ -204,183 +128,57 @@ class displayUsers extends Component {
     }
 
   }
-
   render() {
-
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
-        <LoggedInNavBar />
-
-        <Grid container spacing={1} justify="center">
-
-          <Grid container item xs={12} spacing={3}>
+      <LoggedInNavBar />
+      <Grid container spacing={1} justify="center"></Grid>
+      <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}><Typography variant='h4'>User Search Options</Typography></Paper>
             </Grid>
           </Grid>
-
-          <Grid container item xs={9} spacing={1}>
+           {this.state.users}
+          <form onSubmit={this.onSubmit}>
+        <Grid container item xs={9} spacing={1}>
+        <Grid item xs={3}>
+          <br></br>
+          <FormControl className={classes.formControl}>
+            <input id="Username" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Search Username"/>
+            </FormControl>
+        </Grid>
+        <Grid container item xs={9} spacing={1}>
             <Grid item xs={3}>
+            <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-city">City</InputLabel>
-                <Select
-                  labelId="select-city-label"
-                  id="city-box"
-                  multiple
-                  value={this.state.cities}
-                  onChange={this.onChangeCity}
-                  input={<Input />}
-                  renderValue={selected => selected.join(', ')}
-                // MenuProps={MenuProps}
-                >
-                  {this.cityOptions.map(city => (
-                    <MenuItem key={city} value={city}>
-                      <Checkbox checked={this.state.cities.indexOf(city) > -1} />
-                      <ListItemText primary={city} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="City" type="text" value={this.state.city} onChange= {this.onChangeCity} placeholder="Enter City"/>
               </FormControl>
             </Grid>
             <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-major">Majors</InputLabel>
-                <Select
-                  labelId="select-major-label"
-                  id="majors-box"
-                  multiple
-                  value={this.state.majors}
-                  onChange={this.onChangeMajor}
-                  input={<Input />}
-                  renderValue={selected => selected.join(', ')}
-                // MenuProps={MenuProps}
-                >
-                  {this.majorOptions.map(major => (
-                    <MenuItem key={major} value={major}>
-                      <Checkbox checked={this.state.majors.indexOf(major) > -1} />
-                      <ListItemText primary={major} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="Major" type="text" value={this.state.major} onChange= {this.onChangeMajor} placeholder="Enter Major"/>
               </FormControl>
-            </Grid>
+            </Grid>  
             <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-major" float='left'>Operator</InputLabel>
-                <Select
-                  labelId="select-op-label"
-                  id="op-box"
-                  value={this.state.comparisonOp}
-                  onChange={this.onChangeCompOp}
-                  input={<Input />}
-                // MenuProps={MenuProps}
-                >
-                  {this.comparisonOperators.map(op => (
-                    <MenuItem key={op} value={op}>
-                      <ListItemText primary={op} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
               </FormControl>
+            </Grid>  
+            <Grid item xs={3}>
+              <br></br>
               <FormControl className={classes.formControl}>
-                <InputLabel id="select-gpa" float='left'>GPA</InputLabel>
-                <Select
-                  labelId="select-gpa-label"
-                  id="gpa-box"
-                  value={this.state.GPA}
-                  onChange={this.onChangeGPA}
-                  input={<Input />}
-                // MenuProps={MenuProps}
-                >
-                  {this.GPAOptions.map(gpa => (
-                    <MenuItem key={gpa} value={gpa}>
-                      <ListItemText primary={gpa} />
-                    </MenuItem>
-                  ))}
-                </Select>
+              <input type="submit"></input>
               </FormControl>
-            </Grid>
-
-          </Grid>
-
-          <Grid container item xs={12}>
-            <Grid item xs={12}>
-              <List className={classes.root}>
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Bruce Wayne"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Computer Science
-              </Typography>
-                        {" - Average millionaire from Gotham"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Tony Stark"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Mechanical Engineering
-              </Typography>
-                        {" - Iron Man from New York"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem button alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar src={anon} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Clark Kent"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Journalism
-              </Typography>
-                        {' - Journalist from Los Angeles'}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-              </List>
-            </Grid>
-          </Grid>
+            </Grid>     
+        </Grid>
         </Grid>
 
-      </div>
+        </form>
 
-
+      </div> 
     )
   }
 }
