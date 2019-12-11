@@ -74,20 +74,20 @@ class HomePageCompany extends Component {
                 <Grid container className={classes.grid}>
                     <Grid item xs={3}></Grid>
                     <Grid item xs={6}>
-                        <Typography variant='h2'>Top Applicants</Typography>
+                        <Typography variant='h3'>Top Applicants</Typography>
                         <ExpansionPanel>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="this week"
                                 id="this week header"
                             >
-                                <Typography variant='h3'>This Week</Typography>
+                                <Typography variant='h4'>This Week</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <ListItem className={classes.item}>
-                                    <Typography variant='h4'>Anastasia</Typography>
+                                    <Typography variant='h5'>Anastasia</Typography>
                                     <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-                                        <Button variant="contained">View Resume</Button>
+                                        <Button variant="contained">View Profile</Button>
                                     </Grid>
                                 </ListItem>
                             </ExpansionPanelDetails>
@@ -98,13 +98,13 @@ class HomePageCompany extends Component {
                                 aria-controls="last week"
                                 id="last week header"
                             >
-                                <Typography variant='h3'>Last Ago</Typography>
+                                <Typography variant='h4'>Last Ago</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <ListItem className={classes.item}>
-                                    <Typography variant='h4'>William</Typography>
+                                    <Typography variant='h5'>William</Typography>
                                     <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-                                        <Button variant="contained">View Resume</Button>
+                                        <Button variant="contained">View Profile</Button>
                                     </Grid>
                                 </ListItem>
                             </ExpansionPanelDetails>
@@ -115,7 +115,7 @@ class HomePageCompany extends Component {
                                 aria-controls="2 weeks ago"
                                 id="2 weeks ago header"
                             >
-                                <Typography variant='h3'>2 Weeks Ago</Typography>
+                                <Typography variant='h4'>2 Weeks Ago</Typography>
                             </ExpansionPanelSummary>
                         </ExpansionPanel>
                     </Grid>
