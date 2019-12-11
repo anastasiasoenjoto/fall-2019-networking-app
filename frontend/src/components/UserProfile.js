@@ -85,7 +85,6 @@ export default class UserProfile extends Component {
       major: this.state.major,
       GPA: this.state.GPA
     }
-    // console.log(this.state.username)
     console.log(user)
     axios.post('http://localhost:3001/users/editProfile', user)
       .then(res => console.log(res.data));

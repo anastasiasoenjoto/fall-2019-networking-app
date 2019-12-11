@@ -108,19 +108,6 @@ export default function LoggedInNavBar(props) {
                     </Typography>
                     </Button>
 
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
