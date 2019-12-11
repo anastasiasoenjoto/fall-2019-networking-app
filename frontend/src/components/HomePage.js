@@ -70,7 +70,6 @@ class HomePage extends Component {
             redirectToApply: false , 
             jobId: ''
         };
-        this.onClickApply = this.onClickApply.bind(this);
     }
 
     componentDidMount() {
@@ -98,6 +97,7 @@ class HomePage extends Component {
                 .then(data => {
                     this.setState({recUsers: data})
                 })
+                console.log("USER DETAIL", userDetails)
                 axios.post('http://localhost:3001/jobs/getRecommendedJobs', userDetails)
                 .then(res => {
                     console.log("Recommended jobs: ", res.data.jobs)
@@ -116,27 +116,11 @@ class HomePage extends Component {
         })
 
       } 
-      onClickApply(e){
-        console.log(e.target.id)
-        this.setState({
-            redirectToApply: true,
-            jobId: e.target.id
-        })
-      }
       
 
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
-        if(this.state.redirectToApply){
-            return <Redirect 
-            to={{
-                pathname:'/jobApplication',
-                state: {jobId: this.state.jobId}
-            }}
-            />
-            
-        }
         return (
             
 
@@ -284,7 +268,12 @@ class HomePage extends Component {
                                                         </div>
                                                         <br></br>
                                                         
-                                                        <Button variant="contained" onClick={this.onClickApply} id={u._id}>Apply</Button>
+                                                        <Link to={{
+                                                            pathname: '/jobApplication',
+                                                            state: {
+                                                                jobId: u._id
+                                                            }
+                                                            }}><Button variant="contained" id={u._id}>Apply</Button></Link>
                                                         
                                                     </span>
                                                 </Popup>
