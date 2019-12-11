@@ -1,37 +1,39 @@
 import React, { Component } from 'react';
-import ListComments from './ListComment';
-import AddComment from './AddComment';
+import axios from 'axios';
+import MessageList from "./MessageList.js"
+import SendMessageForm from "./SendMessageForm.js"
+import {withStyles} from '@material-ui/styles';
+import styles from './ChatRoom.css'
 
-export default class Home extends Component {
 
-  constructor(props){
-    super(props);
-    const sock = new WebSocket('ws://localhost:3001/chats');
-    sock.onopen = function() {
-        console.log('open');
-    };
+const DUMMY_DATA = [
+  {
+    senderId: "perborgen",
+    text: "who'll win?"
+  },
+  {
+    senderId: "janedoe",
+    text: "who'll win?"
+  }
+]
 
-    const self = this;
-    sock.onmessage = function(e) {
-          const message = JSON.parse(e.data);
-          const dataToSend = JSON.stringify(message);
-          self.setState({ comment: dataToSend });
-    };
-
+class ChatRoom extends Component {
+      
+  constructor() {
+    super()
     this.state = {
-      username: "anastasia",
-      actions : sock,
-      comment : {},
+       messages: DUMMY_DATA
     }
   }
-
+  
   render() {
     return (
-      <div className="container">
-        <br/>
-        < AddComment { ... this.state  }/>
-        < ListComments { ... this.state }/>
-      </div>
-    );
+      <div className="app">
+        <MessageList messages={this.state.messages}/>
+        <SendMessageForm />
+     </div>
+    )
   }
 }
+
+export default withStyles(styles)(ChatRoom);
