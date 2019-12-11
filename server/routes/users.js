@@ -276,8 +276,8 @@ router.post('/editProfile', async (req, res) => {
 });
 
 router.post('/requestFriend', async(req, res) => {
-  var requestedName = req.body.friendName;
-  var requestingName = "hc@gmail.com";
+  var requestedName = req.body.friendname;
+  var requestingName = req.body.username;
   console.log(requestedName);
 
   const requested = await User.findOne({username: requestedName});

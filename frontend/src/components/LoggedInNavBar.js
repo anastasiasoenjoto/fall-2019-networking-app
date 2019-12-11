@@ -17,6 +17,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     search: {
@@ -88,6 +89,12 @@ const StyledMenu = withStyles({
 export default function LoggedInNavBar(props) {
     
     //@Jianyi to get username of current user, just use props.username. If this doesn't work, let me know lol
+    const friend = {
+        username: props.username,
+        //friendname: 
+    }
+
+    const user = props.username;
 
     const classes = useStyles();
 
@@ -97,8 +104,17 @@ export default function LoggedInNavBar(props) {
 
     //@Jianyi The pendingRequests is a state array variable that I'm using to populate the list of notifications. 
     //It starts empty by default, but you need to add a function to pull the data from the backend.
-
+    
     const [pendingRequests, setPendingRequests] = React.useState([])
+    axios.post('http://localhost:3001/users/getCurrentUser', user)
+    .then(res => {
+       //console.log(res.data.user[0].pending)
+       setPendingRequests(res.data.user[0].pending)
+       return res.data.user[0].pending
+     })
+
+
+    
 
     const menuId = 'profile-menu';
     const notifID = 'notif-menu';
@@ -178,7 +194,6 @@ export default function LoggedInNavBar(props) {
                         }
                     />
                 </ListItem>
-                
                 {pendingRequests.map((req) => (
                     <ListItem button alignItems="flex-start">
                     <ListItemText
@@ -190,10 +205,10 @@ export default function LoggedInNavBar(props) {
                                     className={classes.inline}
                                     color="textPrimary"
                                 >
-                                   {req.username} has sent you a friend request.     
+                                   {req} has sent you a friend request.     
                                 </Typography>
-                                <Button value={req.username} onClick={handleAcceptRequest}>Accept</Button>
-                                <Button value={req.username} onClick={handleRejectRequest}>Reject</Button>
+                                <Button value={req} onClick={handleAcceptRequest}>Accept</Button>
+                                <Button value={req} onClick={handleRejectRequest}>Reject</Button>
                             </React.Fragment>
                         }
                     />

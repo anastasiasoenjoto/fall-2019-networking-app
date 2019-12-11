@@ -62,9 +62,38 @@ class HomePage extends Component {
         this.state = {
             users: [],
             recUsers: [[]],
-            recJobs:[[]]
+            recJobs:[[]],
+            pending:[]
         };
+
+        this.onAddFriend = this.onAddFriend.bind(this);
     }
+
+    onAddFriend(e){
+        e.preventDefault();
+
+        const friend = {
+            username: this.props.location.state.username,
+            friendname: e.target.id
+        }
+        axios.post('http://localhost:3001/users/requestFriend', friend)
+        .then(res => {
+          return res.data;
+        })
+        .then(data=> {
+          return data.message;
+        })
+        .then(validity => {
+          if (validity == "Request has been submitted") {
+            console.log('Request has been submitted')
+            {this.setDirectToHomeUser()}
+          }
+          else {
+            console.log('Sorry, no such user exists')
+          }
+        })
+    }
+
 
     componentDidMount() {
         console.log(this.props.location.state)
@@ -106,6 +135,7 @@ class HomePage extends Component {
                 )
             })
             this.setState({users: users})
+            
         })
 
       } 
@@ -118,7 +148,7 @@ class HomePage extends Component {
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar username={this.props.username} />
+                <LoggedInNavBar username={this.props.location.state.username} />
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>
@@ -170,7 +200,7 @@ class HomePage extends Component {
                                                         </React.Fragment>
                                                     }
                                                 />
-                                                <input type="button" id={u.username} value="Add"></input>
+                                                <input type="button" id={u.username} value="Add" onClick= {this.onAddFriend}></input>
                                             </ListItem>
     
                                             ))
