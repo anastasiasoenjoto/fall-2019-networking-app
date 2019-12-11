@@ -10,15 +10,20 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const companyUsername = req.body.companyUsername;
-    const jobTitle = req.body.jobTitle;
+    var jobTitle = req.body.jobTitle;
     const numOfPositions = req.body.numOfPositions;
     const jobDescription = req.body.jobDescription;
-    const jobLocation = req.body.jobLocation;
+    var jobLocation = req.body.jobLocation;
     const jobSalary = req.body.jobSalary;
     const gpaReq = req.body.gpaReq;
     const majorReq = req.body.majorReq;
     const applicationDeadline = req.body.applicationDeadline;
     const applicants = []
+
+    jobTitle = jobTitle.toLowerCase()
+    jobTitle = jobTitle.replace(/\s/g,'')
+    jobLocation = jobLocation.toLowerCase()
+    jobLocation = jobLocation.replace(/\s/g,'')
   
   
     const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline, applicants});
@@ -31,9 +36,9 @@ router.route('/add').post((req, res) => {
     });
 
 router.post('/getRecommendedJobs', (req, res) => {
-  // var major = req.body.major;
   var city = req.body.city;
-
+  city = city.toLowerCase()
+  city = city.replace(/\s/g,'')
 
   Job.find({jobLocation: city}, function(err, job){
       if(err) {
@@ -41,15 +46,12 @@ router.post('/getRecommendedJobs', (req, res) => {
       }
       var message;
       if(job) {
-          // console.log(user)
           message = 'found Job!';
           console.log(message)
-          // res.json({"user": Array(user)});
       }
 
       else {
         message = 'not found!';
-        // res.json({"user": []});
       }
       res.json({"jobs": Array(job), message: message})
   })
@@ -59,9 +61,11 @@ router.post('/queryJobs', (req, res) => {
   var nameOfOpenPosition = req.body.nameOfOpenPosition;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  city = city.toLowerCase()
+  city = city.replace(/\s/g,'')
   console.log('message received')
 
-  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, jobLocation: city}, function(err, jobs){
       if(err) {
           console.log(err);
       }

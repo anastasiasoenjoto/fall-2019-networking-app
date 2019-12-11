@@ -14,11 +14,15 @@ router.route('/add').post((req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const city = req.body.city;
-  const major = req.body.major;
+  var city = req.body.city;
+  var major = req.body.major;
   const GPA = req.body.GPA;
   const friends = [];
 
+  city = city.toLowerCase();
+  city = city.replace(/\s/g,'');
+  major = major.toLowerCase();
+  major = major.replace(/\s/g,'');
 
   const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends});
 
@@ -103,6 +107,10 @@ router.post('/queryUsers', (req, res) => {
   console.log(username, major, GPA, city)
   console.log('message received')
 
+  major = major.toLowerCase();
+  city = city.toLowerCase();
+  major = major.replace(/\s/g,'');
+  city = city.replace(/\s/g,'');
   if (username == ''){
     User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
         if(err) {
@@ -238,6 +246,10 @@ router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
 
+  major = major.toLowerCase();
+  city = city.toLowerCase();
+  major = major.replace(/\s/g,'');
+  city = city.replace(/\s/g,'');
 
   User.find({major: major, city: city}, function(err, user){
       if(err) {
@@ -261,13 +273,17 @@ router.post('/getRecommendedUser', (req, res) => {
 
 router.post('/editProfile', async (req, res) => {
   var username = req.body.username
+  var city = req.body.city.toLowerCase();
+  city = city.replace(/\s/g,'');
+  var major = req.body.major.toLowerCase();
+  major = major.replace(/\s/g,'');
   const doc = await User.findOne({username: username});
   doc.firstName = req.body.firstName;
   doc.lastName = req.body.lastName;
   doc.email = req.body.email;
   doc.password = req.body.password;
-  doc.city = req.body.city;
-  doc.major = req.body.major;
+  doc.city = city;
+  doc.major = major;
   doc.GPA = req.body.GPA;
 
   await doc.save();
