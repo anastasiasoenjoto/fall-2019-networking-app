@@ -179,7 +179,8 @@ class HomePage extends Component {
                                                     </React.Fragment>
                                                 }
                                             /> 
-                                                <Button variant="contained" color="primary" id={u.username}>Add</Button>
+                                            {(u.username == this.props.location.state.username) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username}>Add</Button>}
+                                                
                                             </ListItem>
     
                                             ))
