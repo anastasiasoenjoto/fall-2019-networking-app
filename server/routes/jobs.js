@@ -16,7 +16,7 @@ router.route('/add').post((req, res) => {
     var jobLocation = req.body.jobLocation;
     const jobSalary = req.body.jobSalary;
     const gpaReq = req.body.gpaReq;
-    const majorReq = req.body.majorReq;
+    var majorReq = req.body.majorReq;
     const applicationDeadline = req.body.applicationDeadline;
     const applicants = []
 
@@ -24,8 +24,9 @@ router.route('/add').post((req, res) => {
     jobTitle = jobTitle.replace(/\s/g,'')
     jobLocation = jobLocation.toLowerCase()
     jobLocation = jobLocation.replace(/\s/g,'')
-  
-  
+    majorReq = majorReq.toLowerCase()
+    majorReq = majorReq.replace(/\s/g,'')
+
     const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline, applicants});
   
     newJob.save()
