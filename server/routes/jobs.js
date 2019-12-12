@@ -79,6 +79,7 @@ router.post('/queryJobs', (req, res) => {
 
 router.post('/addApplicants', async (req, res) => {
     var jobId = req.body.jobId;
+    console.log("JOB ID", jobId)
     skills_string = req.body.skill
     var skills_array = skills_string.split(',')
     for (i=0; i<skills_array.length; i++) {
@@ -87,11 +88,14 @@ router.post('/addApplicants', async (req, res) => {
     }
     
     const applicantDetails = {
+      username: req.body.username,
       name: req.body.nameOfApplicant, 
       email: req.body.email,
       major: req.body.major, 
       GPA: req.body.GPA, 
-      skills: skills_array
+      skills: skills_array, 
+      resume: req.body.resume, 
+      date: req.body.date
     }
 
     // const doc = await Job.findOne({_id: ObjectId('5de97ec89cb4c2836ccf5bc1')});
@@ -100,6 +104,39 @@ router.post('/addApplicants', async (req, res) => {
     await doc.save();
     res.json({"message": "applicant added"})
     
+});
+
+router.post('/analytics', async (req, res) => {
+  var currentDate = new Date();
+  var oneWeek = new Date();
+  var username = req.body.username;
+  var count = 0;
+  oneWeek.setDate(currentDate.getDate() - 7);
+  oneWeek = oneWeek.getTime()
+  Job.find({})
+    .then(jobs => {
+      return jobs
+    })
+    .then(jobs => {
+      jobs.forEach(job => {
+        job.applicants.forEach(applicant => {
+          
+          if ((applicant.username == username) && ((new Date(applicant.date)).getTime()) >= oneWeek) {
+                console.log("Applicant:", applicant.username)
+                count = count + 1
+            }
+            
+        })
+      })
+      return count
+    })
+    .then(count => {
+      res.json({"count": count})
+    })
+    
+
+
+
 });
 
 

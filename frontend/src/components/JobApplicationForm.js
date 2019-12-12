@@ -76,12 +76,15 @@ export default class JobApplicationForm extends Component {
         e.preventDefault();
 
         const newJob = {
-            jobId: this.state.jobId,
+            username: this.props.location.state.username,
+            jobId: this.props.location.state.jobId,
             nameOfApplicant: this.state.nameOfApplicant,
             email: this.state.email,
             major: this.state.major,
             GPA: this.state.GPA, 
-            skill: this.state.skill
+            skill: this.state.skill, 
+            resume: this.state.resume, 
+            date: new Date()
         }
 
         axios.post('http://localhost:3001/jobs/addApplicants', newJob)
