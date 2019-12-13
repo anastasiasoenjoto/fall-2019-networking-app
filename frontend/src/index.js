@@ -14,6 +14,7 @@ import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
 import chatRoom from "./components/chatRoom.js"
+import ViewCompany from './components/ViewCompany';
 
 const routing = (
     <Router>
@@ -30,6 +31,7 @@ const routing = (
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
         <Route path="/userProfile" component={UserProfile}/>
         <Route path="/companyProfile" component={CompanyProfile}/>
+        <Route path="/ViewCompany" component={ViewCompany}/>
       </Switch>
       </div>
     </Router>

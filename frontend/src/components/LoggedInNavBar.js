@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function LoggedInNavBar() {
+export default function LoggedInNavBar(props) {
 
     const classes = useStyles();
 
@@ -94,7 +94,7 @@ export default function LoggedInNavBar() {
           onClose={handleMenuClose}
         >
         
-        <Link to={{pathname: "/displayUsers", className:"nav-link", state: {username: this.props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
+        <Link to={{pathname: "/displayUsers", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
           <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
         </Menu>
       );
