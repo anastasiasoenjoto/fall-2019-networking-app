@@ -13,7 +13,8 @@ import JobQuestionnaire from './components/JobQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
-import chatRoom from "./components/chatRoom.js"
+import AddFriend from "./components/AddFriend.js"
+
 
 const routing = (
     <Router>
@@ -30,6 +31,7 @@ const routing = (
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
         <Route path="/userProfile" component={UserProfile}/>
         <Route path="/companyProfile" component={CompanyProfile}/>
+        <Route path="/AddFriend" component = {AddFriend}/>
       </Switch>
       </div>
     </Router>
