@@ -19,8 +19,6 @@ import Avatar from '@material-ui/core/Avatar';
 import anon from '../frontend images/anon.png';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popup from "reactjs-popup";
-import { Redirect } from 'react-router-dom';
-import { stat } from 'fs';
 
 
 const styles = theme => ({
@@ -42,6 +40,10 @@ const styles = theme => ({
     },
     rowBreak: {
         minWidth: '240',
+    },
+    listCard: {
+        maxHeight: 200,
+        overflow: 'auto',
     }
 });
 
@@ -52,7 +54,7 @@ class ViewCompany extends Component {
         super(props);
         this.state = {
             jobs: [],
-            redirectToApply: false , 
+            redirectToApply: false,
             jobId: '',
             username: 'test',
         };
@@ -101,25 +103,24 @@ class ViewCompany extends Component {
             this.setState({users: users})
         })
 
-      } */ 
-      
+      } */
+
 
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
         return (
-            
+
 
             <div className={classes.enclosing}>
 
                 <LoggedInNavBar username={this.state.username} />
 
-                <Card className={classes.card} style={{height:'70%', outline: '1px solid gray'}}>
-                    <Grid container height='100%'>
+                <Card className={classes.card} style={{ height: '70%', outline: '1px solid gray' }} elevation={0}>
+                    <Grid container style={{ height: '100%' }}>
                         <Grid container item xs={12}>
-                            <Grid item xs={3}><Typography variant='h4'>Google</Typography></Grid>
+                            <Grid item xs={3} ><Typography variant='h4'>Google</Typography></Grid>
                         </Grid>
-                        <Grid item height="50%" style={{outline: '1px solid gray'}} xs={12}></Grid>
                         <Grid container item xs={12}>
                             <Grid item xs={2}><Typography variant='h5'>About:</Typography></Grid>
                             <Grid item xs={10}><Typography variant='h6'>Lorem Ipsum</Typography></Grid>
@@ -129,7 +130,132 @@ class ViewCompany extends Component {
                             <Grid item xs={10}><Typography variant='h6'>1</Typography></Grid>
                         </Grid>
                         <Grid item xs={12}>
+                            <Typography variant='h5'>Open Jobs: </Typography>
+                            <Card className={classes.listCard} elevation={0}>
+                                <CardContent>
+                                    <List className={classes.enclosing}>
 
+                                    <ListItem button alignItems="flex-start">
+                                                <Popup
+                                                    trigger={<ListItemText
+                                                        primary= 'Software Engineer'
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    className={classes.inline}
+                                                                    color="textPrimary"
+                                                                >
+                                                                    NYC, NY
+                                                                </Typography>
+                                                                <br></br>
+                                                            </React.Fragment>
+                                                        }
+                                                    />
+                                                }
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="h3"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                Software Engineer
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Job Description: Lorem Ipsum
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        
+                                                        <Button variant="contained" id='N/A'>Apply</Button>
+                                                        
+                                                    </span>
+                                                </Popup>
+                                            </ListItem>
+
+                                        {/* {this.state.recJobs[0].map((u) => (
+                                                <ListItem button alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar src={anon} />
+                                                </ListItemAvatar>
+                                                <Popup
+                                                    trigger={<ListItemText
+                                                        primary= {u.jobTitle}
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    className={classes.inline}
+                                                                    color="textPrimary"
+                                                                >
+                                                                    {u.companyUsername}
+                                                                </Typography>
+                                                                <br></br>
+                                                            {u.jobLocation}
+                                                            </React.Fragment>
+                                                        }
+                                                    />
+                                                }
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="h3"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {u.jobTitle}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Job Description: {u.jobDescription}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        
+                                                        <Link to={{
+                                                            pathname: '/jobApplication',
+                                                            state: {
+                                                                jobId: u._id
+                                                            }
+                                                            }}><Button variant="contained" id={u._id}>Apply</Button></Link>
+                                                        
+                                                    </span>
+                                                </Popup>
+                                            </ListItem>
+    
+                                            ))
+                                        } */}
+                                    </List>
+                                </CardContent>
+                            </Card>
                         </Grid>
                     </Grid>
                 </Card>
