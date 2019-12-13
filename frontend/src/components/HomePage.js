@@ -68,7 +68,9 @@ class HomePage extends Component {
             recUsers: [[]],
             recJobs:[[]],
             redirectToApply: false , 
-            jobId: ''
+            jobId: '', 
+            currentPending: [], 
+            currentFriends: []
         };
     }
 
@@ -85,6 +87,10 @@ class HomePage extends Component {
         })
         .then(data => {
             let users = data.map((u) => {
+                this.setState({
+                    currentPending: u.pending, 
+                    currentFriends: u.friends
+                })
                 const userDetails = {
                     major: u.major, 
                     city: u.city
@@ -121,6 +127,7 @@ class HomePage extends Component {
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
+        
         return (
             
 
@@ -179,7 +186,7 @@ class HomePage extends Component {
                                                     </React.Fragment>
                                                 }
                                             /> 
-                                            {(u.username == this.props.location.state.username) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username}>Add</Button>}
+                                            {((u.username == this.props.location.state.username) || (this.currentFriends.includes(u.username)) || this.currentPending.includes(u.username)) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username}>Add</Button>}
                                                 
                                             </ListItem>
     
