@@ -217,7 +217,6 @@ export default class JobQuestionnaire extends Component {
                         <br></br>
                         
                     </fieldset>
-                    {/* <input type='submit'></input> */}
                     <input type="button" value="Save and Exit" onClick={this.onSubmit}></input>
                     <input type="button" value="Save and Add Another" onClick={this.onSubmitNext}></input>
                 </form>

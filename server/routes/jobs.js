@@ -31,11 +31,8 @@ router.route('/add').post((req, res) => {
     });
 
 router.post('/getRecommendedJobs', (req, res) => {
-  // var major = req.body.major;
   var city = req.body.city;
-
-
-  Job.find({city: city}, function(err, job){
+  Job.find({jobLocation: city}, function(err, job){
       if(err) {
           console.log(err);
       }

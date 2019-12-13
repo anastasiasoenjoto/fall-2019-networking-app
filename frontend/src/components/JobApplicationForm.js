@@ -15,6 +15,7 @@ export default class JobApplicationForm extends Component {
       this.onUpdateGPA = this.onUpdateGPA.bind(this);
       this.onUpdatePhoneNumber = this.onUpdatePhoneNumber.bind(this);
       this.onUpdateSkills = this.onUpdateSkills.bind(this);
+      this.onUpdateResume = this.onUpdateResume.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
   
       this.state = {
@@ -24,7 +25,8 @@ export default class JobApplicationForm extends Component {
           major: '', 
           GPA: '',
           PhoneNumber:'', 
-          skill: ''
+          skill: '', 
+          resume: ''
       }  
     }
 
@@ -64,6 +66,12 @@ export default class JobApplicationForm extends Component {
         )
     }
 
+    onUpdateResume(e){
+        this.setState(
+            {resume: e.target.value}
+        )
+    }
+
     onSubmit(e){
         e.preventDefault();
 
@@ -93,7 +101,7 @@ export default class JobApplicationForm extends Component {
     
 
     render() {
-       
+        console.log(this.props.location.state.jobId)
         return (
           <div>
             <h1> Job Title: </h1>
@@ -128,6 +136,11 @@ export default class JobApplicationForm extends Component {
               <label>
                 Skills (seperated by comma):
                 <input id = "skill" type = "text" value={this.state.skill} onChange = {this.onUpdateSkills} placeholder="Enter skills"/>
+              </label>
+              <br></br>
+                <label>
+                Link to resume:
+                <input id = "resume" type = "url" value={this.state.resume} onChange = {this.onUpdateResume} placeholder="Enter link to resume"/>
               </label>
               <br></br>
               </fieldset>

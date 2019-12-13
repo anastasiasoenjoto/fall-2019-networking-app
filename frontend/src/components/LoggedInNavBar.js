@@ -147,7 +147,7 @@ export default function LoggedInNavBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem>Edit Profile</MenuItem>
+            <Link to={{pathname: "/displayUsers", className:"nav-link", state: {username: this.props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
             
         </Menu>

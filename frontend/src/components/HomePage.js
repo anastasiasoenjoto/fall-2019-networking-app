@@ -18,6 +18,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import anon from '../frontend images/anon.png';
 import ListItemText from '@material-ui/core/ListItemText';
+import Popup from "reactjs-popup";
+import { Redirect } from 'react-router-dom';
+import { stat } from 'fs';
 
 
 const styles = theme => ({
@@ -64,6 +67,8 @@ class HomePage extends Component {
             recUsers: [[]],
             recJobs:[[]],
             pending:[],
+            redirectToApply: false , 
+            jobId: ''
         };
 
         this.onAddFriend = this.onAddFriend.bind(this);
@@ -122,6 +127,7 @@ class HomePage extends Component {
                 .then(data => {
                     this.setState({recUsers: data})
                 })
+                console.log("USER DETAIL", userDetails)
                 axios.post('http://localhost:3001/jobs/getRecommendedJobs', userDetails)
                 .then(res => {
                     console.log("Recommended jobs: ", res.data.jobs)
@@ -141,12 +147,13 @@ class HomePage extends Component {
         })
 
       } 
-
+      
 
     render() {
-        console.log(this.state.recJobs)
         const { classes } = this.props;
+        console.log(this.state.jobId)
         return (
+            
 
             <div className={classes.enclosing}>
 
@@ -185,6 +192,7 @@ class HomePage extends Component {
                                                 <ListItemAvatar>
                                                     <Avatar src={anon} />
                                                 </ListItemAvatar>
+                                                
                                                 <ListItemText
                                                     primary= {u.firstName}
                                                     secondary={
@@ -244,23 +252,62 @@ class HomePage extends Component {
                                                 <ListItemAvatar>
                                                     <Avatar src={anon} />
                                                 </ListItemAvatar>
-                                                <ListItemText
-                                                    primary= {u.firstName}
-                                                    secondary={
-                                                        <React.Fragment>
+                                                <Popup
+                                                    trigger={<ListItemText
+                                                        primary= {u.jobTitle}
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    className={classes.inline}
+                                                                    color="textPrimary"
+                                                                >
+                                                                    {u.companyUsername}
+                                                                </Typography>
+                                                                <br></br>
+                                                            {u.jobLocation}
+                                                            </React.Fragment>
+                                                        }
+                                                    />
+                                                }
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
                                                             <Typography
                                                                 component="span"
-                                                                variant="body2"
+                                                                variant="h3"
                                                                 className={classes.inline}
                                                                 color="textPrimary"
                                                             >
-                                                                {u.major}
+                                                                {u.jobTitle}
                                                             </Typography>
-                                                            <br></br>
-                                                          {u.city}
-                                                        </React.Fragment>
-                                                    }
-                                                />
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Job Description: {u.jobDescription}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        
+                                                        <Link to={{
+                                                            pathname: '/jobApplication',
+                                                            state: {
+                                                                jobId: u._id
+                                                            }
+                                                            }}><Button variant="contained" id={u._id}>Apply</Button></Link>
+                                                        
+                                                    </span>
+                                                </Popup>
                                             </ListItem>
     
                                             ))
