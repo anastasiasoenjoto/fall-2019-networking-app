@@ -63,7 +63,7 @@ class HomePage extends Component {
             users: [],
             recUsers: [[]],
             recJobs:[[]],
-            pending:[]
+            pending:[],
         };
 
         this.onAddFriend = this.onAddFriend.bind(this);
@@ -104,6 +104,8 @@ class HomePage extends Component {
         axios.post('http://localhost:3001/users/getCurrentUser', user)
         .then(res => {
             console.log("CURRENT USER DETAILS", res.data.user)
+            this.setState({pending: res.data.user[0].pending})
+            console.log("Current Pending", this.state.pending)
             return res.data.user
         })
         .then(data => {
@@ -148,7 +150,7 @@ class HomePage extends Component {
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar username={this.props.location.state.username} />
+                <LoggedInNavBar username={this.props.location.state.username}  pending={this.state.pending}/>
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>

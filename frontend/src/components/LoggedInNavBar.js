@@ -96,25 +96,23 @@ export default function LoggedInNavBar(props) {
 
     const user = props.username;
 
+    const pendingarray = props.pending;
+
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const [anchorEl2, setAnchorEl2] = React.useState(null);
-
-    //@Jianyi The pendingRequests is a state array variable that I'm using to populate the list of notifications. 
-    //It starts empty by default, but you need to add a function to pull the data from the backend.
     
-    const [pendingRequests, setPendingRequests] = React.useState([])
+    const pendingRequests = props.pending || [];
+
+    //console.log("Pending Array Navbar", pendingRequests)
+
     axios.post('http://localhost:3001/users/getCurrentUser', user)
     .then(res => {
-       //console.log(res.data.user[0].pending)
-       setPendingRequests(res.data.user[0].pending)
        return res.data.user[0].pending
      })
 
-
-    
 
     const menuId = 'profile-menu';
     const notifID = 'notif-menu';
@@ -158,67 +156,82 @@ export default function LoggedInNavBar(props) {
     //Add your code to these 2 functions. You can access the username of the request through event.value.
 
     const handleAcceptRequest = event => {
-        //doSomething(event.value);
+        const friend = {
+            username: props.username,
+            friendname: event.currentTarget.value
+        }
+        console.log("approving: " + friend.username);
+        console.log("approved: " + friend.friendname);
+        axios.post('http://localhost:3001/users/approveFriend', friend)
+        .then(res => {
+            return res.data;
+          })
+          .then(data=> {
+            console.log(data.message);
+          })
+          .then(validity => {
+            if (validity == "Request has been submitted") {
+              console.log('Request has been submitted')
+              {this.setDirectToHomeUser()}
+            }
+            else {
+              console.log('Sorry, no such user exists')
+            }
+          })
+        console.log("after approving func");
     };
 
     const handleRejectRequest = event => {
-        //doSomething(event.value);
+        const rejecter = {
+            username: props.username,
+            friendname: event.currentTarget.value
+        }
+        axios.post('http://localhost:3001/users/rejectFriend', rejecter)
     };
 
-    const notifMenu = (
-        <StyledMenu
-            anchorEl={anchorEl2}
-            // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            keepMounted
-            // transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-            id={notifID}
-            open={isNotifOpen}
-            onClose={handleNotifMenuClose}
-        >
-            <List>
-                <ListItem alignItems="flex-start">
-                    <ListItemText
-                        primary={
-                            <React.Fragment>
-                                <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className={classes.inline}
-                                    color="textPrimary"
-                                >
-                                   Naruto has sent you a friend request.     
-                                </Typography>
-                                <Button value="naruto">Accept</Button>
-                                <Button>Reject</Button>
-                            </React.Fragment>
-                        }
-                    />
-                </ListItem>
-                {pendingRequests.map((req) => (
-                    <ListItem button alignItems="flex-start">
-                    <ListItemText
-                        primary={
-                            <React.Fragment>
-                                <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className={classes.inline}
-                                    color="textPrimary"
-                                >
-                                   {req} has sent you a friend request.     
-                                </Typography>
-                                <Button value={req} onClick={handleAcceptRequest}>Accept</Button>
-                                <Button value={req} onClick={handleRejectRequest}>Reject</Button>
-                            </React.Fragment>
-                        }
-                    />
-                </ListItem>
-                ))
-                }
 
-            </List>
-        </StyledMenu>
-    );
+
+        const notifMenu= (
+            <StyledMenu
+                anchorEl={anchorEl2}
+                // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                keepMounted
+                // transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                id={notifID}
+                open={isNotifOpen}
+                onClose={handleNotifMenuClose}
+            >
+                <List>
+    
+                    {pendingRequests.map((req) => (
+                        <ListItem button alignItems="flex-start">
+                        <ListItemText
+                            primary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary"
+                                    >
+                                       {req} has sent you a friend request.     
+                                    </Typography>
+                                    <Button value={req} onClick={handleAcceptRequest}>Accept</Button>
+                                    <Button value={req} onClick={handleRejectRequest}>Reject</Button>
+                                </React.Fragment>
+                            }
+                        />
+                    </ListItem>
+                    ))
+                    }
+                    
+                    
+    
+                </List>
+            </StyledMenu>
+        );
+
+
 
 
     return (
@@ -242,6 +255,7 @@ export default function LoggedInNavBar(props) {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            defaultValue={"Hi, " + props.username}
                         />
                     </div>
                     <div className={classes.grow} />
@@ -260,7 +274,7 @@ export default function LoggedInNavBar(props) {
                             aria-controls={notifID}
                             color="inherit"
                             onClick={handleNotifMenuOpen}>
-                            <Badge badgeContent={1} color="secondary">
+                            <Badge badgeContent={pendingRequests.length} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
