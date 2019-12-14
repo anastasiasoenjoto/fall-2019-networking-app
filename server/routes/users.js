@@ -14,13 +14,18 @@ router.route('/add').post((req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const city = req.body.city;
-  const major = req.body.major;
+  var city = req.body.city;
+  var major = req.body.major;
   const GPA = req.body.GPA;
   const friends = [];
+  const pending = [];
 
+  city = city.toLowerCase();
+  city = city.replace(/\s/g,'');
+  major = major.toLowerCase();
+  major = major.replace(/\s/g,'');
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends});
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -50,6 +55,7 @@ router.route('/add').post((req, res) => {
     })
 
 });
+
 
 router.post('/validateFriend', (req, res) => {
   var friendName = req.body.searchUsername;
@@ -100,9 +106,12 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
-  console.log(username, major, GPA, city)
-  console.log('message received')
+  
 
+  major = major.toLowerCase();
+  city = city.toLowerCase();
+  major = major.replace(/\s/g,'');
+  city = city.replace(/\s/g,'');
   if (username == ''){
     User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
         if(err) {
@@ -238,6 +247,10 @@ router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
 
+  major = major.toLowerCase();
+  city = city.toLowerCase();
+  major = major.replace(/\s/g,'');
+  city = city.replace(/\s/g,'');
 
   User.find({major: major, city: city}, function(err, user){
       if(err) {
@@ -261,18 +274,90 @@ router.post('/getRecommendedUser', (req, res) => {
 
 router.post('/editProfile', async (req, res) => {
   var username = req.body.username
+  var city = req.body.city.toLowerCase();
+  city = city.replace(/\s/g,'');
+  var major = req.body.major.toLowerCase();
+  major = major.replace(/\s/g,'');
   const doc = await User.findOne({username: username});
   doc.firstName = req.body.firstName;
   doc.lastName = req.body.lastName;
   doc.email = req.body.email;
   doc.password = req.body.password;
-  doc.city = req.body.city;
-  doc.major = req.body.major;
+  doc.city = city;
+  doc.major = major;
   doc.GPA = req.body.GPA;
 
   await doc.save();
 
+});
+
+router.post('/requestFriend', async(req, res) => {
+  var requestedName = req.body.friendname;
+  var requestingName = req.body.username;
+  console.log(requestedName);
+
+  const requested = await User.findOne({username: requestedName});
+  console.log("Requested:", requested.username)
+
+  if(requested.pending.includes(requestingName) === false){
+    requested.pending.push(requestingName);
+    await requested.save();
+    res.json({"message": "Received a friend request from: " + requestingName});
+  }
+
+  /** 
+
+  const requesting = await User.findOne({username: requestingName});
+  requesting.pending.push(requestedName);
+  await requesting.save()
+  res.json({"message": "A friend request to: " + requestingName + " is submitted"});
+
+  */
+});
+
+router.post('/approveFriend', async(req, res) => {
+  var approvingName = req.body.username;
+  var approvedName = req.body.friendname;
+
+  const approved = await User.findOne({username: approvedName});
+
+  if(approved.pending.includes(approvingName) === false){
+    //res.json({"array": approved.pending});
+    approved.friends.push(approvingName);
+    console.log(approved.friends);
+    await approved.save();
+    //res.json({"message": approved.friends});
+  }
+
+  const approving = await User.findOne({username: approvingName});
+
+  var index = approving.pending.indexOf(approvedName);
+    if(index > -1){
+      approving.pending.splice(index, 1);
+      res.json({"message": approving.pending})
+      approving.friends.push(approvedName);
+      await approving.save();
+    }
+
 })
+
+router.post('/rejectFriend', async(req, res) => {
+  var rejectingName = req.body.username;
+  var rejectedName = req.body.friendname;
+
+  const rejecter = await User.findOne({username: rejectingName});
+
+  if(rejecter.pending.includes(rejectedName)){
+    console.log("rejecter: ", rejectingName);
+    console.log("rejected: ", rejectedName);
+    var index = rejecter.pending.indexOf(rejectedName);
+    if(index > -1){
+      rejecter.pending.splice(index, 1);
+    }
+    await requested.save();
+    res.json({"message": "You have rejected a friend request from:" + rejectedName});
+
+  }
+})
+
 module.exports = router;
-
-

@@ -13,8 +13,10 @@ router.route('/add').post((req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-  const city = req.body.city;
+  var city = req.body.city;
 
+  city = city.toLowerCase();
+  city = city.replace(/\s/g,'');
 
   const newCompany = new Company({companyName, username, email, password, city });
 
@@ -87,6 +89,9 @@ router.post('/getCurrentCompany', (req, res) => {
 
 router.post('/editProfile', async (req, res) => {
   var username = req.body.username
+  var city = req.body.city
+  city = city.toLowerCase()
+  city = city.replace(/\s/g,'')
   const doc = await Company.findOne({username: username});
   doc.companyName = req.body.companyName
   doc.email = req.body.email;

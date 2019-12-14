@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
-export default class AddFriends extends Component {
+export default class AddFriend extends Component {
     constructor(props) {
       super(props);
   
       this.onChangeSearchUsername = this.onChangeSearchUsername.bind(this);
-      this.onSubmitRequest = this.onSubmitRequest.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
 
       this.state = {
         searchUsername: '',
@@ -21,20 +21,17 @@ export default class AddFriends extends Component {
         })
     }
 
-    setDirectToHomeUser(){
-        tihs.setState({
-            directToHomeUser: true
-        })
-    }
 
-    onSubmitRequest(e){
+    onSubmit(e){
         e.preventDefault();
 
         const friend = {
-            friendName: this.state.searchUsername
+            friendName: this.state.searchUsername,
+            //username: this.props.location.state.username
+      
         }
-
-        axios.post('http://localhost:3001/users/validateFriend', friend)
+        console.log("Friend:", friend)
+        axios.post('http://localhost:3001/users/requestFriend', friend)
         .then(res => {
           return res.data;
         })
@@ -53,7 +50,20 @@ export default class AddFriends extends Component {
     }
 
     render(){
-        if(this.state.directToHomeUser == true){
-        }
+        return(
+          <div>
+            <h1> Add Friends Here</h1>
+            <form id = "requestFriend" onSubmit = {this.onSubmit}>
+              <label>
+                Enter the username of the person you want to add as friend:
+                <input id = "searchUsername" type = "text" value = {this.state.searchUsername} onChange = {this.onChangeSearchUsername}>
+                  </input> 
+              </label>
+              <br></br>
+              <input type='submit'></input>
+            </form>
+
+          </div>
+        )
     }
 }

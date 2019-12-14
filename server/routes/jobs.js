@@ -10,17 +10,23 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const companyUsername = req.body.companyUsername;
-    const jobTitle = req.body.jobTitle;
+    var jobTitle = req.body.jobTitle;
     const numOfPositions = req.body.numOfPositions;
     const jobDescription = req.body.jobDescription;
-    const jobLocation = req.body.jobLocation;
+    var jobLocation = req.body.jobLocation;
     const jobSalary = req.body.jobSalary;
     const gpaReq = req.body.gpaReq;
-    const majorReq = req.body.majorReq;
+    var majorReq = req.body.majorReq;
     const applicationDeadline = req.body.applicationDeadline;
     const applicants = []
-  
-  
+
+    jobTitle = jobTitle.toLowerCase()
+    jobTitle = jobTitle.replace(/\s/g,'')
+    jobLocation = jobLocation.toLowerCase()
+    jobLocation = jobLocation.replace(/\s/g,'')
+    majorReq = majorReq.toLowerCase()
+    majorReq = majorReq.replace(/\s/g,'')
+
     const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline, applicants});
   
     newJob.save()
@@ -32,21 +38,21 @@ router.route('/add').post((req, res) => {
 
 router.post('/getRecommendedJobs', (req, res) => {
   var city = req.body.city;
+  city = city.toLowerCase()
+  city = city.replace(/\s/g,'')
+
   Job.find({jobLocation: city}, function(err, job){
       if(err) {
           console.log(err);
       }
       var message;
       if(job) {
-          // console.log(user)
           message = 'found Job!';
           console.log(message)
-          // res.json({"user": Array(user)});
       }
 
       else {
         message = 'not found!';
-        // res.json({"user": []});
       }
       res.json({"jobs": Array(job), message: message})
   })
@@ -56,9 +62,11 @@ router.post('/queryJobs', (req, res) => {
   var nameOfOpenPosition = req.body.nameOfOpenPosition;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  city = city.toLowerCase()
+  city = city.replace(/\s/g,'')
   console.log('message received')
 
-  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, workLocation: city}, function(err, jobs){
+  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, jobLocation: city}, function(err, jobs){
       if(err) {
           console.log(err);
       }
@@ -79,6 +87,7 @@ router.post('/queryJobs', (req, res) => {
 
 router.post('/addApplicants', async (req, res) => {
     var jobId = req.body.jobId;
+    console.log("JOB ID", jobId)
     skills_string = req.body.skill
     var skills_array = skills_string.split(',')
     for (i=0; i<skills_array.length; i++) {
@@ -87,11 +96,14 @@ router.post('/addApplicants', async (req, res) => {
     }
     
     const applicantDetails = {
+      username: req.body.username,
       name: req.body.nameOfApplicant, 
       email: req.body.email,
       major: req.body.major, 
       GPA: req.body.GPA, 
-      skills: skills_array
+      skills: skills_array, 
+      resume: req.body.resume, 
+      date: req.body.date
     }
 
     // const doc = await Job.findOne({_id: ObjectId('5de97ec89cb4c2836ccf5bc1')});
@@ -100,6 +112,39 @@ router.post('/addApplicants', async (req, res) => {
     await doc.save();
     res.json({"message": "applicant added"})
     
+});
+
+router.post('/analytics', async (req, res) => {
+  var currentDate = new Date();
+  var oneWeek = new Date();
+  var username = req.body.username;
+  var count = 0;
+  oneWeek.setDate(currentDate.getDate() - 7);
+  oneWeek = oneWeek.getTime()
+  Job.find({})
+    .then(jobs => {
+      return jobs
+    })
+    .then(jobs => {
+      jobs.forEach(job => {
+        job.applicants.forEach(applicant => {
+          
+          if ((applicant.username == username) && ((new Date(applicant.date)).getTime()) >= oneWeek) {
+                console.log("Applicant:", applicant.username)
+                count = count + 1
+            }
+            
+        })
+      })
+      return count
+    })
+    .then(count => {
+      res.json({"count": count})
+    })
+    
+
+
+
 });
 
 
