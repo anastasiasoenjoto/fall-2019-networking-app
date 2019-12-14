@@ -70,7 +70,7 @@ class HomePage extends Component {
             redirectToApply: false , 
             jobId: '', 
             currentPending: [], 
-            currentFriends: []
+            currentFriends: [],
             jobsApplied: 0
         };
 
