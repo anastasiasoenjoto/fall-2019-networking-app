@@ -13,8 +13,9 @@ import JobQuestionnaire from './components/JobQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
-import chatRoom from "./components/chatRoom.js"
+import chatRoom from "./components/chatRoom.js";
 import ViewCompany from './components/ViewCompany';
+import AddFriend from "./components/AddFriend.js";
 
 const routing = (
     <Router>

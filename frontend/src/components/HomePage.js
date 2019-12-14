@@ -25,7 +25,6 @@ import { stat } from 'fs';
 
 const styles = theme => ({
     card: {
-        minWidth: 275,
         minHeight: 200,
         maxHeight: 200,
         outline: '1px solid gray',
@@ -67,13 +66,52 @@ class HomePage extends Component {
             users: [],
             recUsers: [[]],
             recJobs:[[]],
+            pending:[],
             redirectToApply: false , 
-            jobId: ''
+            jobId: '', 
+            jobsApplied: 0
         };
+
+        this.onAddFriend = this.onAddFriend.bind(this);
     }
+
+    onAddFriend(e){
+        e.preventDefault();
+
+        const friend = {
+            username: this.props.location.state.username,
+            friendname: e.target.id
+        }
+        axios.post('http://localhost:3001/users/requestFriend', friend)
+        .then(res => {
+          return res.data;
+        })
+        .then(data=> {
+          return data.message;
+        })
+        .then(validity => {
+          if (validity == "Request has been submitted") {
+            console.log('Request has been submitted')
+            {this.setDirectToHomeUser()}
+          }
+          else {
+            console.log('Sorry, no such user exists')
+          }
+        })
+    }
+
 
     componentDidMount() {
         console.log(this.props.location.state)
+        const analyticDetails = {
+            username: this.props.location.state.username
+        }
+        axios.post('http://localhost:3001/jobs/analytics', analyticDetails)
+        .then(res => {
+            console.log(res.data.count)
+            this.setState({jobsApplied: res.data.count})
+
+        })
         
         const user = {
             username: this.props.location.state.username
@@ -81,6 +119,8 @@ class HomePage extends Component {
         axios.post('http://localhost:3001/users/getCurrentUser', user)
         .then(res => {
             console.log("CURRENT USER DETAILS", res.data.user)
+            this.setState({pending: res.data.user[0].pending})
+            console.log("Current Pending", this.state.pending)
             return res.data.user
         })
         .then(data => {
@@ -113,6 +153,7 @@ class HomePage extends Component {
                 )
             })
             this.setState({users: users})
+            
         })
 
       } 
@@ -126,7 +167,7 @@ class HomePage extends Component {
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar typeuser={0} username={this.props.location.state.username} />
+                <LoggedInNavBar typeuser={0} username={this.props.location.state.username} pending={this.state.pending}/>
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>
@@ -134,7 +175,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have applied to 5 jobs in the past week!
+                                        You have applied to {this.state.jobsApplied} jobs in the past week!
                                         </Typography>
                                 </CardContent>
                                 <CardActions>
@@ -163,23 +204,23 @@ class HomePage extends Component {
                                                 </ListItemAvatar>
                                                 
                                                 <ListItemText
-                                                primary= {u.firstName}
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            {u.major}
-                                                        </Typography>
-                                                        <br></br>
-                                                        {u.city}
-                                                    </React.Fragment>
-                                                }
-                                            /> 
-                                                <Button variant="contained" color="primary" id={u.username}>Add</Button>
+                                                    primary= {u.firstName}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {u.major}
+                                                            </Typography>
+                                                            <br></br>
+                                                          {u.city}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                                <input type="button" id={u.username} value="Add" onClick= {this.onAddFriend}></input>
                                             </ListItem>
     
                                             ))
@@ -271,7 +312,8 @@ class HomePage extends Component {
                                                         <Link to={{
                                                             pathname: '/jobApplication',
                                                             state: {
-                                                                jobId: u._id
+                                                                jobId: u._id, 
+                                                                username: this.props.location.state.username
                                                             }
                                                             }}><Button variant="contained" id={u._id}>Apply</Button></Link>
                                                         
