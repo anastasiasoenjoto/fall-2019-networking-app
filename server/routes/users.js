@@ -106,29 +106,18 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
-  
-
-  major = major.toLowerCase();
-  city = city.toLowerCase();
-  major = major.replace(/\s/g,'');
-  city = city.replace(/\s/g,'');
-  if (username == ''){
+  console.log('message received')
+  if (username && major && GPA && city){
+    console.log('hello')
     User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
         if(err) {
             console.log(err);
         }
         var message; 
         if(user) {
-          if (user = []){
-            console.log(user)
-            message = 'No Users Found';
-            console.log(message)
-          }
-          else {
             console.log(user)
             message = 'valid';
             console.log(message)
-          }
         } else {
             message = 'invalid';
             console.log(message)
@@ -137,107 +126,60 @@ router.post('/queryUsers', (req, res) => {
         res.json({"message": message, "users" : user});
     })
   }
-  else if (major = ''){
-    User.find({username : username, GPA: {$gt :GPA}, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (major && GPA && city){
+    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
-  })
-}
-  else if (GPA = ''){
-    User.find({username : username, major : major, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
-        }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
-        }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      } 
-
-      res.json({"message": message, "users" : user});
+        res.json({"message": message, "users" : user});
     })
   }
-  else if (city = ''){
-    User.find({username : username, major : major,GPA: {$gt : GPA} }, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (username && major && GPA){
+    User.find({username: username, GPA: {$gt :GPA}, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
+        res.json({"message": message, "users" : user});
     })
   }
-  else {
-    User.find({username : username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (username && major && city){
+    User.find({username: username, major: major, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      }
-      else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
-  })
-}
+        res.json({"message": message, "users" : user});
+    })
+  }
 
 });
 
