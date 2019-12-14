@@ -147,8 +147,9 @@ export default function LoggedInNavBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <Link to={{pathname: "/displayUsers", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
-            <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
+        
+        <Link to={{pathname: "/UserProfile", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
+         <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
             
         </Menu>
     );
@@ -234,66 +235,182 @@ export default function LoggedInNavBar(props) {
 
 
 
-    return (
-        <div className={classes.grow}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Button>
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            Networking App
-                    </Typography>
-                    </Button>
+    const renderMenuComp = (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+        
+        <Link to={{pathname: "/CompanyProfile", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
+          <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+        </Menu>
+    );
 
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+
+    if(props.typeuser) {
+        if(props.typeuser === 0) {
+            return (
+                <div className={classes.grow}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <Button>
+                                <Typography className={classes.title} variant="h6" noWrap>
+                                    Networking App
+                                </Typography>
+                            </Button>
+        
+                            <div className={classes.search}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <InputBase
+                                    placeholder="Search…"
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </div>
+                            <div className={classes.grow} />
+                            <div className={classes.sectionDesktop}>
+                                <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
+                                <Button> <Link to="/displayJobs" className="nav-link">Search Jobs </Link></Button>
+                                <IconButton aria-label="show 4 new mails" color="inherit">
+                                    <Badge badgeContent={4} color="secondary">
+                                        <MailIcon />
+                                    </Badge>
+                                </IconButton>
+                                <IconButton aria-label="show new notifications" color="inherit">
+                                    <Badge badgeContent={1} color="secondary">
+                                        <NotificationsIcon />
+                                    </Badge>
+                                </IconButton>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="edit account"
+                                    aria-haspopup="true"
+                                    aria-controls={menuId}
+                                    color="inherit"
+                                    onClick={handleProfileMenuOpen}
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </div>
+                        </Toolbar>
+                    </AppBar>
+                    {renderMenu}
+              {notifMenu}
+                </div>
+            )
+        }
+        else if(props.typeuser === 1) {
+            return (
+                <div className={classes.grow}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <Button>
+                                <Typography className={classes.title} variant="h6" noWrap>
+                                    Networking App
+                            </Typography>
+                            </Button>
+        
+                            <div className={classes.search}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <InputBase
+                                    placeholder="Search…"
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </div>
+                            <div className={classes.grow} />
+                            <div className={classes.sectionDesktop}>
+                                <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
+                                <Button> <Link to="/jobPost" className="nav-link">Add Job</Link> </Button>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="edit account"
+                                    aria-haspopup="true"
+                                    aria-controls={menuId}
+                                    color="inherit"
+                                    onClick={handleProfileMenuOpen}
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </div>
+                        </Toolbar>
+                    </AppBar>
+                    {renderMenuComp}
+                </div>
+            )
+        }
+    }
+    else {
+        return (
+            <div className={classes.grow}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Button>
+                            <Typography className={classes.title} variant="h6" noWrap>
+                                Networking App
+                        </Typography>
+                        </Button>
+    
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                            defaultValue={"Hi, " + props.username}
-                        />
-                    </div>
-                    <div className={classes.grow} />
-                    <div className={classes.sectionDesktop}>
-                        <Button> <Link to="/displayUsers" style={{ textDecoration: 'none', color: 'Black' }}>Search Users</Link> </Button>
-                        <Button> <Link to="/displayJobs" style={{ textDecoration: 'none', color: 'Black' }}>Search Jobs </Link></Button>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show new notifications"
-                            color="inherit"
-                            edge="end"
-                            aria-haspopup="true"
-                            aria-controls={notifID}
-                            color="inherit"
-                            onClick={handleNotifMenuOpen}>
-                            <Badge badgeContent={pendingRequests.length} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="edit account"
-                            aria-haspopup="true"
-                            aria-controls={menuId}
-                            color="inherit"
-                            onClick={handleProfileMenuOpen}
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-            </AppBar>
-            {renderMenu}
-            {notifMenu}
-        </div>
-    )
+                        <div className={classes.grow} />
+                        <div className={classes.sectionDesktop}>
+                            <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
+                            <Button> <Link to="/displayJobs" className="nav-link">Search Jobs </Link></Button>
+                            <IconButton aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={4} color="secondary">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton aria-label="show new notifications" color="inherit">
+                                <Badge badgeContent={1} color="secondary">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                aria-label="edit account"
+                                aria-haspopup="true"
+                                aria-controls={menuId}
+                                color="inherit"
+                                onClick={handleProfileMenuOpen}
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                {renderMenu}
+          {notifMenu}
+            </div>
+        )
+    }
+
 
 }

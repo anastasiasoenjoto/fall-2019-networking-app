@@ -19,31 +19,11 @@ import Avatar from '@material-ui/core/Avatar';
 import anon from '../frontend images/anon.png';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popup from "reactjs-popup";
-import { Redirect } from 'react-router-dom';
-import { stat } from 'fs';
 
 
 const styles = theme => ({
-    card: {
-        minHeight: 200,
-        maxHeight: 200,
-        outline: '1px solid gray',
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
     title: {
         fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-    grid: {
-        position: 'absolute',
-        top: '20%',
-        transform: 'translateY(-50 %)',
     },
     enclosing: {
         flexGrow: 1,
@@ -51,67 +31,37 @@ const styles = theme => ({
     cardButtons: {
         float: 'bottom'
     },
+    card: {
+        position: 'absolute',
+        top: '20%',
+        transform: 'translateY(-50 %)',
+        width: '100%',
+
+    },
+    rowBreak: {
+        minWidth: '240',
+    },
     listCard: {
         maxHeight: 200,
-        overflow: 'auto'
+        overflow: 'auto',
     }
 });
 
-class HomePage extends Component {
+class ViewCompany extends Component {
 
 
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
-            recUsers: [[]],
-            recJobs:[[]],
-            pending:[],
-            redirectToApply: false , 
-            jobId: '', 
-            jobsApplied: 0
+            jobs: [],
+            redirectToApply: false,
+            jobId: '',
+            username: 'test',
         };
-
-        this.onAddFriend = this.onAddFriend.bind(this);
     }
 
-    onAddFriend(e){
-        e.preventDefault();
-
-        const friend = {
-            username: this.props.location.state.username,
-            friendname: e.target.id
-        }
-        axios.post('http://localhost:3001/users/requestFriend', friend)
-        .then(res => {
-          return res.data;
-        })
-        .then(data=> {
-          return data.message;
-        })
-        .then(validity => {
-          if (validity == "Request has been submitted") {
-            console.log('Request has been submitted')
-            {this.setDirectToHomeUser()}
-          }
-          else {
-            console.log('Sorry, no such user exists')
-          }
-        })
-    }
-
-
-    componentDidMount() {
+    /* componentDidMount() {
         console.log(this.props.location.state)
-        const analyticDetails = {
-            username: this.props.location.state.username
-        }
-        axios.post('http://localhost:3001/jobs/analytics', analyticDetails)
-        .then(res => {
-            console.log(res.data.count)
-            this.setState({jobsApplied: res.data.count})
-
-        })
         
         const user = {
             username: this.props.location.state.username
@@ -119,8 +69,6 @@ class HomePage extends Component {
         axios.post('http://localhost:3001/users/getCurrentUser', user)
         .then(res => {
             console.log("CURRENT USER DETAILS", res.data.user)
-            this.setState({pending: res.data.user[0].pending})
-            console.log("Current Pending", this.state.pending)
             return res.data.user
         })
         .then(data => {
@@ -153,111 +101,94 @@ class HomePage extends Component {
                 )
             })
             this.setState({users: users})
-            
         })
 
-      } 
-      
+      } */
+
 
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
         return (
-            
+
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar typeuser={0} username={this.props.location.state.username} pending={this.state.pending}/>
+                <LoggedInNavBar username={this.state.username} />
 
-                <Grid container spacing={1} className={classes.grid}>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item xs={3}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="h5" component="h2">
-                                        You have applied to {this.state.jobsApplied} jobs in the past week!
-                                        </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">See active job applications</Button>
-                                </CardActions>
-                            </Card>
+                <Card className={classes.card} style={{ height: '70%', outline: '1px solid gray' }} elevation={0}>
+                    <Grid container style={{ height: '100%' }}>
+                        <Grid container item xs={12}>
+                            <Grid item xs={3} ><Typography variant='h4'>Google</Typography></Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="h5" component="h2">
-                                        Your profile was looked at 2 times by companies in the last month!
-                                        </Typography>
-                                </CardContent>
-                            </Card>
+                        <Grid container item xs={12}>
+                            <Grid item xs={2}><Typography variant='h5'>About:</Typography></Grid>
+                            <Grid item xs={10}><Typography variant='h6'>Lorem Ipsum</Typography></Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                        <Typography variant="h5">Recommended Users</Typography>
-                            <Card className={classes.listCard}>
+                        <Grid container item xs={12}>
+                            <Grid item xs={2}><Typography variant='h5'>Employee Count:</Typography></Grid>
+                            <Grid item xs={10}><Typography variant='h6'>1</Typography></Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant='h5'>Open Jobs: </Typography>
+                            <Card className={classes.listCard} elevation={0}>
                                 <CardContent>
                                     <List className={classes.enclosing}>
-                                             {this.state.recUsers[0].map((u) => (
-                                                <ListItem button alignItems="flex-start">
-                                                <ListItemAvatar>
-                                                    <Avatar src={anon} />
-                                                </ListItemAvatar>
-                                                
-                                                <ListItemText
-                                                    primary= {u.firstName}
-                                                    secondary={
-                                                        <React.Fragment>
+
+                                    <ListItem button alignItems="flex-start">
+                                                <Popup
+                                                    trigger={<ListItemText
+                                                        primary= 'Software Engineer'
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    className={classes.inline}
+                                                                    color="textPrimary"
+                                                                >
+                                                                    NYC, NY
+                                                                </Typography>
+                                                                <br></br>
+                                                            </React.Fragment>
+                                                        }
+                                                    />
+                                                }
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
                                                             <Typography
                                                                 component="span"
-                                                                variant="body2"
+                                                                variant="h3"
                                                                 className={classes.inline}
                                                                 color="textPrimary"
                                                             >
-                                                                {u.major}
+                                                                Software Engineer
                                                             </Typography>
-                                                            <br></br>
-                                                          {u.city}
-                                                        </React.Fragment>
-                                                    }
-                                                />
-                                                <input type="button" id={u.username} value="Add" onClick= {this.onAddFriend}></input>
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Job Description: Lorem Ipsum
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        
+                                                        <Button variant="contained" id='N/A'>Apply</Button>
+                                                        
+                                                    </span>
+                                                </Popup>
                                             </ListItem>
-    
-                                            ))
-                                        }
-                                    </List>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item xs={3}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="h5" component="h2">
-                                        You have made 3 new friends in the past month!
-                                        </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">See friends</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="h5" component="h2">
-                                        Your profile was looked at 8 times by other users in the last month!
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Typography variant="h5">Recommended Jobs</Typography>
-                            <Card className={classes.listCard}>
-                                <CardContent>
-                                    <List className={classes.enclosing}>
-                                    {this.state.recJobs[0].map((u) => (
+
+                                        {/* {this.state.recJobs[0].map((u) => (
                                                 <ListItem button alignItems="flex-start">
                                                 <ListItemAvatar>
                                                     <Avatar src={anon} />
@@ -312,8 +243,7 @@ class HomePage extends Component {
                                                         <Link to={{
                                                             pathname: '/jobApplication',
                                                             state: {
-                                                                jobId: u._id, 
-                                                                username: this.props.location.state.username
+                                                                jobId: u._id
                                                             }
                                                             }}><Button variant="contained" id={u._id}>Apply</Button></Link>
                                                         
@@ -322,13 +252,13 @@ class HomePage extends Component {
                                             </ListItem>
     
                                             ))
-                                        }
+                                        } */}
                                     </List>
                                 </CardContent>
                             </Card>
                         </Grid>
                     </Grid>
-                </Grid>
+                </Card>
 
             </div>
 
@@ -336,4 +266,4 @@ class HomePage extends Component {
     }
 }
 
-export default withStyles(styles)(HomePage);
+export default withStyles(styles)(ViewCompany);
