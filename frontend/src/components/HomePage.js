@@ -69,6 +69,8 @@ class HomePage extends Component {
             pending:[],
             redirectToApply: false , 
             jobId: '', 
+            currentPending: [], 
+            currentFriends: []
             jobsApplied: 0
         };
 
@@ -125,6 +127,10 @@ class HomePage extends Component {
         })
         .then(data => {
             let users = data.map((u) => {
+                this.setState({
+                    currentPending: u.pending, 
+                    currentFriends: u.friends
+                })
                 const userDetails = {
                     major: u.major, 
                     city: u.city
@@ -162,6 +168,7 @@ class HomePage extends Component {
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
+        
         return (
             
 
@@ -204,23 +211,24 @@ class HomePage extends Component {
                                                 </ListItemAvatar>
                                                 
                                                 <ListItemText
-                                                    primary= {u.firstName}
-                                                    secondary={
-                                                        <React.Fragment>
-                                                            <Typography
-                                                                component="span"
-                                                                variant="body2"
-                                                                className={classes.inline}
-                                                                color="textPrimary"
-                                                            >
-                                                                {u.major}
-                                                            </Typography>
-                                                            <br></br>
-                                                          {u.city}
-                                                        </React.Fragment>
-                                                    }
-                                                />
-                                                <input type="button" id={u.username} value="Add" onClick= {this.onAddFriend}></input>
+                                                primary= {u.firstName}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            component="span"
+                                                            variant="body2"
+                                                            className={classes.inline}
+                                                            color="textPrimary"
+                                                        >
+                                                            {u.major}
+                                                        </Typography>
+                                                        <br></br>
+                                                        {u.city}
+                                                    </React.Fragment>
+                                                }
+                                            /> 
+                                            {((u.username == this.props.location.state.username) || (this.currentFriends.includes(u.username)) || this.currentPending.includes(u.username)) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username}>Add</Button>}
+                                                
                                             </ListItem>
     
                                             ))
