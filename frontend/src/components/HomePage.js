@@ -68,7 +68,8 @@ class HomePage extends Component {
             recJobs:[[]],
             pending:[],
             redirectToApply: false , 
-            jobId: ''
+            jobId: '', 
+            jobsApplied: 0
         };
 
         this.onAddFriend = this.onAddFriend.bind(this);
@@ -102,6 +103,15 @@ class HomePage extends Component {
 
     componentDidMount() {
         console.log(this.props.location.state)
+        const analyticDetails = {
+            username: this.props.location.state.username
+        }
+        axios.post('http://localhost:3001/jobs/analytics', analyticDetails)
+        .then(res => {
+            console.log(res.data.count)
+            this.setState({jobsApplied: res.data.count})
+
+        })
         
         const user = {
             username: this.props.location.state.username
@@ -165,7 +175,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have applied to 5 jobs in the past week!
+                                        You have applied to {this.state.jobsApplied} jobs in the past week!
                                         </Typography>
                                 </CardContent>
                                 <CardActions>
@@ -302,7 +312,8 @@ class HomePage extends Component {
                                                         <Link to={{
                                                             pathname: '/jobApplication',
                                                             state: {
-                                                                jobId: u._id
+                                                                jobId: u._id, 
+                                                                username: this.props.location.state.username
                                                             }
                                                             }}><Button variant="contained" id={u._id}>Apply</Button></Link>
                                                         
