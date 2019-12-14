@@ -64,6 +64,12 @@ const userSchema = new Schema({
 
   pending: {
     type: Array
+  }, 
+  pendingApplication: {
+    type: Array
+  },
+  closedApplication: {
+    type: Array
   }
 },
 {

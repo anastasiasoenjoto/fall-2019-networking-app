@@ -19,9 +19,11 @@ router.route('/add').post((req, res) => {
   const GPA = req.body.GPA;
   const friends = [];
   const pending = [];
+  const pendingApplication = [];
+  const closedApplication = [];
 
 
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending, pendingApplication, closedApplication});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -289,14 +291,6 @@ router.post('/requestFriend', async(req, res) => {
     res.json({"message": "Received a friend request from: " + requestingName});
   }
 
-  /** 
-
-  const requesting = await User.findOne({username: requestingName});
-  requesting.pending.push(requestedName);
-  await requesting.save()
-  res.json({"message": "A friend request to: " + requestingName + " is submitted"});
-
-  */
 });
 
 router.post('/approveFriend', async(req, res) => {
@@ -306,11 +300,9 @@ router.post('/approveFriend', async(req, res) => {
   const approved = await User.findOne({username: approvedName});
 
   if(approved.pending.includes(approvingName) === false){
-    //res.json({"array": approved.pending});
     approved.friends.push(approvingName);
     console.log(approved.friends);
     await approved.save();
-    //res.json({"message": approved.friends});
   }
 
   const approving = await User.findOne({username: approvingName});
@@ -343,5 +335,48 @@ router.post('/rejectFriend', async(req, res) => {
 
   }
 })
+
+// add function to add to pending (when they apply) 
+router.post('/addApplication', async (req, res) => {
+  var jobId = req.body.jobId;
+  var user = req.body.userId;
+  console.log("User", user)
+  console.log("JobId", jobId)
+
+  const doc = await User.findOne({_id: ObjectId(user)});
+  doc.pendingApplication.push(jobId)
+  await doc.save();
+  res.json({"message": "applicantion added"})
+  
+});
+
+// add function to move to closed (if they approve or they get rejected)
+router.post('/closeApplication', async (req, res) => {
+  var status = req.body.status;
+  var details = req.body.details;
+  var company = req.body.company;
+
+  details = details.split(':')
+  var jobId = details[0]
+  var jobTitle = details[1]
+  var user = details[2]
+
+  console.log("User", user)
+  console.log("JobId", jobId)
+  
+  const jobDetails = {
+    jobId: jobId, 
+    jobTitle: jobTitle, 
+    company: company, 
+    status: status
+  }
+  
+  const doc = await User.findOne({_id: ObjectId(user)});
+  doc.closedApplication.push(jobDetails)
+  doc.pendingApplication.pull(jobId)
+  await doc.save();
+  res.json({"message": "applicantion closed"})
+  
+});
 
 module.exports = router;

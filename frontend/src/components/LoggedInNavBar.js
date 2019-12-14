@@ -336,7 +336,12 @@ export default function LoggedInNavBar(props) {
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
                                 <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
-                                <Button> <Link to="/jobPost" className="nav-link">Add Job</Link> </Button>
+                                <Button> <Link to={{
+                                    pathname: "/jobPost", 
+                                    state: {
+                                        username: props.username
+                                    }
+                                 }} className="nav-link">Add Job</Link> </Button>
                                 <IconButton
                                     edge="end"
                                     aria-label="edit account"

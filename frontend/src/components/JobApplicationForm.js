@@ -87,9 +87,19 @@ export default class JobApplicationForm extends Component {
             date: new Date()
         }
 
+        const newApplication = {
+            username: this.props.location.state.username,
+            jobId: this.props.location.state.jobId,
+        }
+
         axios.post('http://localhost:3001/jobs/addApplicants', newJob)
         .then(res => {
             return res.data.message
+        })
+        
+        axios.post('http://localhost:3001/users/addApplication', newApplication)
+        .then(res => {
+            console.log(res.data.message)
         })
 
         this.setState({
