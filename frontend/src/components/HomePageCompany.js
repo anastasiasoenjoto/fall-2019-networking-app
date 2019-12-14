@@ -70,7 +70,7 @@ class HomePageCompany extends Component {
 
         return (
             <div>
-                <LoggedInNavBar />
+                <LoggedInNavBar typeuser={1} username={this.props.location.state.username}/>
                 <Grid container className={classes.grid}>
                     <Grid item xs={3}></Grid>
                     <Grid item xs={6}>

@@ -126,7 +126,7 @@ class HomePage extends Component {
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar />
+                <LoggedInNavBar typeuser={0} username={this.props.location.state.username} />
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>
