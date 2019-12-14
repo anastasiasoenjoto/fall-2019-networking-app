@@ -20,10 +20,7 @@ router.route('/add').post((req, res) => {
   const friends = [];
   const pending = [];
 
-  city = city.toLowerCase();
-  city = city.replace(/\s/g,'');
-  major = major.toLowerCase();
-  major = major.replace(/\s/g,'');
+
 
   const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
 
@@ -108,8 +105,7 @@ router.post('/queryUsers', (req, res) => {
   var city = req.body.city;
   console.log('message received')
   if (username && major && GPA && city){
-    console.log('hello')
-    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -145,7 +141,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && GPA){
-    User.find({username: username, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({username: username, GPA: {$gt :GPA}, major: major}, function(err, user){
         if(err) {
             console.log(err);
         }
