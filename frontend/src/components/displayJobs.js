@@ -59,7 +59,8 @@ class displayJobs extends Component {
       username: '',
       gpaRequirement: '', 
       workLocation: '',
-      jobs: []
+      jobs: [],
+      nameofOpenPosition: '',
     }
   }
 
@@ -127,26 +128,26 @@ class displayJobs extends Component {
               <Paper className={classes.paper} elevation={0}><Typography variant='h4'>Job Search Options</Typography></Paper>
             </Grid>
           </Grid>
-           {this.state.users}
+           {this.state.jobs}
           <form onSubmit={this.onSubmit}>
         <Grid container item xs={9} spacing={1}>
         <Grid item xs={3}>
           <br></br>
           <FormControl className={classes.formControl}>
-            <input id="jobtitle" type="text" value={this.state.username} onChange= {this.onChangeUsername} placeholder="Job Title"/>
+            <input id="jobtitle" type="text" value={this.state.nameOfOpenPosition} onChange= {this.onChangenameOfOpenPosition} placeholder="Job Title"/>
             </FormControl>
         </Grid>
-        <Grid container item xs={9} spacing={1} style={{outline: '1px solid gray' }}>
+        <Grid container item xs={9} spacing={1}>
             <Grid item xs={3}>
             <br></br>
               <FormControl className={classes.formControl}>
-              <input id="City" type="text" value={this.state.city} onChange= {this.onChangeCity} placeholder="Enter City"/>
+              <input id="City" type="text" value={this.state.workLocation} onChange= {this.onChangeworkLocation} placeholder="Enter City"/>
               </FormControl>
             </Grid>
             <Grid item xs={3}>
               <br></br>
               <FormControl className={classes.formControl}>
-              <input id="GPA" type="text" value={this.state.GPA} onChange= {this.onChangeGPA} placeholder="Enter GPA"/>
+              <input id="GPA" type="text" value={this.state.gpaRequirement} onChange= {this.onChangegpaRequirement} placeholder="Enter GPA"/>
               </FormControl>
             </Grid>   
             <Grid item xs={3}>

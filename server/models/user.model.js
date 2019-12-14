@@ -63,7 +63,8 @@ const userSchema = new Schema({
   },
 
   pending: {
-    type: Array
+    type: Array,
+    required: true
   }
 },
 {
