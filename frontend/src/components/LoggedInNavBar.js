@@ -158,7 +158,8 @@ export default function LoggedInNavBar(props) {
     const handleAcceptRequest = event => {
         const friend = {
             username: props.username,
-            friendname: event.currentTarget.value
+            friendname: event.currentTarget.value,
+            date: new Date()
         }
         console.log("approving: " + friend.username);
         console.log("approved: " + friend.friendname);

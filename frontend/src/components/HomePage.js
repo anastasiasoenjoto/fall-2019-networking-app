@@ -80,7 +80,7 @@ class HomePage extends Component {
 
         const friend = {
             username: this.props.location.state.username,
-            friendname: e.target.id
+            friendname: e.target.id,
         }
         axios.post('http://localhost:3001/users/requestFriend', friend)
         .then(res => {

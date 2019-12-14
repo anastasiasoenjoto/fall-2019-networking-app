@@ -303,11 +303,21 @@ router.post('/approveFriend', async(req, res) => {
   var approvingName = req.body.username;
   var approvedName = req.body.friendname;
 
+  const approvingDetails = {
+    username: req.body.username,
+    date: req.body.date
+  }
+
+  const approvedDetails = {
+    username : req.body.friendname,
+    date: req.body.date
+  }
+
   const approved = await User.findOne({username: approvedName});
 
   if(approved.pending.includes(approvingName) === false){
     //res.json({"array": approved.pending});
-    approved.friends.push(approvingName);
+    approved.friends.push(approvingDetails);
     console.log(approved.friends);
     await approved.save();
     //res.json({"message": approved.friends});
@@ -319,7 +329,7 @@ router.post('/approveFriend', async(req, res) => {
     if(index > -1){
       approving.pending.splice(index, 1);
       res.json({"message": approving.pending})
-      approving.friends.push(approvedName);
+      approving.friends.push(approvedDetails);
       await approving.save();
     }
 
@@ -343,5 +353,32 @@ router.post('/rejectFriend', async(req, res) => {
 
   }
 })
+
+router.post('/analytics', async (req, res) => {
+  var currentDate = new Date();
+  var oneWeek = new Date();
+  var username = req.body.username;
+  var count = 0;
+  oneWeek.setDate(currentDate.getDate() - 7);
+  oneWeek = oneWeek.getTime()
+  User.find({})
+    .then(users => {
+      return users
+    })
+    .then(users => {
+      users.forEach(user => {
+        user.friends.forEach(friends => {
+          if ((friends.username == username) && ((new Date(friends.date)).getTime()) >= oneWeek) {
+                count = count + 1
+            }
+        })
+      })
+      return count
+    })
+    .then(count => {
+      res.json({"count": count})
+    })
+  })
+    
 
 module.exports = router;
