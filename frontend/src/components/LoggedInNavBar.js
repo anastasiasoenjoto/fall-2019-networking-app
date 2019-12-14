@@ -259,11 +259,12 @@ export default function LoggedInNavBar(props) {
                 <div className={classes.grow}>
                     <AppBar position="static">
                         <Toolbar>
+                        <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                             <Button>
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     Networking App
                                 </Typography>
-                            </Button>
+                            </Button></Link>
 
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
@@ -321,11 +322,12 @@ export default function LoggedInNavBar(props) {
                 <div className={classes.grow}>
                     <AppBar position="static">
                         <Toolbar>
+                        <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                             <Button>
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     Networking App
                             </Typography>
-                            </Button>
+                            </Button></Link>
 
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
@@ -367,11 +369,12 @@ export default function LoggedInNavBar(props) {
             <div className={classes.grow}>
                 <AppBar position="static">
                     <Toolbar>
+                    <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                         <Button>
                             <Typography className={classes.title} variant="h6" noWrap>
                                 Networking App
                         </Typography>
-                        </Button>
+                        </Button></Link>
 
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
