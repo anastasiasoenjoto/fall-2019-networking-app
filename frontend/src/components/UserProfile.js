@@ -76,8 +76,7 @@ export default class UserProfile extends Component {
 
 
     const user = {
-      // username: this.props.location.state.username,
-      username: 'anastasia',
+      username: this.props.location.state.username,
       firstName: this.state.firstName, 
       lastName: this.state.lastName, 
       email: this.state.email,
@@ -136,22 +135,7 @@ export default class UserProfile extends Component {
           <br></br>
           <label>
             City: 
-            <select id="city" value={this.state.city} onChange= {this.onChangeCity}>
-              <option>----Select a city-----</option>
-              <optgroup label="California">
-                <option value="losAngeles">Los Angeles</option>
-                <option value="sanFrancisico">San Francisco</option>
-              </optgroup>
-              <optgroup label="New York">
-              <option value="albany">Albany</option>
-                <option value="newYork">New York </option>
-              </optgroup>
-              <optgroup label="Texas">
-              <option value="austin">Austin</option>
-                <option value="dallas">Dallas</option>
-              </optgroup>
-
-            </select>
+            <input id="city" type="text" value={this.state.city} onChange= {this.onChangeCity} />
           </label>
 
           <br></br>
@@ -159,14 +143,7 @@ export default class UserProfile extends Component {
 
             <label>
             Major: 
-            <select id="major" value={this.state.major} onChange= {this.onChangeMajor}>
-              <option>----Select your major-----</option>
-
-              <option value="anthropology">Anthropology</option>
-              <option value="businessManagement">Business Management</option>
-              <option value="computerScience">Computer Science</option>
-              <option value="dataScience">Data Science</option>
-            </select>
+            <input id="major" type="text" value={this.state.major} onChange= {this.onChangeMajor} />
           </label>
           <br></br><br></br>
           <label>

@@ -74,7 +74,7 @@ export default class CompanyProfile extends Component {
         <form id="editProfile" onSubmit={this.onSubmit} >
           <label>
             Company Name: 
-            <input id="firstName" type="text" value={this.state.companyName} onChange= {this.onChangeName} placeholder= {this.props.location.state.companyName}/>
+            <input id="companyName" type="text" value={this.state.companyName} onChange= {this.onChangeName} placeholder= {this.props.location.state.companyName}/>
           </label>
           <br></br>
           <label>
@@ -89,22 +89,7 @@ export default class CompanyProfile extends Component {
           <br></br>
           <label>
             City: 
-            <select id="city" value={this.state.city} onChange= {this.onChangeCity}>
-              <option>----Select a city-----</option>
-              <optgroup label="California">
-                <option value="losAngeles">Los Angeles</option>
-                <option value="sanFrancisico">San Francisco</option>
-              </optgroup>
-              <optgroup label="New York">
-              <option value="albany">Albany</option>
-                <option value="newYork">New York </option>
-              </optgroup>
-              <optgroup label="Texas">
-              <option value="austin">Austin</option>
-                <option value="dallas">Dallas</option>
-              </optgroup>
-
-            </select>
+            <input id="city" type="text" value={this.state.city} onChange= {this.onChangeCity} />
           </label>
 
           <br></br>

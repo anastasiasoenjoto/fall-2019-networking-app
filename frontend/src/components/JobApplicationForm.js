@@ -104,7 +104,7 @@ export default class JobApplicationForm extends Component {
     
 
     render() {
-        console.log(this.props.location.state.jobId)
+        // console.log(this.props.location.state.jobId)
         return (
           <div>
             <h1> Job Title: </h1>
@@ -118,7 +118,7 @@ export default class JobApplicationForm extends Component {
               <br></br>
               <label>
                 Phone Number: 
-               <input id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
+               <input id = "phone" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
               </label>
               <br></br>
               <label>
