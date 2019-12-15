@@ -14,15 +14,13 @@ router.route('/add').post((req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const city = req.body.city;
-  const major = req.body.major;
+  var city = req.body.city;
+  var major = req.body.major;
   const GPA = req.body.GPA;
   const friends = [];
   const pending = [];
   const pendingApplication = [];
   const closedApplication = [];
-
-
   const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending, pendingApplication, closedApplication});
 
   newUser.save()
@@ -104,25 +102,17 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
-  
-
-  if (username == ''){
-    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+  console.log('message received')
+  if (username && major && GPA && city){
+    User.find({username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
         if(err) {
             console.log(err);
         }
         var message; 
         if(user) {
-          if (user = []){
-            console.log(user)
-            message = 'No Users Found';
-            console.log(message)
-          }
-          else {
             console.log(user)
             message = 'valid';
             console.log(message)
-          }
         } else {
             message = 'invalid';
             console.log(message)
@@ -131,107 +121,60 @@ router.post('/queryUsers', (req, res) => {
         res.json({"message": message, "users" : user});
     })
   }
-  else if (major = ''){
-    User.find({username : username, GPA: {$gt :GPA}, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (major && GPA && city){
+    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
-  })
-}
-  else if (GPA = ''){
-    User.find({username : username, major : major, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
-        }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
-        }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      } 
-
-      res.json({"message": message, "users" : user});
+        res.json({"message": message, "users" : user});
     })
   }
-  else if (city = ''){
-    User.find({username : username, major : major,GPA: {$gt : GPA} }, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (username && major && GPA){
+    User.find({username: username, GPA: {$gt :GPA}, major: major}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      } else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
+        res.json({"message": message, "users" : user});
     })
   }
-  else {
-    User.find({username : username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
-      if(err) {
-          console.log(err);
-      }
-      var message; 
-      if(user) {
-        if (user = []){
-          console.log(user)
-          message = 'No Users Found';
-          console.log(message)
+  if (username && major && city){
+    User.find({username: username, major: major, city: city}, function(err, user){
+        if(err) {
+            console.log(err);
         }
-        else {
-          console.log(user)
-          message = 'valid';
-          console.log(message)
+        var message; 
+        if(user) {
+            console.log(user)
+            message = 'valid';
+            console.log(message)
+        } else {
+            message = 'invalid';
+            console.log(message)
         }
-      }
-      else {
-          message = 'invalid';
-          console.log(message)
-      }
 
-      res.json({"message": message, "users" : user});
-  })
-}
+        res.json({"message": message, "users" : user});
+    })
+  }
 
 });
 
@@ -241,6 +184,10 @@ router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
 
+  major = major.toLowerCase();
+  city = city.toLowerCase();
+  major = major.replace(/\s/g,'');
+  city = city.replace(/\s/g,'');
 
   User.find({major: major, city: city}, function(err, user){
       if(err) {
@@ -264,13 +211,17 @@ router.post('/getRecommendedUser', (req, res) => {
 
 router.post('/editProfile', async (req, res) => {
   var username = req.body.username
+  var city = req.body.city.toLowerCase();
+  city = city.replace(/\s/g,'');
+  var major = req.body.major.toLowerCase();
+  major = major.replace(/\s/g,'');
   const doc = await User.findOne({username: username});
   doc.firstName = req.body.firstName;
   doc.lastName = req.body.lastName;
   doc.email = req.body.email;
   doc.password = req.body.password;
-  doc.city = req.body.city;
-  doc.major = req.body.major;
+  doc.city = city;
+  doc.major = major;
   doc.GPA = req.body.GPA;
 
   await doc.save();
@@ -297,10 +248,21 @@ router.post('/approveFriend', async(req, res) => {
   var approvingName = req.body.username;
   var approvedName = req.body.friendname;
 
+  const approvingDetails = {
+    username: req.body.username,
+    date: req.body.date
+  }
+
+  const approvedDetails = {
+    username : req.body.friendname,
+    date: req.body.date
+  }
+
   const approved = await User.findOne({username: approvedName});
 
   if(approved.pending.includes(approvingName) === false){
-    approved.friends.push(approvingName);
+    //res.json({"array": approved.pending});
+    approved.friends.push(approvingDetails);
     console.log(approved.friends);
     await approved.save();
   }
@@ -311,7 +273,7 @@ router.post('/approveFriend', async(req, res) => {
     if(index > -1){
       approving.pending.splice(index, 1);
       res.json({"message": approving.pending})
-      approving.friends.push(approvedName);
+      approving.friends.push(approvedDetails);
       await approving.save();
     }
 
@@ -335,6 +297,7 @@ router.post('/rejectFriend', async(req, res) => {
 
   }
 })
+
 
 // add function to add to pending (when they apply) 
 router.post('/addApplication', async (req, res) => {
@@ -378,5 +341,32 @@ router.post('/closeApplication', async (req, res) => {
   res.json({"message": "applicantion closed"})
   
 });
+
+router.post('/analytics', async (req, res) => {
+  var currentDate = new Date();
+  var oneWeek = new Date();
+  var username = req.body.username;
+  var count = 0;
+  oneWeek.setDate(currentDate.getDate() - 7);
+  oneWeek = oneWeek.getTime()
+  User.find({})
+    .then(users => {
+      return users
+    })
+    .then(users => {
+      users.forEach(user => {
+        user.friends.forEach(friends => {
+          if ((friends.username == username) && ((new Date(friends.date)).getTime()) >= oneWeek) {
+                count = count + 1
+            }
+        })
+      })
+      return count
+    })
+    .then(count => {
+      res.json({"count": count})
+    })
+  })
+    
 
 module.exports = router;

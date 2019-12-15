@@ -68,26 +68,26 @@ const useStyles = makeStyles(theme => ({
 
 const StyledMenu = withStyles({
     paper: {
-      border: '1px solid #d3d4d5',
+        border: '1px solid #d3d4d5',
     },
-  })(props => (
+})(props => (
     <Menu
-      elevation={0}
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      {...props}
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
     />
-  ));
+));
 
 export default function LoggedInNavBar(props) {
-    
+
     //@Jianyi to get username of current user, just use props.username. If this doesn't work, let me know lol
     const friend = {
         username: props.username,
@@ -103,15 +103,15 @@ export default function LoggedInNavBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const [anchorEl2, setAnchorEl2] = React.useState(null);
-    
+
     const pendingRequests = props.pending || [];
 
     //console.log("Pending Array Navbar", pendingRequests)
 
     axios.post('http://localhost:3001/users/getCurrentUser', user)
-    .then(res => {
-       return res.data.user[0].pending
-     })
+        .then(res => {
+            return res.data.user[0].pending
+        })
 
 
     const menuId = 'profile-menu';
@@ -147,10 +147,10 @@ export default function LoggedInNavBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-        
-        <Link to={{pathname: "/UserProfile", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
-         <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
-            
+
+            <Link to={{ pathname: "/UserProfile", className: "nav-link", state: { username: props.username } }}><MenuItem>Edit Profile</MenuItem></Link>
+            <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
+
         </Menu>
     );
 
@@ -159,26 +159,27 @@ export default function LoggedInNavBar(props) {
     const handleAcceptRequest = event => {
         const friend = {
             username: props.username,
-            friendname: event.currentTarget.value
+            friendname: event.currentTarget.value,
+            date: new Date()
         }
         console.log("approving: " + friend.username);
         console.log("approved: " + friend.friendname);
         axios.post('http://localhost:3001/users/approveFriend', friend)
-        .then(res => {
-            return res.data;
-          })
-          .then(data=> {
-            console.log(data.message);
-          })
-          .then(validity => {
-            if (validity == "Request has been submitted") {
-              console.log('Request has been submitted')
-              {this.setDirectToHomeUser()}
-            }
-            else {
-              console.log('Sorry, no such user exists')
-            }
-          })
+            .then(res => {
+                return res.data;
+            })
+            .then(data => {
+                console.log(data.message);
+            })
+            .then(validity => {
+                if (validity == "Request has been submitted") {
+                    console.log('Request has been submitted')
+                    { this.setDirectToHomeUser() }
+                }
+                else {
+                    console.log('Sorry, no such user exists')
+                }
+            })
         console.log("after approving func");
     };
 
@@ -192,20 +193,20 @@ export default function LoggedInNavBar(props) {
 
 
 
-        const notifMenu= (
-            <StyledMenu
-                anchorEl={anchorEl2}
-                // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                keepMounted
-                // transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-                id={notifID}
-                open={isNotifOpen}
-                onClose={handleNotifMenuClose}
-            >
-                <List>
-    
-                    {pendingRequests.map((req) => (
-                        <ListItem button alignItems="flex-start">
+    const notifMenu = (
+        <StyledMenu
+            anchorEl={anchorEl2}
+            // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            keepMounted
+            // transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            id={notifID}
+            open={isNotifOpen}
+            onClose={handleNotifMenuClose}
+        >
+            <List>
+
+                {pendingRequests.map((req) => (
+                    <ListItem button alignItems="flex-start">
                         <ListItemText
                             primary={
                                 <React.Fragment>
@@ -215,7 +216,7 @@ export default function LoggedInNavBar(props) {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                       {req} has sent you a friend request.     
+                                        {req} has sent you a friend request.
                                     </Typography>
                                     <Button value={req} onClick={handleAcceptRequest}>Accept</Button>
                                     <Button value={req} onClick={handleRejectRequest}>Reject</Button>
@@ -223,47 +224,48 @@ export default function LoggedInNavBar(props) {
                             }
                         />
                     </ListItem>
-                    ))
-                    }
-                    
-                    
-    
-                </List>
-            </StyledMenu>
-        );
+                ))
+                }
+
+
+
+            </List>
+        </StyledMenu>
+    );
 
 
 
 
     const renderMenuComp = (
         <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={menuId}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
         >
-        
-        <Link to={{pathname: "/CompanyProfile", className:"nav-link", state: {username: props.username}}}><MenuItem>Edit Profile</MenuItem></Link>
-          <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+
+            <Link to={{ pathname: "/CompanyProfile", className: "nav-link", state: { username: props.username } }}><MenuItem>Edit Profile</MenuItem></Link>
+            <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
         </Menu>
     );
 
 
-    if(props.typeuser) {
-        if(props.typeuser === 0) {
+    if (props.typeuser) {
+        if (props.typeuser === 0) {
             return (
                 <div className={classes.grow}>
                     <AppBar position="static">
                         <Toolbar>
+                        <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                             <Button>
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     Networking App
                                 </Typography>
-                            </Button>
-        
+                            </Button></Link>
+
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />
@@ -286,8 +288,14 @@ export default function LoggedInNavBar(props) {
                                         <MailIcon />
                                     </Badge>
                                 </IconButton>
-                                <IconButton aria-label="show new notifications" color="inherit">
-                                    <Badge badgeContent={1} color="secondary">
+                                <IconButton aria-label="show new notifications"
+                                    color="inherit"
+                                    edge="end"
+                                    aria-haspopup="true"
+                                    aria-controls={notifID}
+                                    color="inherit"
+                                    onClick={handleNotifMenuOpen}>
+                                    <Badge badgeContent={pendingRequests.length} color="secondary">
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
@@ -305,21 +313,22 @@ export default function LoggedInNavBar(props) {
                         </Toolbar>
                     </AppBar>
                     {renderMenu}
-              {notifMenu}
+                    {notifMenu}
                 </div>
             )
         }
-        else if(props.typeuser === 1) {
+        else if (props.typeuser === 1) {
             return (
                 <div className={classes.grow}>
                     <AppBar position="static">
                         <Toolbar>
+                        <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                             <Button>
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     Networking App
                             </Typography>
-                            </Button>
-        
+                            </Button></Link>
+
                             <div className={classes.search}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />
@@ -365,12 +374,13 @@ export default function LoggedInNavBar(props) {
             <div className={classes.grow}>
                 <AppBar position="static">
                     <Toolbar>
+                    <Link style={{ textDecoration: 'none' }} to={{ pathname: "/HomePage", state: { username: props.username } }}>
                         <Button>
                             <Typography className={classes.title} variant="h6" noWrap>
                                 Networking App
                         </Typography>
-                        </Button>
-    
+                        </Button></Link>
+
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -393,8 +403,14 @@ export default function LoggedInNavBar(props) {
                                     <MailIcon />
                                 </Badge>
                             </IconButton>
-                            <IconButton aria-label="show new notifications" color="inherit">
-                                <Badge badgeContent={1} color="secondary">
+                            <IconButton aria-label="show new notifications"
+                                color="inherit"
+                                edge="end"
+                                aria-haspopup="true"
+                                aria-controls={notifID}
+                                color="inherit"
+                                onClick={handleNotifMenuOpen}>
+                                <Badge badgeContent={pendingRequests.length} color="secondary">
                                     <NotificationsIcon />
                                 </Badge>
                             </IconButton>
@@ -412,7 +428,7 @@ export default function LoggedInNavBar(props) {
                     </Toolbar>
                 </AppBar>
                 {renderMenu}
-          {notifMenu}
+                {notifMenu}
             </div>
         )
     }

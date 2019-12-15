@@ -54,7 +54,10 @@ const styles = theme => ({
     listCard: {
         maxHeight: 200,
         overflow: 'auto'
-    }
+    },
+    inline: {
+
+    },
 });
 
 class HomePage extends Component {
@@ -69,7 +72,10 @@ class HomePage extends Component {
             pending:[],
             redirectToApply: false , 
             jobId: '', 
-            jobsApplied: 0
+            currentPending: [], 
+            currentFriends: [],
+            jobsApplied: 0,
+            friendCount: 0,
         };
 
         this.onAddFriend = this.onAddFriend.bind(this);
@@ -80,7 +86,7 @@ class HomePage extends Component {
 
         const friend = {
             username: this.props.location.state.username,
-            friendname: e.target.id
+            friendname: e.target.id,
         }
         axios.post('http://localhost:3001/users/requestFriend', friend)
         .then(res => {
@@ -102,7 +108,7 @@ class HomePage extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.location.state)
+        console.log(this.props.location.state.username)
         const analyticDetails = {
             username: this.props.location.state.username
         }
@@ -111,6 +117,11 @@ class HomePage extends Component {
             console.log(res.data.count)
             this.setState({jobsApplied: res.data.count})
 
+        })
+
+        axios.post('http://localhost:3001/users/analytics', analyticDetails)
+        .then(res => {
+            this.setState({friendCount: res.data.count})
         })
         
         const user = {
@@ -125,6 +136,10 @@ class HomePage extends Component {
         })
         .then(data => {
             let users = data.map((u) => {
+                this.setState({
+                    currentPending: u.pending, 
+                    currentFriends: u.friends
+                })
                 const userDetails = {
                     major: u.major, 
                     city: u.city
@@ -162,6 +177,7 @@ class HomePage extends Component {
     render() {
         const { classes } = this.props;
         console.log(this.state.jobId)
+        
         return (
             
 
@@ -202,25 +218,28 @@ class HomePage extends Component {
                                                 <ListItemAvatar>
                                                     <Avatar src={anon} />
                                                 </ListItemAvatar>
-                                                
                                                 <ListItemText
-                                                    primary= {u.firstName}
-                                                    secondary={
-                                                        <React.Fragment>
-                                                            <Typography
-                                                                component="span"
-                                                                variant="body2"
-                                                                className={classes.inline}
-                                                                color="textPrimary"
-                                                            >
-                                                                {u.major}
-                                                            </Typography>
-                                                            <br></br>
-                                                          {u.city}
-                                                        </React.Fragment>
-                                                    }
-                                                />
-                                                <input type="button" id={u.username} value="Add" onClick= {this.onAddFriend}></input>
+                                                primary= {u.firstName}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            component="span"
+                                                            variant="body2"
+                                                            /* className={classes.inline} */
+                                                            color="textPrimary"
+                                                        >
+                                                            {u.major}
+                                                        </Typography>
+                                                        <br></br>
+                                                        {u.city}
+                                                    </React.Fragment>
+                                                }
+                                            /> 
+
+                                            {console.log(this.currentFriends, this.currentPending)}
+
+                                            {((u.username == this.props.location.state.username) ) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username} onClick= {this.onAddFriend}>Add</Button>}
+                                                
                                             </ListItem>
     
                                             ))
@@ -235,7 +254,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have made 3 new friends in the past month!
+                                        You have made {this.state.friendCount} new friends in the past month!
                                         </Typography>
                                 </CardContent>
                                 <CardActions>

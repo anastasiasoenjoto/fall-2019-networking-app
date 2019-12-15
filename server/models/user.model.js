@@ -63,6 +63,7 @@ const userSchema = new Schema({
   },
 
   pending: {
+
     type: Array
   }, 
   pendingApplication: {
@@ -70,6 +71,7 @@ const userSchema = new Schema({
   },
   closedApplication: {
     type: Array
+
   }
 },
 {

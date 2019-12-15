@@ -96,7 +96,6 @@ export default class JobQuestionnaire extends Component {
 
     onSubmit(e){
         e.preventDefault();
-
         const job = {
             companyUsername: this.state.companyUsername,
             jobTitle: this.state.jobTitle,
@@ -184,7 +183,7 @@ export default class JobQuestionnaire extends Component {
             <div>
                 <h1> Welcome! </h1>
                 <h3> post a new job here</h3>
-                <form id = "postJobForm" onSubmit = {this.onSumbit}>
+                <form id = "postJobForm">
                     <fieldset>
                         <legend className = "formHeader"> </legend>
                         <label>
@@ -205,7 +204,6 @@ export default class JobQuestionnaire extends Component {
                         <label>
                             Job Description:
                             <textarea id = "jobDescription" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description"></textarea>
-                            {/* <input id = "jobDescription" type = "text" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description" /> */}
                         </label>
                         <br></br>
                         <label>
