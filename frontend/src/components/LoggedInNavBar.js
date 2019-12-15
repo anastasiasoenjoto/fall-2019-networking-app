@@ -18,6 +18,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
     search: {
@@ -106,6 +107,8 @@ export default function LoggedInNavBar(props) {
 
     const pendingRequests = props.pending || [];
 
+    const closedApps = props.closed || [];
+
     //console.log("Pending Array Navbar", pendingRequests)
 
     axios.post('http://localhost:3001/users/getCurrentUser', user)
@@ -192,8 +195,40 @@ export default function LoggedInNavBar(props) {
     };
 
 
+    let notifMenu;
 
-    const notifMenu = (
+    const notifMenuDefault = (
+        <StyledMenu
+        anchorEl={anchorEl2}
+        // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        keepMounted
+        // transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        id={notifID}
+        open={isNotifOpen}
+        onClose={handleNotifMenuClose}
+    >
+        <List>
+            <ListItem button alignItems="flex-start">
+                <ListItemText
+                    primary={
+                        <React.Fragment>
+                            <Typography
+                                component="span"
+                                variant="body2"
+                                className={classes.inline}
+                                color="textPrimary"
+                            >
+                                You have no new notifications at this time.
+                            </Typography>
+                        </React.Fragment>
+                    }
+                />
+            </ListItem>
+        </List>
+    </StyledMenu>
+    );
+
+    const notifMenu1 = (
         <StyledMenu
             anchorEl={anchorEl2}
             // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -204,7 +239,6 @@ export default function LoggedInNavBar(props) {
             onClose={handleNotifMenuClose}
         >
             <List>
-
                 {pendingRequests.map((req) => (
                     <ListItem button alignItems="flex-start">
                         <ListItemText
@@ -226,14 +260,41 @@ export default function LoggedInNavBar(props) {
                     </ListItem>
                 ))
                 }
+                <Divider></Divider>
+                {closedApps.map((req) => {
+                    const appStatus = '';
+                    if(req.status === true) {
+                        const appStatus = 'accepted';
+                    }
+                    else {
+                        const appStatus = 'rejected';
+                    }
+                    return (
+                    <ListItem button alignItems="flex-start">
+                        <ListItemText
+                            primary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary"
+                                    >
+                                        Your application for the position of {req.jobTitle} at {req.company} was {appStatus}.
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                        />
+                    </ListItem>
+                    )
+                })
+                }
 
 
 
             </List>
         </StyledMenu>
-    );
-
-
+    ); 
 
 
     const renderMenuComp = (
@@ -247,13 +308,19 @@ export default function LoggedInNavBar(props) {
             onClose={handleMenuClose}
         >
 
-            <Link to={{ pathname: "/CompanyProfile", className: "nav-link", state: { username: props.username } }}><MenuItem>Edit Profile</MenuItem></Link>
-            <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+            <Link to={{ pathname: "/CompanyProfile", className: "nav-link", state: { username: props.username } }} style={{ textDecoration: 'none', color: 'Black' }}><MenuItem>Edit Profile</MenuItem></Link>
+            <MenuItem onClick={handleMenuClose}><Link to="../" style={{ textDecoration: 'none', color: 'Black' }}>Sign Out</Link></MenuItem>
         </Menu>
     );
 
 
     if (props.typeuser) {
+        if(pendingRequests.length === 0 && closedApps.length === 0 ) {
+            notifMenu = notifMenuDefault;
+        }
+        else {
+            notifMenu = notifMenu1;
+        }
         if (props.typeuser === 0) {
             return (
                 <div className={classes.grow}>
@@ -295,7 +362,7 @@ export default function LoggedInNavBar(props) {
                                     aria-controls={notifID}
                                     color="inherit"
                                     onClick={handleNotifMenuOpen}>
-                                    <Badge badgeContent={pendingRequests.length} color="secondary">
+                                    <Badge badgeContent={pendingRequests.length + closedApps.length} color="secondary">
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
@@ -370,6 +437,12 @@ export default function LoggedInNavBar(props) {
         }
     }
     else {
+        if(pendingRequests.length === 0 && closedApps.length === 0 ) {
+            notifMenu = notifMenuDefault;
+        }
+        else {
+            notifMenu = notifMenu1;
+        }
         return (
             <div className={classes.grow}>
                 <AppBar position="static">
