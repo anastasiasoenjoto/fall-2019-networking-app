@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme';
 import { mount } from 'enzyme';
-import JobApplication from '../frontend/src/components/JobApplicationForm'
+import JobApplication from '../frontend/src/components/JobApplicationForm.js'
 
 
 

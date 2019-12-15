@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme';
 import { mount } from 'enzyme';
-import UserProfile from '../frontend/src/components/userProfile'
+import UserProfile from '../frontend/src/components/UserProfile.js'
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme';
 import { mount } from 'enzyme';
-import JobQuestionnaire from '../frontend/src/components/JobQuestionnaire'
+import JobQuestionnaire from '../frontend/src/components/JobQuestionnaire.js'
 
 
 
