@@ -326,6 +326,7 @@ router.post('/closeApplication', async (req, res) => {
 
   console.log("User", user)
   console.log("JobId", jobId)
+  console.log("jobTitle", jobTitle)
   
   const jobDetails = {
     jobId: jobId, 
@@ -334,7 +335,7 @@ router.post('/closeApplication', async (req, res) => {
     status: status
   }
   
-  const doc = await User.findOne({_id: ObjectId(user)});
+  const doc = await User.findOne({_id: user});
   doc.closedApplication.push(jobDetails)
   doc.pendingApplication.pull(jobId)
   await doc.save();

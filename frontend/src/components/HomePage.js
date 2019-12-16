@@ -79,7 +79,7 @@ class HomePage extends Component {
             activeApps: [],
             closedApps: [],
             friends: [],
-            
+            id: '',
         };
 
         this.onAddFriend = this.onAddFriend.bind(this);
@@ -133,7 +133,8 @@ class HomePage extends Component {
         }
         axios.post('http://localhost:3001/users/getCurrentUser', user)
             .then(res => {
-                console.log("CURRENT USER DETAILS", res.data.user)
+                console.log("CURRENT USER DETAILS", res.data.user);
+                this.setState({id: res.data.user[0]._id});
                 this.setState({ pending: res.data.user[0].pending })
                 console.log("Current Pending", this.state.pending)
                 this.setState({ activeApps: res.data.user[0].pendingApplication });
@@ -373,7 +374,8 @@ class HomePage extends Component {
                                                             pathname: '/jobApplication',
                                                             state: {
                                                                 jobId: u._id,
-                                                                username: this.props.location.state.username
+                                                                username: this.props.location.state.username,
+                                                                userID: this.state.id,
                                                             }
                                                         }}><Button variant="contained" id={u._id}>Apply</Button></Link>
 

@@ -122,6 +122,7 @@ class HomePageCompany extends Component {
                             </ExpansionPanelSummary>
                             {u.applicants.map((a) => (
                                  <ExpansionPanelDetails>
+                                     {u._id + ":" + u.jobTitle + ":" + a._id}
                                  <ListItem className={classes.item}>
                                      <Typography variant='h5'>{a.name}</Typography>
                                      <Grid container alignItems="flex-start" justify="flex-end" direction="row">
@@ -161,8 +162,8 @@ class HomePageCompany extends Component {
                                                         </div>
                                                         <br></br>
                                                         
-                                                        <Button variant="contained" id={u._id + ":" + u._jobTitle + ":" + a._id} onClick={this.onClickAccept}>Accept</Button>
-                                                        <Button variant="contained" id={u._id + ":" + u._jobTitle + ":" + a._id} onClick={this.onClickReject}>Reject</Button>
+                                                        <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickAccept}>Accept</Button>
+                                                        <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickReject}>Reject</Button>
                                                     </span>
                                                 </Popup>  
                                      </Grid>

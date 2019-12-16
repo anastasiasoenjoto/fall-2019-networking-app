@@ -106,7 +106,8 @@ router.post('/addApplicants', async (req, res) => {
       GPA: req.body.GPA, 
       skills: skills_array, 
       resume: req.body.resume, 
-      date: req.body.date
+      date: req.body.date,
+      _id: req.body._id,
     }
 
     // const doc = await Job.findOne({_id: ObjectId('5de97ec89cb4c2836ccf5bc1')});

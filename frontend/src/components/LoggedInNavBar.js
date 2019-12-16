@@ -262,12 +262,12 @@ export default function LoggedInNavBar(props) {
                 }
                 <Divider></Divider>
                 {closedApps.map((req) => {
-                    const appStatus = '';
+                    let appStatus = '';
                     if(req.status === true) {
-                        const appStatus = 'accepted';
+                        appStatus = 'accepted';
                     }
                     else {
-                        const appStatus = 'rejected';
+                        appStatus = 'rejected';
                     }
                     return (
                     <ListItem button alignItems="flex-start">
@@ -313,8 +313,7 @@ export default function LoggedInNavBar(props) {
         </Menu>
     );
 
-
-    if (props.typeuser) {
+    if (props.typeuser !== undefined) {
         if(pendingRequests.length === 0 && closedApps.length === 0 ) {
             notifMenu = notifMenuDefault;
         }
@@ -483,7 +482,7 @@ export default function LoggedInNavBar(props) {
                                 aria-controls={notifID}
                                 color="inherit"
                                 onClick={handleNotifMenuOpen}>
-                                <Badge badgeContent={pendingRequests.length} color="secondary">
+                                <Badge badgeContent={pendingRequests.length + closedApps.length} color="secondary">
                                     <NotificationsIcon />
                                 </Badge>
                             </IconButton>

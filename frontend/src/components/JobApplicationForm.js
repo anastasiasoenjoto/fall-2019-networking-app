@@ -84,7 +84,8 @@ export default class JobApplicationForm extends Component {
             GPA: this.state.GPA, 
             skill: this.state.skill, 
             resume: this.state.resume, 
-            date: new Date()
+            date: new Date(),
+            _id: this.props.location.state.userID,
         }
 
         const newApplication = {
