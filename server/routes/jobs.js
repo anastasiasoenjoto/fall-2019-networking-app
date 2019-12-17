@@ -60,13 +60,14 @@ router.post('/getRecommendedJobs', (req, res) => {
 
 router.post('/queryJobs', (req, res) => {
   var nameOfOpenPosition = req.body.nameOfOpenPosition;
-  var GPA = req.body.GPA;
-  var city = req.body.city;
-  city = city.toLowerCase()
-  city = city.replace(/\s/g,'')
+  var GPA = req.body.gpaRequirement;
+  var city = req.body.workLocation;
+  city2 = city.toLowerCase();
+  city2 = city2.replace(/\s/g,'');
+  console.log(nameOfOpenPosition, GPA, city, city2)
   console.log('message received')
 
-  Job.find({nameOfOpenPosition: nameOfOpenPosition, gpaRequirement: {$gt :GPA}, jobLocation: city}, function(err, jobs){
+  Job.find({jobTitle: nameOfOpenPosition, gpaReq: {$gt :GPA}, jobLocation:{ $in : [city,city2]}}, function(err, jobs){
       if(err) {
           console.log(err);
       }

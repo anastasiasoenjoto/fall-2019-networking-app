@@ -112,7 +112,6 @@ class displayUsers extends Component {
             <div key={u.username}>
               <h4>Name: {u.firstName} {u.lastName}</h4>
               <p><i>Email: {u.email}</i></p>
-
             </div>
           )
         })
@@ -130,6 +129,7 @@ class displayUsers extends Component {
   }
   render() {
     const { classes } = this.props;
+
     return (
       <div className={classes.root}>
       <LoggedInNavBar />
