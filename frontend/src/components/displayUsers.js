@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import anon from '../frontend images/anon.png';
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -112,6 +113,8 @@ class displayUsers extends Component {
             <div key={u.username}>
               <h4>Name: {u.firstName} {u.lastName}</h4>
               <p><i>Email: {u.email}</i></p>
+              <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username} onClick= {this.onAddFriend}>Add</Button>
+
             </div>
           )
         })
