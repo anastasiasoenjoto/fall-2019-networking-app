@@ -21,6 +21,7 @@ open 2 terminals one to run frontend one to run backend <br>
 to run frontend: <br>
  - cd frontend <br>
  - npm start <br>
+
 to run server: <br>
  - cd server <br>
  - nodemon server 
