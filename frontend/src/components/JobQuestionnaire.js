@@ -109,7 +109,20 @@ export default class JobQuestionnaire extends Component {
         }
 
         axios.post('http://localhost:3001/jobs/add', job)
-            .then(res => console.log(res.data));
+            .then(res => {
+                console.log(res.data)
+                return res.data.jobId
+            })
+            .then(jobId => {
+                const jobDetails = {
+                    companyUsername: this.props.location.state.username, 
+                    jobId: jobId
+                }
+                console.log(jobDetails)
+                axios.post('http://localhost:3001/company/addJob', jobDetails)
+                     .then(res => console.log(res.data))
+
+            })
         this.setState({redirectToHome: true});
     }
 
@@ -129,7 +142,20 @@ export default class JobQuestionnaire extends Component {
         }
 
         axios.post('http://localhost:3001/jobs/add', job)
-            .then(res => console.log(res.data));
+            .then(res => {
+                console.log(res.data)
+                return res.data.jobId
+            })
+            .then(jobId => {
+                const jobDetails = {
+                    companyUsername: this.props.location.state.username, 
+                    jobId: jobId
+                }
+                console.log(jobDetails)
+                axios.post('http://localhost:3001/company/addJob', jobDetails)
+                    .then(res => console.log(res.data))
+
+            })
 
         this.setState({
             companyUsername: '',
@@ -145,7 +171,6 @@ export default class JobQuestionnaire extends Component {
         })
     }
     render(){
-
         if (this.state.redirectToHome == true) {
             return <Redirect to={{
                 pathname: "/HomePageCompany",

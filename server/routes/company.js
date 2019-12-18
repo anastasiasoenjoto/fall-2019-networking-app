@@ -13,12 +13,14 @@ router.route('/add').post((req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
+  const jobs = [];
   var city = req.body.city;
+
 
   city = city.toLowerCase();
   city = city.replace(/\s/g,'');
 
-  const newCompany = new Company({companyName, username, email, password, city });
+  const newCompany = new Company({companyName, username, email, password, city, jobs });
 
   newCompany.save()
     .then(() => res.json(
@@ -100,7 +102,22 @@ router.post('/editProfile', async (req, res) => {
 
   await doc.save();
 
-})
+});
+
+
+router.post('/addJob', async (req, res) => {
+  var username = req.body.companyUsername
+  console.log("username: ", req.body.companyUsername)
+  var jobId = req.body.jobId
+  const doc = await Company.findOne({username: username});
+  doc.jobs.push(jobId)
+  await doc.save();
+  res.json({message: 'job added'})
+});
+
+
+
+
 
 
 
