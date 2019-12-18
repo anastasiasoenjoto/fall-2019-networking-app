@@ -17,12 +17,14 @@ The motivation of the project is the struggles that people face when they are tr
 
 ## Running <br> 
 git clone https://github.com/nyu-software-engineering/fall-2019-networking-app.git <br>
-run npm install <br>
+
 open 2 terminals one to run frontend one to run backend <br>
 to run frontend: <br>
+ - run npm install <br>
  - cd frontend <br>
  - npm start <br>
 
 to run server: <br>
+ - run npm install <br>
  - cd server <br>
  - nodemon server 
