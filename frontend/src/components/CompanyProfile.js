@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
+import { ListItemText, ListItem, List } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
+const styles = theme => ({
+  root: {
+      border: '2px solid black',
+      width: '40%'
+  },
+});
 
-export default class CompanyProfile extends Component {
+class CompanyProfile extends Component {
   constructor(props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -19,6 +28,17 @@ export default class CompanyProfile extends Component {
       city: this.props.location.state.city  
     }
 
+  }
+
+  componentDidMount(){
+    const company = {
+      username: this.props.location.state.username
+    }
+    axios.post('http://localhost:3001/company/getCurrentCompany', company)
+    .then(res => {
+        this.setState({companyName: res.data.user[0].companyName, email: res.data.user[0].email, password: res.data.user[0].password, city: res.data.user[0].city})
+        return res.data.user
+    })
   }
 
   onChangeName(e) {
@@ -67,51 +87,33 @@ export default class CompanyProfile extends Component {
   }
   
   render() {
+
+    const { classes } = this.props;
    
     return (
-      <div>
-        <h1> Edit Profile </h1>
-        <form id="editProfile" onSubmit={this.onSubmit} >
-          <label>
-            Company Name: 
-            <input id="firstName" type="text" value={this.state.companyName} onChange= {this.onChangeName} placeholder= {this.props.location.state.companyName}/>
-          </label>
-          <br></br>
-          <label>
-            E-mail: 
-            <input id="email" type="email" value={this.state.email} onChange= {this.onChangeEmail} placeholder={this.props.location.state.email}/>
-          </label>
-          <br></br>
-          <label>
-            Password: 
-            <input id="password" type="password" value={this.state.password} onChange= {this.onChangePassword} />
-          </label>
-          <br></br>
-          <label>
-            City: 
-            <select id="city" value={this.state.city} onChange= {this.onChangeCity}>
-              <option>----Select a city-----</option>
-              <optgroup label="California">
-                <option value="losAngeles">Los Angeles</option>
-                <option value="sanFrancisico">San Francisco</option>
-              </optgroup>
-              <optgroup label="New York">
-              <option value="albany">Albany</option>
-                <option value="newYork">New York </option>
-              </optgroup>
-              <optgroup label="Texas">
-              <option value="austin">Austin</option>
-                <option value="dallas">Dallas</option>
-              </optgroup>
-
-            </select>
-          </label>
-
-          <br></br>
-          <input type="submit"></input>
-        </form>
+      <div className={classes.root}>
+        <List>
+          <ListItemText primary="Edit Profile"></ListItemText>
+        
+        <ListItem>
+        <input style={{width: "40%"}} id="firstName" type="text" value={this.state.companyName} onChange= {this.onChangeName} placeholder= {this.props.location.state.companyName}/>
+        </ListItem>
+        <ListItem>
+         <input style={{width: "40%"}} id="email" type="email" value={this.state.email} onChange= {this.onChangeEmail} placeholder={this.props.location.state.email}/>
+        </ListItem>
+        <ListItem>
+        <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange= {this.onChangePassword} />
+        </ListItem>
+        <ListItem>
+        <input style={{width: "40%"}} id="city" type="text" value={this.state.city} onChange= {this.onChangeCity} />
+        </ListItem>
+        <ListItem>
+          <Button variant="contained" onClick={this.onSubmit}>Submit</Button>
+        </ListItem>
+        </List>
       </div> 
     )
   }
 }
+export default withStyles(styles)(CompanyProfile);;
 
