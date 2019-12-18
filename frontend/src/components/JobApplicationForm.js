@@ -26,7 +26,8 @@ export default class JobApplicationForm extends Component {
           GPA: '',
           PhoneNumber:'', 
           skill: '', 
-          resume: ''
+          resume: '', 
+          redirectBackToHome: false
       }  
     }
 
@@ -97,6 +98,8 @@ export default class JobApplicationForm extends Component {
         .then(res => {
             return res.data.message
         })
+
+        console.log("NEW APP", newApplication)
         
         axios.post('http://localhost:3001/users/addApplication', newApplication)
         .then(res => {
@@ -108,13 +111,21 @@ export default class JobApplicationForm extends Component {
             email: '',
             major: '',
             GPA: '', 
-            skill: ''
+            skill: '', 
+            redirectBackToHome: true
         })
     }
 
     
 
     render() {
+        if (this.state.redirectBackToHome == true) {
+            return <Redirect to={{
+                pathname: "/HomePage",
+                state: { username: this.props.location.state.username }
+            }}
+            />
+        }
         console.log(this.props.location.state.jobId)
         return (
           <div>

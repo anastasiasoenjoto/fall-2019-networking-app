@@ -306,11 +306,11 @@ router.post('/rejectFriend', async(req, res) => {
 // add function to add to pending (when they apply) 
 router.post('/addApplication', async (req, res) => {
   var jobId = req.body.jobId;
-  var user = req.body.userId;
+  var user = req.body.username;
   console.log("User", user)
   console.log("JobId", jobId)
 
-  const doc = await User.findOne({_id: ObjectId(user)});
+  const doc = await User.findOne({username: user});
   doc.pendingApplication.push(jobId)
   await doc.save();
   res.json({"message": "applicantion added"})
