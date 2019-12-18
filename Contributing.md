@@ -38,6 +38,19 @@ Talk to that person and figure out what is going on. If it was because of a pers
 ### Rules to prioritize the Product Backlog:
 Start with the basic features. Also, balance the load, no challenging parts back to back. Make sure every team member’s area of work in the same sprint is relevant to each other’s and covers one area’s features. 
 
+## Running <br> 
+git clone https://github.com/nyu-software-engineering/fall-2019-networking-app.git <br>
+
+open 2 terminals one to run frontend one to run backend <br>
+to run frontend: <br>
+ - run npm install <br>
+ - cd frontend <br>
+ - npm start <br>
+
+to run server: <br>
+ - run npm install <br>
+ - cd server <br>
+ - nodemon server 
 
 
 
