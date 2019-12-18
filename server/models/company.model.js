@@ -31,6 +31,10 @@ const companySchema = new Schema({
     trim: true,
     minlength: 3
   },
+  jobs:{
+    type: Array
+
+  },
   city:{
     type: String,
     required: true,

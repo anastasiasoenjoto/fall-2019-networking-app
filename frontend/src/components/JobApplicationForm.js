@@ -96,12 +96,23 @@ class JobApplicationForm extends Component {
             GPA: this.state.GPA, 
             skill: this.state.skill, 
             resume: this.state.resume, 
-            date: new Date()
+            date: new Date(),
+            _id: this.props.location.state.userID,
+        }
+
+        const newApplication = {
+            username: this.props.location.state.username,
+            jobId: this.props.location.state.jobId,
         }
 
         axios.post('http://localhost:3001/jobs/addApplicants', newJob)
         .then(res => {
             return res.data.message
+        })
+        
+        axios.post('http://localhost:3001/users/addApplication', newApplication)
+        .then(res => {
+            console.log(res.data.message)
         })
 
         this.setState({

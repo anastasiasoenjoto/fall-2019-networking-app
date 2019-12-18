@@ -19,10 +19,9 @@ router.route('/add').post((req, res) => {
   const GPA = req.body.GPA;
   const friends = [];
   const pending = [];
-
-
-
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
+  const pendingApplication = [];
+  const closedApplication = [];
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending, pendingApplication, closedApplication});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -103,9 +102,14 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  major2 = major.toLowerCase();
+  city2 = city.toLowerCase();
+  major2 = major2.replace(/\s/g,'');
+  city2= city2.replace(/\s/g,'');
+  console.log(major2, city2, major, city)
   console.log('message received')
   if (username && major && GPA && city){
-    User.find({username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({username, major: { $in : [major, major2]} , GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -123,7 +127,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (major && GPA && city){
-    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({ major: { $in : [major, major2]}, GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -141,7 +145,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && GPA){
-    User.find({username: username, GPA: {$gt :GPA}, major: major}, function(err, user){
+    User.find({username: username, GPA: {$gt :GPA},  major: { $in : [major, major2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -159,7 +163,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && city){
-    User.find({username: username, major: major, city: city}, function(err, user){
+    User.find({username: username, major: { $in : [major, major2]}, city:  { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -184,7 +188,6 @@ router.post('/queryUsers', (req, res) => {
 router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
-
   major = major.toLowerCase();
   city = city.toLowerCase();
   major = major.replace(/\s/g,'');
@@ -243,14 +246,6 @@ router.post('/requestFriend', async(req, res) => {
     res.json({"message": "Received a friend request from: " + requestingName});
   }
 
-  /** 
-
-  const requesting = await User.findOne({username: requestingName});
-  requesting.pending.push(requestedName);
-  await requesting.save()
-  res.json({"message": "A friend request to: " + requestingName + " is submitted"});
-
-  */
 });
 
 router.post('/approveFriend', async(req, res) => {
@@ -274,7 +269,6 @@ router.post('/approveFriend', async(req, res) => {
     approved.friends.push(approvingDetails);
     console.log(approved.friends);
     await approved.save();
-    //res.json({"message": approved.friends});
   }
 
   const approving = await User.findOne({username: approvingName});
@@ -307,6 +301,54 @@ router.post('/rejectFriend', async(req, res) => {
 
   }
 })
+
+
+// add function to add to pending (when they apply) 
+router.post('/addApplication', async (req, res) => {
+  var jobId = req.body.jobId;
+  var user = req.body.userId;
+  console.log("User", user)
+  console.log("JobId", jobId)
+
+  const doc = await User.findOne({_id: ObjectId(user)});
+  doc.pendingApplication.push(jobId)
+  await doc.save();
+  res.json({"message": "applicantion added"})
+  
+});
+
+// add function to move to closed (if they approve or they get rejected)
+router.post('/closeApplication', async (req, res) => {
+
+  console.log("hello", req.body.details.split(':'));
+
+  var status = req.body.status;
+  var details = req.body.details;
+  var company = req.body.company;
+
+  details = details.split(':')
+  var jobId = details[0]
+  var jobTitle = details[1]
+  var user = details[2]
+
+  console.log("User", user)
+  console.log("JobId", jobId)
+  console.log("jobTitle", jobTitle)
+  
+  const jobDetails = {
+    jobId: jobId, 
+    jobTitle: jobTitle, 
+    company: company, 
+    status: status
+  }
+  
+  const doc = await User.findOne({_id: user});
+  doc.closedApplication.push(jobDetails)
+  doc.pendingApplication.pull(jobId)
+  await doc.save();
+  res.json({"message": "applicantion closed"})
+  
+});
 
 router.post('/analytics', async (req, res) => {
   var currentDate = new Date();
