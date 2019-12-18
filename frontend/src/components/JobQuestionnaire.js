@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { ListItemText, ListItem, List, Typography,Button  } from '@material-ui/core';
+const styles = theme => ({
+    root: {
+        border: '2px solid black',
+        width: '40%', 
+        margin: 'auto'
+    },
+    
+  });
 
-
-export default class JobQuestionnaire extends Component {
+class JobQuestionnaire extends Component {
     constructor(props) {
         super(props);
         this.onChangeCompanyUsername = this.onChangeCompanyUsername.bind(this);
@@ -179,71 +188,51 @@ export default class JobQuestionnaire extends Component {
             />
         }
 
+        const { classes } = this.props;
         return(
-            <div>
-                <h1> Welcome! </h1>
-                <h3> post a new job here</h3>
-                <form id = "postJobForm">
-                    <fieldset>
-                        <legend className = "formHeader"> </legend>
-                        <label>
-                             Company Username: 
-                             <input id = "companyUsername" type = "text" value = {this.state.companyUsername} onChange = {this.onChangeCompanyUsername} placeholder = "Enter Your Username" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Job Title: 
-                            <input id = "jobTitle" type = "text" value = {this.state.jobTitle} onChange = {this.onChangeJobTitle} placeholder = "Enter job title" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Number of Employees Recruiting: 
-                            <input id = "numOfPositions" type = "number" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Job Description:
-                            <textarea id = "jobDescription" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description"></textarea>
-                        </label>
-                        <br></br>
-                        <label>
-                            Job Location:
-                            <input id = "jobLocation" type = "text" value = {this.state.jobLocation} onChange = {this.onChangeJobLocation} placeholder = "Enter job location" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Salary Per Hour:
-                            <input id = "jobSalary" type = "text" value = {this.state.jobSalary} onChange = {this.onChangeJobSalary} placeholder = "Enter salary per hour" />
-                        </label>
-                        <br></br>
-                        <label>
-                            GPA Requirement:
-                            <input id = "gpaReq" type = "text" value = {this.state.gpaReq} onChange = {this.onChangeGpaReq} placeholder = "Enter GPA Requirement" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Major Requirement:
-                            <input id = "majorReq" type = "text" value = {this.state.majorReq} onChange = {this.onChangeMajorReq} placeholder = "Enter major Requirement" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Application Deadline:
-                            <input id = "applicationDeadline" type = "date" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
-                        </label>
-                        <br></br>
-                        <label>
-                            Skills Needed(seperated by comma):<br></br>
-                            <i>ex. Java, C, Python</i><br></br>
-                            <input id = "skills" type = "text" value = {this.state.skills} onChange = {this.onChangeSkills} placeholder = "Enter your skills" />
-                        </label>
-                       
-                        <br></br>
-                        
-                    </fieldset>
-                    <input type="button" value="Save and Exit" onClick={this.onSubmit}></input>
-                    <input type="button" value="Save and Add Another" onClick={this.onSubmitNext}></input>
-                </form>
+            <div className={classes.root}>
+                <List>
+                    <ListItemText primary={<Typography component="span" variant='h3' color="textPrimary">Post a new job</Typography>}></ListItemText>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "companyUsername" type = "text" value = {this.state.companyUsername} onChange = {this.onChangeCompanyUsername} placeholder = "Enter Your Username" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "jobTitle" type = "text" value = {this.state.jobTitle} onChange = {this.onChangeJobTitle} placeholder = "Enter job title" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "numOfPositions" type = "number" value = {this.state.numOfPositions} onChange = {this.onChangeNumOfPositions} placeholder = "Enter number of employees needed" />
+                    </ListItem>
+                    <ListItem>
+                        <textarea style={{width: "60%"}} id = "jobDescription" value = {this.state.jobDescription} onChange = {this.onChangeJobDescription} placeholder = "Enter job description"></textarea>
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "jobLocation" type = "text" value = {this.state.jobLocation} onChange = {this.onChangeJobLocation} placeholder = "Enter job location" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "jobSalary" type = "text" value = {this.state.jobSalary} onChange = {this.onChangeJobSalary} placeholder = "Enter salary per hour" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "gpaReq" type = "text" value = {this.state.gpaReq} onChange = {this.onChangeGpaReq} placeholder = "Enter GPA Requirement" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "majorReq" type = "text" value = {this.state.majorReq} onChange = {this.onChangeMajorReq} placeholder = "Enter major Requirement" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "applicationDeadline" type = "date" value = {this.state.applicationDeadline} onChange = {this.onChangeApplicationDeadline} placeholder = "Enter application deadline" />
+                    </ListItem>
+                    <ListItem>
+                        <input style={{width: "60%"}} id = "skills" type = "text" value = {this.state.skills} onChange = {this.onChangeSkills} placeholder = "Enter your skills seperated by comma" />
+                    </ListItem>
+                    <ListItem>
+                        <Button variant='contained' onClick={this.onSubmit}>Save and Exit</Button>
+                        <Button variant='contained' onClick={this.onSubmitNext}>Save and Add Another</Button>
+                    
+                    </ListItem>
+                </List>
+                
             </div>
         )
     }
 }
+export default withStyles(styles)(JobQuestionnaire);;
+

@@ -373,9 +373,14 @@ class HomePage extends Component {
                                                         <Link to={{
                                                             pathname: '/jobApplication',
                                                             state: {
-                                                                jobId: u._id,
+
+                                                                jobId: u._id, 
                                                                 username: this.props.location.state.username,
-                                                                userID: this.state.id,
+                                                                jobDescription: u.jobDescription,
+                                                                jobTitle: u.jobTitle, 
+                                                                companyUsername: u.companyUsername,
+                                                                userID: this.state.id
+
                                                             }
                                                         }}><Button variant="contained" id={u._id}>Apply</Button></Link>
 
