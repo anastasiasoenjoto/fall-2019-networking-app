@@ -5,11 +5,14 @@ import {
   connectToChatkit,
   connectToRoom,
   sendMessage,
+  sendDM,
 } from './ChatMethods';
 
 import Dialog from './Dialog';
 import RoomList from './RoomList';
 import ChatSession from './ChatSession';
+import RoomUsers from './RoomUsers';
+
 
 
 import 'skeleton-css/css/normalize.css';
@@ -36,6 +39,8 @@ class ChatRoom extends Component {
     this.connectToChatkit = connectToChatkit.bind(this);
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
+    this.sendDM = sendDM.bind(this);
+
 
 
   }
@@ -91,6 +96,13 @@ class ChatRoom extends Component {
               </footer>
             </section>
             <aside className="sidebar right-sidebar">
+              {currentRoom ? (
+                  <RoomUsers
+                    currentUser={currentUser}
+                    sendDM={this.sendDM}
+                    roomUsers={roomUsers}
+                  />
+                ) : null}
               {showLogin ? (
                 <Dialog
                   userId={userId}
