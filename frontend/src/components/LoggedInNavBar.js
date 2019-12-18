@@ -313,6 +313,7 @@ export default function LoggedInNavBar(props) {
         </Menu>
     );
 
+
     if (props.typeuser !== undefined) {
         if(pendingRequests.length === 0 && closedApps.length === 0 ) {
             notifMenu = notifMenuDefault;
@@ -320,6 +321,7 @@ export default function LoggedInNavBar(props) {
         else {
             notifMenu = notifMenu1;
         }
+    if (props.typeuser) {
         if (props.typeuser === 0) {
             return (
                 <div className={classes.grow}>
@@ -347,8 +349,8 @@ export default function LoggedInNavBar(props) {
                             </div>
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
-                                <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
-                                <Button> <Link to="/displayJobs" className="nav-link">Search Jobs </Link></Button>
+                                <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
+                                <Button> <Link to={{ pathname: "/DisplayJobs", state: { username: props.username }}}>Search Jobs </Link></Button>
                                 <IconButton aria-label="show 4 new mails" color="inherit">
                                     <Badge badgeContent={4} color="secondary">
                                         <MailIcon />
@@ -410,13 +412,8 @@ export default function LoggedInNavBar(props) {
                             </div>
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
-                                <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
-                                <Button> <Link to={{
-                                    pathname: "/jobPost", 
-                                    state: {
-                                        username: props.username
-                                    }
-                                 }} className="nav-link">Add Job</Link> </Button>
+                                <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
+                                <Button> <Link to={{ pathname: "/jobPost", state: { username: props.username }}}>Add Job</Link> </Button>
                                 <IconButton
                                     edge="end"
                                     aria-label="edit account"
@@ -468,8 +465,8 @@ export default function LoggedInNavBar(props) {
                         </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <Button> <Link to="/displayUsers" className="nav-link">Search Users</Link> </Button>
-                            <Button> <Link to="/displayJobs" className="nav-link">Search Jobs </Link></Button>
+                            <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
+                            <Button> <Link to={{ pathname: "/DisplayJobs", state: { username: props.username }}}>Search Jobs </Link></Button>
                             <IconButton aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="secondary">
                                     <MailIcon />

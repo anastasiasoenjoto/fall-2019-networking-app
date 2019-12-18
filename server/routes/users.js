@@ -102,9 +102,14 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  major2 = major.toLowerCase();
+  city2 = city.toLowerCase();
+  major2 = major2.replace(/\s/g,'');
+  city2= city2.replace(/\s/g,'');
+  console.log(major2, city2, major, city)
   console.log('message received')
   if (username && major && GPA && city){
-    User.find({username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({username, major: { $in : [major, major2]} , GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -122,7 +127,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (major && GPA && city){
-    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({ major: { $in : [major, major2]}, GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -140,7 +145,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && GPA){
-    User.find({username: username, GPA: {$gt :GPA}, major: major}, function(err, user){
+    User.find({username: username, GPA: {$gt :GPA},  major: { $in : [major, major2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -158,7 +163,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && city){
-    User.find({username: username, major: major, city: city}, function(err, user){
+    User.find({username: username, major: { $in : [major, major2]}, city:  { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -183,7 +188,6 @@ router.post('/queryUsers', (req, res) => {
 router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
-
   major = major.toLowerCase();
   city = city.toLowerCase();
   major = major.replace(/\s/g,'');

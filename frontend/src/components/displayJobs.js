@@ -56,11 +56,10 @@ class displayJobs extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
+      nameofOpenPosition: '',
       gpaRequirement: '', 
       workLocation: '',
       jobs: [],
-      nameofOpenPosition: '',
     }
   }
 
@@ -98,9 +97,10 @@ class displayJobs extends Component {
     .then(data=> {
             let jobs = data.map((u) => {
                 return(
-                    <div key={u.nameOfOpenPosition}>
-                        <h4>City: {u.workLocation}</h4>
-                        <p><i>gpaRequirement: {u.gpaRequirement}</i></p>
+                    <div key={u.companyUsername}>
+                        <h4> {u.companyUsername} </h4>
+                        <h6> City : {u.jobLocation} </h6>
+                        <p><i>GPA Requirement: {u.gpaReq}</i></p>
 
                     </div>
                 )
@@ -121,7 +121,7 @@ class displayJobs extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-      <LoggedInNavBar />
+      <LoggedInNavBar  username={this.props.location.state.username} />
       <Grid container spacing={1} justify="center"></Grid>
       <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
