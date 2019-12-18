@@ -40,9 +40,6 @@ class ChatRoom extends Component {
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
     this.sendDM = sendDM.bind(this);
-
-
-
   }
 
   render() {
