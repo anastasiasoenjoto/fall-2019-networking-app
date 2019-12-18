@@ -16,11 +16,11 @@ The motivation of the project is the struggles that people face when they are tr
 [REQUIREMENTS.md](REQUIREMENTS.md)
 
 ## Running <br> 
-git clone https://github.com/nyu-software-engineering/fall-2019-networking-app.git 
-open 2 terminals one to run frontend one to run backend
-to run frontend: 
- - cd frontend
- - npm start
-to run server: 
- - cd server 
+git clone https://github.com/nyu-software-engineering/fall-2019-networking-app.git <br>
+open 2 terminals one to run frontend one to run backend <br>
+to run frontend: <br>
+ - cd frontend <br>
+ - npm start <br>
+to run server: <br>
+ - cd server <br>
  - nodemon server 
