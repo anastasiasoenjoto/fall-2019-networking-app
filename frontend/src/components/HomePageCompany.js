@@ -74,6 +74,8 @@ class HomePageCompany extends Component {
     onClickAccept(e) {
         e.preventDefault();
 
+        console.log("on click accept user", e.target.id);
+
         const job = {
             status: true,
             company: this.props.location.state.username, 
@@ -122,7 +124,6 @@ class HomePageCompany extends Component {
                             </ExpansionPanelSummary>
                             {u.applicants.map((a) => (
                                  <ExpansionPanelDetails>
-                                     {u._id + ":" + u.jobTitle + ":" + a._id}
                                  <ListItem className={classes.item}>
                                      <Typography variant='h5'>{a.name}</Typography>
                                      <Grid container alignItems="flex-start" justify="flex-end" direction="row">
@@ -155,13 +156,12 @@ class HomePageCompany extends Component {
                                                                Major: {a.major} <br></br>
                                                                GPA: {a.GPA} <br></br>
                                                                Skills: 
-                                                               {a.skills}.join()
+                                                               {a.skills.join()}
                                                                <br></br>
                                                                Link to Resume: {a.resume}
                                                             </Typography>
                                                         </div>
                                                         <br></br>
-                                                        
                                                         <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickAccept}>Accept</Button>
                                                         <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickReject}>Reject</Button>
                                                     </span>

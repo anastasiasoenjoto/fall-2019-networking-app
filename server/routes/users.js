@@ -319,6 +319,9 @@ router.post('/addApplication', async (req, res) => {
 
 // add function to move to closed (if they approve or they get rejected)
 router.post('/closeApplication', async (req, res) => {
+
+  console.log("hello", req.body.details.split(':'));
+
   var status = req.body.status;
   var details = req.body.details;
   var company = req.body.company;

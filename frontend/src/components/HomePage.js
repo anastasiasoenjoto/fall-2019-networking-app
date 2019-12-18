@@ -200,7 +200,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have made {this.state.friendCount} new friends in the past month!
+                                        You have made {this.state.friendCount} new friends in the past week!
                                         </Typography>
                                 </CardContent>
                             </Card>
@@ -235,7 +235,7 @@ class HomePage extends Component {
                                                                                 /* className={classes.inline} */
                                                                                 color="textPrimary"
                                                                             >
-                                                                            Friend since {friend.date}
+                                                                            Friend
                                                                             </Typography>
                                                                             <br></br>
                                                                         </React.Fragment>

@@ -315,13 +315,14 @@ export default function LoggedInNavBar(props) {
 
 
     if (props.typeuser !== undefined) {
+
         if(pendingRequests.length === 0 && closedApps.length === 0 ) {
             notifMenu = notifMenuDefault;
         }
         else {
             notifMenu = notifMenu1;
         }
-    if (props.typeuser) {
+
         if (props.typeuser === 0) {
             return (
                 <div className={classes.grow}>
@@ -334,19 +335,6 @@ export default function LoggedInNavBar(props) {
                                 </Typography>
                             </Button></Link>
 
-                            <div className={classes.search}>
-                                <div className={classes.searchIcon}>
-                                    <SearchIcon />
-                                </div>
-                                <InputBase
-                                    placeholder="Search…"
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </div>
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
                                 <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
@@ -397,19 +385,6 @@ export default function LoggedInNavBar(props) {
                             </Typography>
                             </Button></Link>
 
-                            <div className={classes.search}>
-                                <div className={classes.searchIcon}>
-                                    <SearchIcon />
-                                </div>
-                                <InputBase
-                                    placeholder="Search…"
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </div>
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
                                 <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
@@ -450,19 +425,6 @@ export default function LoggedInNavBar(props) {
                         </Typography>
                         </Button></Link>
 
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
                             <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
