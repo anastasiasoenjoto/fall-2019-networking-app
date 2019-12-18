@@ -74,12 +74,12 @@ class HomePageCompany extends Component {
     onClickAccept(e) {
         e.preventDefault();
 
-        console.log("on click accept user", e.target.id);
+        //console.log("on click accept user", e.currentTarget.id);
 
         const job = {
             status: true,
             company: this.props.location.state.username, 
-            details: e.target.id
+            details: e.currentTarget.id
         }
         axios.post('http://localhost:3001/users/closeApplication', job)
         .then(res => {
@@ -93,7 +93,7 @@ class HomePageCompany extends Component {
         const job = {
             status: false,
             company: this.props.location.state.username, 
-            details: e.target.id
+            details: e.currentTarget.id
         }
         axios.post('http://localhost:3001/users/closeApplication', job)
         .then(res => {
