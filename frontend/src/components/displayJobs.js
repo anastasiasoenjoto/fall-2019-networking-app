@@ -121,7 +121,7 @@ class displayJobs extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-      <LoggedInNavBar />
+      <LoggedInNavBar  username={this.props.location.state.username} />
       <Grid container spacing={1} justify="center"></Grid>
       <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>

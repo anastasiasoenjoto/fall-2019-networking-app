@@ -113,7 +113,7 @@ class displayUsers extends Component {
             <div key={u.username}>
               <h4>Name: {u.firstName} {u.lastName}</h4>
               <p><i>Email: {u.email}</i></p>
-              <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username} onClick= {this.onAddFriend}>Add</Button>
+              <Button variant="contained" color="primary" id={u.username}>Add</Button>
 
             </div>
           )
@@ -135,14 +135,13 @@ class displayUsers extends Component {
 
     return (
       <div className={classes.root}>
-      <LoggedInNavBar />
+      <LoggedInNavBar username={this.props.location.state.username} />
       <Grid container spacing={1} justify="center"></Grid>
       <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}><Typography variant='h4'>User Search Options</Typography></Paper>
             </Grid>
           </Grid>
-           {this.state.users}
           <form onSubmit={this.onSubmit}>
         <Grid container item xs={9} spacing={1}>
         <Grid item xs={3}>
@@ -180,7 +179,7 @@ class displayUsers extends Component {
         </Grid>
 
         </form>
-
+        {this.state.users}
       </div> 
     )
   }

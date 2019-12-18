@@ -76,8 +76,7 @@ export default class UserProfile extends Component {
 
 
     const user = {
-      // username: this.props.location.state.username,
-      username: 'anastasia',
+      username: this.props.location.state.username,
       firstName: this.state.firstName, 
       lastName: this.state.lastName, 
       email: this.state.email,

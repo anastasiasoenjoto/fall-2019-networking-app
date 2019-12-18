@@ -175,9 +175,6 @@ const StyledMenu = withStyles({
             </label>
         </ListItem>
 
-        <ListItem>
-          <Button>Forgot Username or Password?</Button>
-        </ListItem>
 
         <ListItem>
           <Button onClick={onSubmitUser}>Log In as User</Button>

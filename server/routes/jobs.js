@@ -30,8 +30,11 @@ router.route('/add').post((req, res) => {
     const newJob = new Job({companyUsername, jobTitle, numOfPositions, jobDescription, jobLocation, jobSalary, gpaReq, majorReq, applicationDeadline, applicants});
   
     newJob.save()
-      .then(() => res.json('Job added!'))
+      .then(() => res.json({message:'Job added!', jobId:newJob._id}))
+      .then(() => console.log("ID:",newJob._id))
       .catch(err => res.status(400).json('Error: ' + err));
+
+   
     console.log("success!")
   
     });
@@ -104,7 +107,8 @@ router.post('/addApplicants', async (req, res) => {
       GPA: req.body.GPA, 
       skills: skills_array, 
       resume: req.body.resume, 
-      date: req.body.date
+      date: req.body.date,
+      _id: req.body._id,
     }
 
     // const doc = await Job.findOne({_id: ObjectId('5de97ec89cb4c2836ccf5bc1')});
@@ -142,10 +146,20 @@ router.post('/analytics', async (req, res) => {
     .then(count => {
       res.json({"count": count})
     })
-    
+});
 
-
-
+router.post('/findAllApplicants', async (req,res) => {
+  var jobs = req.body.jobs
+  var applicants = {}
+  Job.findOne({_id: ObjectId(jobs)}, function(err, job) {
+    if (err) return handleError(err);
+    applicants[job.jobTitle] = job.applicants
+    return applicants
+  })
+  .then(applicants => {
+    res.json({applicants: applicants})
+  })
+ 
 });
 
 
