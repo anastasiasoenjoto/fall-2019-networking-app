@@ -6,12 +6,12 @@ import {
   connectToRoom,
   sendMessage,
   sendDM,
-} from './ChatMethods';
+} from './chatComponents/ChatMethods';
 
-import Dialog from './Dialog';
-import RoomList from './RoomList';
-import ChatSession from './ChatSession';
-import RoomUsers from './RoomUsers';
+import Dialog from './chatComponents/Dialog';
+import RoomList from './chatComponents/RoomList';
+import ChatSession from './chatComponents/ChatSession';
+import RoomUsers from './chatComponents/RoomUsers';
 
 
 
