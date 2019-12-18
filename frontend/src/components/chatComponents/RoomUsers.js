@@ -11,7 +11,6 @@ const RoomUsers = props => {
           <span>{user.name}</span>
         </div>
         {currentUser.id !== user.id ? (
-          // add onClick to button
           <button
             onClick={() => sendDM(user.id)}
             title={`Send ${user.name} a direct message`}

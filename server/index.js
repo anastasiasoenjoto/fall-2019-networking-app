@@ -1,5 +1,4 @@
 const express = require('express');
-const expressWs = require('express-ws');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
@@ -56,8 +55,6 @@ app.use('/company', companyRouter);
 app.use('/jobs', jobsRouter);
 
 //chat
-
-
 app.post('/chatUsers', (req, res) => {
   const { userId } = req.body;
 

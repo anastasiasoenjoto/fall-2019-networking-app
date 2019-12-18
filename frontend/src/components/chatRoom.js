@@ -42,6 +42,14 @@ class ChatRoom extends Component {
     this.sendDM = sendDM.bind(this);
   }
 
+  componentDidMount() {
+    console.log(this.props.location.state.username)
+    const currUser = {
+        username: this.props.location.state.username
+    }
+    this.setState({userId: currUser.username, currentUser: currUser.username})
+  }
+
   render() {
     const {
       userId,

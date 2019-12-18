@@ -1,6 +1,12 @@
-  
 const router = require('express').Router();
+const Chatkit = require('@pusher/chatkit-server');
+
 let User = require('../models/user.model');
+
+const chatkit = new Chatkit.default({
+  instanceLocator: 'v1:us1:51ce7520-0dcf-4a08-87e2-018408ae7fe7',
+  key: '4359eab2-fb25-499f-ba61-5c694c95e76b:c7g74+1ZKtPUIpLnDhlSvpaDsInSywu8oPhfqjk2b1o='
+});
 
 router.route('/').get((req, res) => {
   User.find()
@@ -8,7 +14,7 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/add').post( (req, res) => {
   const username = req.body.username;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -20,7 +26,22 @@ router.route('/add').post((req, res) => {
   const friends = [];
   const pending = [];
 
-
+  chatkit
+    .createUser({
+      id: username,
+      name: firstName,
+    })
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      if (err.error === 'services/chatkit/user_already_exists') {
+        console.log(`User already exists: ${username}`);
+        res.sendStatus(200);
+      } else {
+        res.status(err.status).json(err);
+      }
+    });
 
   const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
 
@@ -283,6 +304,29 @@ router.post('/approveFriend', async(req, res) => {
 
   const approving = await User.findOne({username: approvingName});
 
+  // create chatroom of approving for approved
+  await chatkit
+    .createRoom({
+      id: `${approvingName}_${approvedName}`,
+      creatorId: approvingName,
+      name: `${approvingName} and ${approvedName}'s chat`,
+      isPrivate: true,
+    })
+      .then(() => {
+        console.log('Room created successfully');
+      }).catch((err) => {
+        console.log(err);
+      });
+  
+
+  chatkit
+    .addUsersToRoom({
+      roomId: `${approvingName}_${approvedName}`,
+      userIds: [approvedName]
+    })
+      .then(() => console.log('added'))
+      .catch(err => console.error(err))
+
   var index = approving.pending.indexOf(approvedName);
     if(index > -1){
       approving.pending.splice(index, 1);
@@ -337,6 +381,4 @@ router.post('/analytics', async (req, res) => {
       res.json({"count": count})
     })
   })
-    
-
 module.exports = router;
