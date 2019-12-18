@@ -142,13 +142,8 @@ class JobApplicationForm extends Component {
           <div className={classes.root}>
               <List>
                 <ListItemText primary={<Typography component="span" variant='h3' color="textPrimary">{this.props.location.state.jobTitle}</Typography>}></ListItemText>
-                <Link to={{
-                    pathname: '/ViewCompany', 
-                    state: {
-                        companyUsername: this.props.location.state.companyUsername
-                    }
-                }}
-                ><ListItemText primary={this.props.location.state.companyUsername}></ListItemText></Link>
+            
+                <ListItemText primary={this.props.location.state.companyUsername}></ListItemText>
                 <ListItemText primary={this.props.location.state.jobDescription}></ListItemText>
                 <ListItem>
                     <input style={{width: "40%"}} id = "nameOfApplicant" type = "text" value = {this.state.nameOfApplicant} onChange = {this.onUpdateNameOfApplicant} placeholder="Enter your name"/>
