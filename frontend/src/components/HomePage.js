@@ -226,7 +226,7 @@ class HomePage extends Component {
                                                                     <Avatar src={anon} />
                                                                 </ListItemAvatar>
                                                                 <ListItemText
-                                                                    primary={friend}
+                                                                    primary={friend.username}
                                                                     secondary={
                                                                         <React.Fragment>
                                                                             <Typography
@@ -308,9 +308,6 @@ class HomePage extends Component {
                                         You have {this.state.activeApps.length} pending/active applications!
                                         </Typography>
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small">See active job applications</Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                         <Grid item xs={6}>
