@@ -18,11 +18,13 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import anon from '../frontend images/anon.png';
 import ListItemText from '@material-ui/core/ListItemText';
+import Popup from "reactjs-popup";
+import { Redirect } from 'react-router-dom';
+import { stat } from 'fs';
 
 
 const styles = theme => ({
     card: {
-        minWidth: 275,
         minHeight: 200,
         maxHeight: 200,
         outline: '1px solid gray',
@@ -52,7 +54,10 @@ const styles = theme => ({
     listCard: {
         maxHeight: 200,
         overflow: 'auto'
-    }
+    },
+    inline: {
+
+    },
 });
 
 class HomePage extends Component {
@@ -62,13 +67,62 @@ class HomePage extends Component {
         super(props);
         this.state = {
             users: [],
-            recUsers: [],
-            recJobs:[]
+            recUsers: [[]],
+            recJobs:[[]],
+            pending:[],
+            redirectToApply: false , 
+            jobId: '', 
+            currentPending: [], 
+            currentFriends: [],
+            jobsApplied: 0,
+            friendCount: 0,
         };
+
+        this.onAddFriend = this.onAddFriend.bind(this);
     }
 
-    /* componentDidMount() {
-        console.log(this.props.location.state)
+    onAddFriend(e){
+        e.preventDefault();
+
+        const friend = {
+            username: this.props.location.state.username,
+            friendname: e.target.id,
+        }
+        axios.post('http://localhost:3001/users/requestFriend', friend)
+        .then(res => {
+          return res.data;
+        })
+        .then(data=> {
+          return data.message;
+        })
+        .then(validity => {
+          if (validity == "Request has been submitted") {
+            console.log('Request has been submitted')
+            {this.setDirectToHomeUser()}
+          }
+          else {
+            console.log('Sorry, no such user exists')
+          }
+        })
+    }
+
+
+    componentDidMount() {
+        console.log(this.props.location.state.username)
+        const analyticDetails = {
+            username: this.props.location.state.username
+        }
+        axios.post('http://localhost:3001/jobs/analytics', analyticDetails)
+        .then(res => {
+            console.log(res.data.count)
+            this.setState({jobsApplied: res.data.count})
+
+        })
+
+        axios.post('http://localhost:3001/users/analytics', analyticDetails)
+        .then(res => {
+            this.setState({friendCount: res.data.count})
+        })
         
         const user = {
             username: this.props.location.state.username
@@ -76,10 +130,16 @@ class HomePage extends Component {
         axios.post('http://localhost:3001/users/getCurrentUser', user)
         .then(res => {
             console.log("CURRENT USER DETAILS", res.data.user)
+            this.setState({pending: res.data.user[0].pending})
+            console.log("Current Pending", this.state.pending)
             return res.data.user
         })
         .then(data => {
             let users = data.map((u) => {
+                this.setState({
+                    currentPending: u.pending, 
+                    currentFriends: u.friends
+                })
                 const userDetails = {
                     major: u.major, 
                     city: u.city
@@ -92,6 +152,7 @@ class HomePage extends Component {
                 .then(data => {
                     this.setState({recUsers: data})
                 })
+                console.log("USER DETAIL", userDetails)
                 axios.post('http://localhost:3001/jobs/getRecommendedJobs', userDetails)
                 .then(res => {
                     console.log("Recommended jobs: ", res.data.jobs)
@@ -107,21 +168,22 @@ class HomePage extends Component {
                 )
             })
             this.setState({users: users})
+            
         })
 
-      } */
-
+      } 
+      
 
     render() {
-
         const { classes } = this.props;
-
-
+        console.log(this.state.jobId)
+        
         return (
+            
 
             <div className={classes.enclosing}>
 
-                <LoggedInNavBar />
+                <LoggedInNavBar typeuser={0} username={this.props.location.state.username} pending={this.state.pending}/>
 
                 <Grid container spacing={1} className={classes.grid}>
                     <Grid container item xs={12} spacing={2}>
@@ -129,7 +191,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have applied to 5 jobs in the past week!
+                                        You have applied to {this.state.jobsApplied} jobs in the past week!
                                         </Typography>
                                 </CardContent>
                                 <CardActions>
@@ -151,71 +213,37 @@ class HomePage extends Component {
                             <Card className={classes.listCard}>
                                 <CardContent>
                                     <List className={classes.enclosing}>
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Bruce Wayne"
+                                             {this.state.recUsers[0].map((u) => (
+                                                <ListItem button alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar src={anon} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                primary= {u.firstName}
                                                 secondary={
                                                     <React.Fragment>
                                                         <Typography
                                                             component="span"
                                                             variant="body2"
-                                                            className={classes.inline}
+                                                            /* className={classes.inline} */
                                                             color="textPrimary"
                                                         >
-                                                            Computer Science
+                                                            {u.major}
                                                         </Typography>
-                                                        {" - Average millionaire from Gotham"}
+                                                        <br></br>
+                                                        {u.city}
                                                     </React.Fragment>
                                                 }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Tony Stark"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Mechanical Engineering
-                                                        </Typography>
-                                                      {" - Iron Man from New York"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemAvatar>
-                                                <Avatar src={anon} />
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Clark Kent"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Journalism
-                                                        </Typography>
-                                                        {' - Journalist from Los Angeles'}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
+                                            /> 
+
+                                            {console.log(this.currentFriends, this.currentPending)}
+
+                                            {((u.username == this.props.location.state.username) ) ? <Button variant="contained" disabled>Add</Button> : <Button variant="contained" color="primary" id={u.username} onClick= {this.onAddFriend}>Add</Button>}
+                                                
+                                            </ListItem>
+    
+                                            ))
+                                        }
                                     </List>
                                 </CardContent>
                             </Card>
@@ -226,7 +254,7 @@ class HomePage extends Component {
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        You have made 3 new friends in the past month!
+                                        You have made {this.state.friendCount} new friends in the past month!
                                         </Typography>
                                 </CardContent>
                                 <CardActions>
@@ -248,43 +276,72 @@ class HomePage extends Component {
                             <Card className={classes.listCard}>
                                 <CardContent>
                                     <List className={classes.enclosing}>
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemText
-                                                primary="Software Programmer"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Microsoft
-                                                        </Typography>
-                                                        {" - New York, New York"}
-                                                    </React.Fragment>
+                                    {this.state.recJobs[0].map((u) => (
+                                                <ListItem button alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar src={anon} />
+                                                </ListItemAvatar>
+                                                <Popup
+                                                    trigger={<ListItemText
+                                                        primary= {u.jobTitle}
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    className={classes.inline}
+                                                                    color="textPrimary"
+                                                                >
+                                                                    {u.companyUsername}
+                                                                </Typography>
+                                                                <br></br>
+                                                            {u.jobLocation}
+                                                            </React.Fragment>
+                                                        }
+                                                    />
                                                 }
-                                            />
-                                        </ListItem>
-                                        <Divider variant="inset" component="li" />
-                                        <ListItem button alignItems="flex-start">
-                                            <ListItemText
-                                                primary="Frontend Developer"
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            component="span"
-                                                            variant="body2"
-                                                            className={classes.inline}
-                                                            color="textPrimary"
-                                                        >
-                                                            Startup
-                                                        </Typography>
-                                                      {" - Los Angeles, California"}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="h3"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                                {u.jobTitle}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Job Description: {u.jobDescription}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        
+                                                        <Link to={{
+                                                            pathname: '/jobApplication',
+                                                            state: {
+                                                                jobId: u._id, 
+                                                                username: this.props.location.state.username
+                                                            }
+                                                            }}><Button variant="contained" id={u._id}>Apply</Button></Link>
+                                                        
+                                                    </span>
+                                                </Popup>
+                                            </ListItem>
+    
+                                            ))
+                                        }
                                     </List>
                                 </CardContent>
                             </Card>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { Redirect } from 'react-router-dom';
 
 
 export default class JobApplicationForm extends Component {
@@ -13,14 +14,19 @@ export default class JobApplicationForm extends Component {
       this.onUpdateMajor = this.onUpdateMajor.bind(this);
       this.onUpdateGPA = this.onUpdateGPA.bind(this);
       this.onUpdatePhoneNumber = this.onUpdatePhoneNumber.bind(this);
+      this.onUpdateSkills = this.onUpdateSkills.bind(this);
+      this.onUpdateResume = this.onUpdateResume.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
   
       this.state = {
+          jobId: '',
           nameOfApplicant: '',
           email: '',
           major: '', 
           GPA: '',
-          PhoneNumber:''
+          PhoneNumber:'', 
+          skill: '', 
+          resume: ''
       }  
     }
 
@@ -38,7 +44,7 @@ export default class JobApplicationForm extends Component {
 
     onUpdateMajor(e){
         this.setState(
-            {email: e.target.value}
+            {major: e.target.value}
         )
     }
 
@@ -54,25 +60,51 @@ export default class JobApplicationForm extends Component {
         )
     }
 
+    onUpdateSkills(e){
+        this.setState(
+            {skill: e.target.value}
+        )
+    }
+
+    onUpdateResume(e){
+        this.setState(
+            {resume: e.target.value}
+        )
+    }
+
     onSubmit(e){
         e.preventDefault();
 
         const newJob = {
+            username: this.props.location.state.username,
+            jobId: this.props.location.state.jobId,
             nameOfApplicant: this.state.nameOfApplicant,
             email: this.state.email,
             major: this.state.major,
-            GPA: this.state.GPA
+            GPA: this.state.GPA, 
+            skill: this.state.skill, 
+            resume: this.state.resume, 
+            date: new Date()
         }
+
+        axios.post('http://localhost:3001/jobs/addApplicants', newJob)
+        .then(res => {
+            return res.data.message
+        })
 
         this.setState({
             nameOfApplicant: '',
             email: '',
             major: '',
-            GPA: '',
+            GPA: '', 
+            skill: ''
         })
     }
 
+    
+
     render() {
+        console.log(this.props.location.state.jobId)
         return (
           <div>
             <h1> Job Title: </h1>
@@ -86,12 +118,12 @@ export default class JobApplicationForm extends Component {
               <br></br>
               <label>
                 Phone Number: 
-                <input id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.state.PhoneNumber} placeholder="Enter phone number"/>
+               <input id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
               </label>
               <br></br>
               <label>
                 Email: 
-                <input id = "email" type = "text" value = {this.state.email} onChange = {this.state.email} placeholder="Enter your email"/>
+                <input id = "email" type = "text" value = {this.state.email} onChange = {this.onUpdateEmail} placeholder="Enter your email"/>
               </label>
               <br></br>
               <label>
@@ -104,9 +136,20 @@ export default class JobApplicationForm extends Component {
                 <input id = "GPA" type = "text" value={this.state.GPA} onChange = {this.onUpdateGPA} placeholder="Enter your GPA"/>
               </label>
               <br></br>
+              <label>
+                Skills (seperated by comma):
+                <input id = "skill" type = "text" value={this.state.skill} onChange = {this.onUpdateSkills} placeholder="Enter skills"/>
+              </label>
+              <br></br>
+                <label>
+                Link to resume:
+                <input id = "resume" type = "url" value={this.state.resume} onChange = {this.onUpdateResume} placeholder="Enter link to resume"/>
+              </label>
+              <br></br>
               </fieldset>
               <br></br>
               <input type="submit"></input>
+              
             </form>
           </div> 
         )

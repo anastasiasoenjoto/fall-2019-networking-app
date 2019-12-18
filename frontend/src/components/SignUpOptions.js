@@ -9,6 +9,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
+import UserSignUp from './UserSignUp';
+import CompanySignUp from './CompanySignUp';
 
 
 const styles = theme => ({
@@ -24,85 +26,15 @@ class SignUpBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            city: '',
-            major: '',
-            GPA: '',
-            companyName: '',
-            optionState: 0,
-            redirectToHome: false
+            optionState: 0
         }
 
     }
 
-    handleChange(e) {
-        this.setState({ [e.target.id] : e.target.value });
-    }
+    SignUpFactory(optionState) {
 
-    onSubmitUser(e) {
-        e.preventDefault();
-
-
-        const user = {
-            username: this.state.username,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            password: this.state.password,
-            city: this.state.city,
-            major: this.state.major,
-            GPA: this.state.GPA
-        }
-
-
-        axios.post('http://localhost:3001/users/add', user)
-            .then(res => console.log(res.data));
-
-        { this.setRedirectToHome() }
-
-    }
-
-    onSubmitCompany(e) {
-        e.preventDefault();
-    
-        const company = {
-          username: this.state.username,
-          companyName: this.state.companyName, 
-          email: this.state.email,
-          password: this.state.password,
-          city: this.state.city, 
-        }
-    
-        axios.post('http://localhost:3001/company/add', company)
-          .then(res => console.log(res.data));
-    
-        { this.setRedirectToHome() }
-      }
-
-      setRedirectToHome() {
-        this.setState({
-          redirectToHome: true
-        })
-      }
-
-
-    render() {
-
-        if (this.state.redirectToHome == true) {
-            return <Redirect to={{
-                pathname: "/home",
-                state: { username: this.state.username }
-            }}
-            />
-        }
-
-        const { classes } = this.props;
-
-        if (this.state.optionState == 0) {
+        if (optionState == 0) {
+            const { classes } = this.props;
             return (
                 <div className={classes.root}>
                     <List>
@@ -122,75 +54,25 @@ class SignUpBox extends React.Component {
                 </div>
             )
         }
-        else if (this.state.optionState == 1) {
+        else if (optionState == 1) {
             return (
-                <div className={classes.root}>
-                    <List>
-                        <ListItem>
-                            <ListItemText primary="User Sign Up"></ListItemText>
-                        </ListItem>
-
-                        <ListItem>
-                            <input style={{width: "40%"}} id="firstName" type="text" value={this.state.firstName} onChange={this.handleChange.bind(this)} placeholder="Enter first name" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="lastName" type="text" value={this.state.lastName} onChange={this.handleChange.bind(this)} placeholder="Enter last name" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="major" type="text" value={this.state.major} onChange={this.handleChange.bind(this)} placeholder="Enter your major" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="GPA" type="text" value={this.state.GPA} onChange={this.handleChange.bind(this)} placeholder="Enter your current GPA" />
-                        </ListItem>
-                        <ListItem>
-                            <Button onClick={this.onSubmitUser.bind(this)}>Sign Up</Button>
-                        </ListItem>
-                    </List>
-                </div>
+                <UserSignUp />
             )
         }
-        else if(this.state.optionState == 2) {
+        else if(optionState == 2) {
             return (
-                <div className={classes.root}>
-                    <List>
-                        <ListItem>
-                            <ListItemText primary="Company Sign Up"></ListItemText>
-                        </ListItem>
-
-                        <ListItem>
-                            <input style={{width: "40%"}} id="companyName" type="text" value={this.state.companyName} onChange={this.handleChange.bind(this)} placeholder="Enter company name" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)} placeholder="Enter username" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
-                        </ListItem>
-                        <ListItem>
-                            <input style={{width: "40%"}} id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />
-                        </ListItem>
-                        <ListItem>
-                            <Button onClick={this.onSubmitCompany.bind(this)}>Sign Up</Button>
-                        </ListItem>
-                    </List>
-                </div>
+                <CompanySignUp/>
             )
         }
+    }
+
+    render() {
+        return(
+            this.SignUpFactory(this.state.optionState)
+        )
+        
+
+        
 
     }
 

@@ -61,6 +61,11 @@ const userSchema = new Schema({
   friends:{
     type: Array
   },
+
+  pending: {
+    type: Array,
+    required: true
+  }
 },
 {
   timestamps: true,

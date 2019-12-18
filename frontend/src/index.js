@@ -9,13 +9,13 @@ import HomePageCompany from './components/HomePageCompany';
 import HomePage from './components/HomePage';
 import displayUsers from './components/displayUsers';
 import displayJobs from './components/displayJobs';
-import JobPostingQuestionnaire from './components/JobPostingQuestionnaire';
+import JobQuestionnaire from './components/JobQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
-import ChatRoom from "./components/ChatRoom.js"
-
-
+import ChatRoom from "./components/chatRoom.js";
+import ViewCompany from './components/ViewCompany';
+import AddFriend from "./components/AddFriend.js";
 
 const routing = (
     <Router>
@@ -28,10 +28,11 @@ const routing = (
         <Route path="/displayUsers" component={displayUsers}/>
         <Route path="/displayJobs" component={displayJobs}/>
         <Route path="/chatRoom" component={ChatRoom}/>
-        <Route path="/jobPost" component={JobPostingQuestionnaire}/>
+        <Route path="/jobPost" component={JobQuestionnaire}/>
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
         <Route path="/userProfile" component={UserProfile}/>
         <Route path="/companyProfile" component={CompanyProfile}/>
+        <Route path="/ViewCompany" component={ViewCompany}/>
       </Switch>
       </div>
     </Router>
