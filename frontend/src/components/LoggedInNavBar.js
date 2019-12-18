@@ -227,8 +227,6 @@ export default function LoggedInNavBar(props) {
                 ))
                 }
 
-
-
             </List>
         </StyledMenu>
     );

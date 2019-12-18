@@ -41,7 +41,7 @@ class HomePageCompany extends Component {
         };
     }
 
-    /* componentDidMount() {
+    componentDidMount() {
         console.log(this.props.location.state.username)
         const company = {
             username: this.props.location.state.username
@@ -50,18 +50,18 @@ class HomePageCompany extends Component {
         .then(res => {
             return res.data.user
         })
-        .then(data => {
-            let companies = data.map((u) => {
-                this.setState({companyName: u.companyName, userName: u.userName, password: u.password, email: u.email, city: u.city})
-                return(
-                    <div key={u.username}>
-                        <h2><b><i>Welcome, {u.companyName}</i></b></h2>
-                    </div>
-                )
-            })
-            // this.setState({companies: companies})
-        })
-    } */
+        // .then(data => {
+        //     let companies = data.map((u) => {
+        //         this.setState({companyName: u.companyName, userName: u.userName, password: u.password, email: u.email, city: u.city})
+        //         return(
+        //             <div key={u.username}>
+        //                 <h2><b><i>Welcome, {u.companyName}</i></b></h2>
+        //             </div>
+        //         )
+        //     })
+        //     // this.setState({companies: companies})
+        // })
+    } 
 
 
     render() {
