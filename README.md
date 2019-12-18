@@ -14,3 +14,14 @@ The motivation of the project is the struggles that people face when they are tr
 
 ## Requirements <br>
 [REQUIREMENTS.md](REQUIREMENTS.md)
+
+## Running <br> 
+git clone https://github.com/nyu-software-engineering/fall-2019-networking-app.git <br>
+open 2 terminals one to run frontend one to run backend <br>
+to run frontend: <br>
+ - cd frontend <br>
+ - npm start <br>
+
+to run server: <br>
+ - cd server <br>
+ - nodemon server 

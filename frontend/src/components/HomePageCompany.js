@@ -54,6 +54,7 @@ class HomePageCompany extends Component {
         .then(res => {
             return res.data.user
         })
+    } 
         .then(data => {
             let companies = data.map((u) => {
                 this.setState({companyName: u.companyName, userName: u.userName, password: u.password, email: u.email, city: u.city})
@@ -73,6 +74,7 @@ class HomePageCompany extends Component {
     }
     onClickAccept(e) {
         e.preventDefault();
+
 
         //console.log("on click accept user", e.currentTarget.id);
 
