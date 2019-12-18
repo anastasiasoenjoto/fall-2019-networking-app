@@ -1,6 +1,12 @@
-  
 const router = require('express').Router();
+const Chatkit = require('@pusher/chatkit-server');
+
 let User = require('../models/user.model');
+
+const chatkit = new Chatkit.default({
+  instanceLocator: 'v1:us1:51ce7520-0dcf-4a08-87e2-018408ae7fe7',
+  key: '4359eab2-fb25-499f-ba61-5c694c95e76b:c7g74+1ZKtPUIpLnDhlSvpaDsInSywu8oPhfqjk2b1o='
+});
 
 router.route('/').get((req, res) => {
   User.find()
@@ -8,7 +14,7 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/add').post( (req, res) => {
   const username = req.body.username;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
@@ -20,9 +26,26 @@ router.route('/add').post((req, res) => {
   const friends = [];
   const pending = [];
 
+  chatkit
+    .createUser({
+      id: username,
+      name: firstName,
+    })
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      if (err.error === 'services/chatkit/user_already_exists') {
+        console.log(`User already exists: ${username}`);
+        res.sendStatus(200);
+      } else {
+        res.status(err.status).json(err);
+      }
+    });
 
-
-  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending});
+  const pendingApplication = [];
+  const closedApplication = [];
+  const newUser = new User({username, firstName, lastName, email, password, city, major, GPA, friends, pending, pendingApplication, closedApplication});
 
   newUser.save()
     .then(() => res.json('User added!'))
@@ -103,9 +126,14 @@ router.post('/queryUsers', (req, res) => {
   var major = req.body.major;
   var GPA = req.body.GPA;
   var city = req.body.city;
+  major2 = major.toLowerCase();
+  city2 = city.toLowerCase();
+  major2 = major2.replace(/\s/g,'');
+  city2= city2.replace(/\s/g,'');
+  console.log(major2, city2, major, city)
   console.log('message received')
   if (username && major && GPA && city){
-    User.find({username, major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({username, major: { $in : [major, major2]} , GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -123,7 +151,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (major && GPA && city){
-    User.find({major: major, GPA: {$gt :GPA}, city: city}, function(err, user){
+    User.find({ major: { $in : [major, major2]}, GPA: {$gt :GPA}, city: { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -141,7 +169,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && GPA){
-    User.find({username: username, GPA: {$gt :GPA}, major: major}, function(err, user){
+    User.find({username: username, GPA: {$gt :GPA},  major: { $in : [major, major2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -159,7 +187,7 @@ router.post('/queryUsers', (req, res) => {
     })
   }
   if (username && major && city){
-    User.find({username: username, major: major, city: city}, function(err, user){
+    User.find({username: username, major: { $in : [major, major2]}, city:  { $in : [city,city2]}}, function(err, user){
         if(err) {
             console.log(err);
         }
@@ -184,7 +212,6 @@ router.post('/queryUsers', (req, res) => {
 router.post('/getRecommendedUser', (req, res) => {
   var major = req.body.major;
   var city = req.body.city;
-
   major = major.toLowerCase();
   city = city.toLowerCase();
   major = major.replace(/\s/g,'');
@@ -243,14 +270,6 @@ router.post('/requestFriend', async(req, res) => {
     res.json({"message": "Received a friend request from: " + requestingName});
   }
 
-  /** 
-
-  const requesting = await User.findOne({username: requestingName});
-  requesting.pending.push(requestedName);
-  await requesting.save()
-  res.json({"message": "A friend request to: " + requestingName + " is submitted"});
-
-  */
 });
 
 router.post('/approveFriend', async(req, res) => {
@@ -274,10 +293,32 @@ router.post('/approveFriend', async(req, res) => {
     approved.friends.push(approvingDetails);
     console.log(approved.friends);
     await approved.save();
-    //res.json({"message": approved.friends});
   }
 
   const approving = await User.findOne({username: approvingName});
+
+  // create chatroom of approving for approved
+  await chatkit
+    .createRoom({
+      id: `${approvingName}_${approvedName}`,
+      creatorId: approvingName,
+      name: `${approvingName} and ${approvedName}'s chat`,
+      isPrivate: true,
+    })
+      .then(() => {
+        console.log('Room created successfully');
+      }).catch((err) => {
+        console.log(err);
+      });
+  
+
+  chatkit
+    .addUsersToRoom({
+      roomId: `${approvingName}_${approvedName}`,
+      userIds: [approvedName]
+    })
+      .then(() => console.log('added'))
+      .catch(err => console.error(err))
 
   var index = approving.pending.indexOf(approvedName);
     if(index > -1){
@@ -308,6 +349,54 @@ router.post('/rejectFriend', async(req, res) => {
   }
 })
 
+
+// add function to add to pending (when they apply) 
+router.post('/addApplication', async (req, res) => {
+  var jobId = req.body.jobId;
+  var user = req.body.userId;
+  console.log("User", user)
+  console.log("JobId", jobId)
+
+  const doc = await User.findOne({_id: ObjectId(user)});
+  doc.pendingApplication.push(jobId)
+  await doc.save();
+  res.json({"message": "applicantion added"})
+  
+});
+
+// add function to move to closed (if they approve or they get rejected)
+router.post('/closeApplication', async (req, res) => {
+
+  console.log("hello", req.body.details.split(':'));
+
+  var status = req.body.status;
+  var details = req.body.details;
+  var company = req.body.company;
+
+  details = details.split(':')
+  var jobId = details[0]
+  var jobTitle = details[1]
+  var user = details[2]
+
+  console.log("User", user)
+  console.log("JobId", jobId)
+  console.log("jobTitle", jobTitle)
+  
+  const jobDetails = {
+    jobId: jobId, 
+    jobTitle: jobTitle, 
+    company: company, 
+    status: status
+  }
+  
+  const doc = await User.findOne({_id: user});
+  doc.closedApplication.push(jobDetails)
+  doc.pendingApplication.pull(jobId)
+  await doc.save();
+  res.json({"message": "applicantion closed"})
+  
+});
+
 router.post('/analytics', async (req, res) => {
   var currentDate = new Date();
   var oneWeek = new Date();
@@ -333,6 +422,4 @@ router.post('/analytics', async (req, res) => {
       res.json({"count": count})
     })
   })
-    
-
 module.exports = router;

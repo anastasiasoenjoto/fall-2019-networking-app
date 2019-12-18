@@ -99,7 +99,7 @@ class UserSignUp extends React.Component {
                         <input style={{width: "40%"}} id="password" type="password" value={this.state.password} onChange={this.handleChange.bind(this)} placeholder="Enter password" />
                     </ListItem>
                     <ListItem>
-                        <input style={{width: "40%"}} id="email" type="text" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
+                        <input style={{width: "40%"}} id="email" type="email" value={this.state.email} onChange={this.handleChange.bind(this)} placeholder="Enter email" />
                     </ListItem>
                     <ListItem>
                         <input style={{width: "40%"}} id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />

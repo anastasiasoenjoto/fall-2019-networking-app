@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { ListItemText, ListItem, List, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
+const styles = theme => ({
+    root: {
+        border: '2px solid black',
+        width: '40%', 
+        margin: 'auto'
+    },
+    
+  });
 
-export default class JobApplicationForm extends Component {
+class JobApplicationForm extends Component {
     constructor(props) {
       super(props);
   
@@ -82,12 +94,23 @@ export default class JobApplicationForm extends Component {
             GPA: this.state.GPA, 
             skill: this.state.skill, 
             resume: this.state.resume, 
-            date: new Date()
+            date: new Date(),
+            _id: this.props.location.state.userID,
+        }
+
+        const newApplication = {
+            username: this.props.location.state.username,
+            jobId: this.props.location.state.jobId,
         }
 
         axios.post('http://localhost:3001/jobs/addApplicants', newJob)
         .then(res => {
             return res.data.message
+        })
+        
+        axios.post('http://localhost:3001/users/addApplication', newApplication)
+        .then(res => {
+            console.log(res.data.message)
         })
 
         this.setState({
@@ -102,54 +125,46 @@ export default class JobApplicationForm extends Component {
     
 
     render() {
-        // console.log(this.props.location.state.jobId)
+        const { classes } = this.props;
         return (
-          <div>
-            <h1> Job Title: </h1>
-            <form id="JobApplicationForm" onSubmit={this.onSubmit} >
-              <fieldset>
-              <legend className="formHeader"> Job Requirement </legend>
-              <label>
-                Name: 
-                <input id = "nameOfApplicant" type = "text" value = {this.state.nameOfApplicant} onChange = {this.onUpdateNameOfApplicant} placeholder="Enter your name"/>
-              </label>
-              <br></br>
-              <label>
-                Phone Number: 
-               <input id = "phone" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
-              </label>
-              <br></br>
-              <label>
-                Email: 
-                <input id = "email" type = "text" value = {this.state.email} onChange = {this.onUpdateEmail} placeholder="Enter your email"/>
-              </label>
-              <br></br>
-              <label>
-                major: 
-                <input id = "major" type = "text" value = {this.state.major} onChange= {this.onUpdateMajor} placeholder="Enter your major"/>
-              </label>
-              <br></br>
-              <label>
-                GPA: 
-                <input id = "GPA" type = "text" value={this.state.GPA} onChange = {this.onUpdateGPA} placeholder="Enter your GPA"/>
-              </label>
-              <br></br>
-              <label>
-                Skills (seperated by comma):
-                <input id = "skill" type = "text" value={this.state.skill} onChange = {this.onUpdateSkills} placeholder="Enter skills"/>
-              </label>
-              <br></br>
-                <label>
-                Link to resume:
-                <input id = "resume" type = "url" value={this.state.resume} onChange = {this.onUpdateResume} placeholder="Enter link to resume"/>
-              </label>
-              <br></br>
-              </fieldset>
-              <br></br>
-              <input type="submit"></input>
-              
-            </form>
+          <div className={classes.root}>
+              <List>
+                <ListItemText primary={<Typography component="span" variant='h3' color="textPrimary">{this.props.location.state.jobTitle}</Typography>}></ListItemText>
+                <Link to={{
+                    pathname: '/ViewCompany', 
+                    state: {
+                        companyUsername: this.props.location.state.companyUsername
+                    }
+                }}
+                ><ListItemText primary={this.props.location.state.companyUsername}></ListItemText></Link>
+                <ListItemText primary={this.props.location.state.jobDescription}></ListItemText>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "nameOfApplicant" type = "text" value = {this.state.nameOfApplicant} onChange = {this.onUpdateNameOfApplicant} placeholder="Enter your name"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "phone number" type = "text" value = {this.state.PhoneNumber} onChange = {this.onUpdatePhoneNumber} placeholder="Enter phone number"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "email" type = "text" value = {this.state.email} onChange = {this.onUpdateEmail} placeholder="Enter your email"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "major" type = "text" value = {this.state.major} onChange= {this.onUpdateMajor} placeholder="Enter your major"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "GPA" type = "text" value={this.state.GPA} onChange = {this.onUpdateGPA} placeholder="Enter your GPA"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "skill" type = "text" value={this.state.skill} onChange = {this.onUpdateSkills} placeholder="Enter skills"/>
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id = "resume" type = "url" value={this.state.resume} onChange = {this.onUpdateResume} placeholder="Enter link to resume"/>
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" onClick={this.onSubmit}>Submit</Button>
+                </ListItem>
+              </List>
           </div> 
         )
       }
 }
+export default withStyles(styles)(JobApplicationForm);;

@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import Popup from "reactjs-popup";
 
 const styles = theme => ({
     grid: {
@@ -38,10 +39,13 @@ class HomePageCompany extends Component {
             email: '',
             city: '',
             userName: '',
+            job: []
         };
+        this.onClickAccept = this.onClickAccept.bind(this);
+        this.onClickReject = this.onClickReject.bind(this);
     }
 
-    /* componentDidMount() {
+    componentDidMount() {
         console.log(this.props.location.state.username)
         const company = {
             username: this.props.location.state.username
@@ -50,22 +54,57 @@ class HomePageCompany extends Component {
         .then(res => {
             return res.data.user
         })
+    } 
         .then(data => {
             let companies = data.map((u) => {
                 this.setState({companyName: u.companyName, userName: u.userName, password: u.password, email: u.email, city: u.city})
-                return(
-                    <div key={u.username}>
-                        <h2><b><i>Welcome, {u.companyName}</i></b></h2>
-                    </div>
-                )
+                u.jobs.map((x) => {
+                    const job = {
+                        jobs: x
+                    }
+                    axios.post('http://localhost:3001/jobs/findAllApplicants', job)
+                    .then(res => {
+                        // console.log("Applicants:", res.data.applicants.jobTitle)
+                        this.setState({job: this.state.job.concat(res.data.applicants)})
+                    })
+                })
+                
             })
-            // this.setState({companies: companies})
         })
-    } */
+    }
+    onClickAccept(e) {
+        e.preventDefault();
 
+
+        //console.log("on click accept user", e.currentTarget.id);
+
+        const job = {
+            status: true,
+            company: this.props.location.state.username, 
+            details: e.currentTarget.id
+        }
+        axios.post('http://localhost:3001/users/closeApplication', job)
+        .then(res => {
+            console.log(res.data.message)
+        })
+    }
+
+    onClickReject(e) {
+        e.preventDefault();
+
+        const job = {
+            status: false,
+            company: this.props.location.state.username, 
+            details: e.currentTarget.id
+        }
+        axios.post('http://localhost:3001/users/closeApplication', job)
+        .then(res => {
+            console.log(res.data.message)
+        })
+    }
 
     render() {
-
+        console.log(this.state.companyName)
         const { classes } = this.props;
 
         return (
@@ -75,49 +114,69 @@ class HomePageCompany extends Component {
                     <Grid item xs={3}></Grid>
                     <Grid item xs={6}>
                         <Typography variant='h3'>Top Applicants</Typography>
-                        <ExpansionPanel>
-                            <ExpansionPanelSummary
+                        
+                            {this.state.job.map((u) => (
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="this week"
                                 id="this week header"
                             >
-                                <Typography variant='h4'>This Week</Typography>
+                                <Typography variant='h4'>{u.jobTitle}</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <ListItem className={classes.item}>
-                                    <Typography variant='h5'>Anastasia</Typography>
-                                    <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-                                        <Button variant="contained">View Profile</Button>
-                                    </Grid>
-                                </ListItem>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        <ExpansionPanel>
-                            <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="last week"
-                                id="last week header"
-                            >
-                                <Typography variant='h4'>Last Ago</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <ListItem className={classes.item}>
-                                    <Typography variant='h5'>William</Typography>
-                                    <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-                                        <Button variant="contained">View Profile</Button>
-                                    </Grid>
-                                </ListItem>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        <ExpansionPanel disabled>
-                            <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="2 weeks ago"
-                                id="2 weeks ago header"
-                            >
-                                <Typography variant='h4'>2 Weeks Ago</Typography>
-                            </ExpansionPanelSummary>
-                        </ExpansionPanel>
+                            {u.applicants.map((a) => (
+                                 <ExpansionPanelDetails>
+                                 <ListItem className={classes.item}>
+                                     <Typography variant='h5'>{a.name}</Typography>
+                                     <Grid container alignItems="flex-start" justify="flex-end" direction="row">
+                                     <Popup
+                                                    trigger={<Button variant="contained">View Profile</Button>}
+                                                    modal
+                                                    closeOnDocumentClick
+                                                >
+                                                    <span> 
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="h3"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                            >
+                                                            {a.name}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        <div>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body1"
+                                                                className={classes.inline}
+                                                                color="textPrimary"
+                                                                
+                                                            >
+                                                               Email: {a.email} <br></br>
+                                                               Major: {a.major} <br></br>
+                                                               GPA: {a.GPA} <br></br>
+                                                               Skills: 
+                                                               {a.skills.join()}
+                                                               <br></br>
+                                                               Link to Resume: {a.resume}
+                                                            </Typography>
+                                                        </div>
+                                                        <br></br>
+                                                        <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickAccept}>Accept</Button>
+                                                        <Button variant="contained" id={u._id + ":" + u.jobTitle + ":" + a._id} onClick={this.onClickReject}>Reject</Button>
+                                                    </span>
+                                                </Popup>  
+                                     </Grid>
+                                 </ListItem>
+                             </ExpansionPanelDetails>
+                            ))}
+                            </ExpansionPanel>
+                           
+                        
+
+                            ))}
                     </Grid>
                 </Grid>
             </div>

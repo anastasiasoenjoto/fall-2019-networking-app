@@ -13,7 +13,7 @@ import JobQuestionnaire from './components/JobQuestionnaire';
 import JobApplicationForm from './components/JobApplicationForm';
 import UserProfile from "./components/UserProfile.js"
 import CompanyProfile from "./components/CompanyProfile.js"
-import chatRoom from "./components/chatRoom.js";
+import ChatRoom from "./components/chatRoom.js";
 import ViewCompany from './components/ViewCompany';
 import AddFriend from "./components/AddFriend.js";
 
@@ -27,8 +27,8 @@ const routing = (
         <Route exact path="/HomePage" component={HomePage}/>
         <Route path="/displayUsers" component={displayUsers}/>
         <Route path="/displayJobs" component={displayJobs}/>
-        {/* <Route path="/chatRoom" component={chatRoom}/> */}
-         <Route path="/jobPost" component={JobQuestionnaire}/>
+        <Route path="/chatRoom" component={ChatRoom}/>
+        <Route path="/jobPost" component={JobQuestionnaire}/>
         <Route path = '/jobApplication' component = {JobApplicationForm}/>
         <Route path="/userProfile" component={UserProfile}/>
         <Route path="/companyProfile" component={CompanyProfile}/>
