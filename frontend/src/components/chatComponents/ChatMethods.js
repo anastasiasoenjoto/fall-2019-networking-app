@@ -9,7 +9,7 @@ function handleInput(event) {
   });
 }
 
-function connectToRoom(id = '08e640c6-31f4-43fc-adf2-289c003d8848') {
+function connectToRoom(id = '11d9323f-dee7-4407-9cc1-891f871e8446') {
   const { currentUser } = this.state;
 
   this.setState({

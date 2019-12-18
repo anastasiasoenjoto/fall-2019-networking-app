@@ -339,12 +339,9 @@ export default function LoggedInNavBar(props) {
                             <div className={classes.sectionDesktop}>
                                 <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
                                 <Button> <Link to={{ pathname: "/DisplayJobs", state: { username: props.username }}}>Search Jobs </Link></Button>
+                                <Link to={{ pathname: "/chatRoom", state: { username: props.username } }} className="btn btn-primary"></Link>
                                 <IconButton aria-label="show 4 new mails" color="inherit">
-Z                                        <Link to={{
-                                            pathname: "/chatRoom", 
-                                            state: { username: props.username } 
-                                            }}/>
-                                            <MailIcon><Button/></MailIcon>
+                                            <MailIcon/>
                                 </IconButton>
                                 <IconButton aria-label="show new notifications"
                                     color="inherit"
@@ -434,11 +431,7 @@ Z                                        <Link to={{
                             <Link to={{ pathname: "/chatRoom", state: { username: props.username } }} className="btn btn-primary"></Link>
                             <IconButton aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={3} color="secondary">
-                                <MailIcon>
-                                <Button>
-                                    <Link to={{ pathname: "/chatRoom", state: { username: props.username } }}></Link>
-                                </Button>
-                                </MailIcon>
+                                <MailIcon/>
                                 </Badge>
                             </IconButton>
                             <IconButton aria-label="show new notifications"
