@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router-dom';
 import { ListItemText, ListItem, List, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -127,7 +125,6 @@ class JobApplicationForm extends Component {
     
 
     render() {
-     
         const { classes } = this.props;
         return (
           <div className={classes.root}>
