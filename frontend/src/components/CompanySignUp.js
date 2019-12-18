@@ -27,7 +27,9 @@ class CompanySignUp extends React.Component {
             password: '',
             city: '',
             companyName: '',
-            redirectToQuestions: false
+            redirectToQuestions: false,
+            about: "",
+            employeeCount: ""
         }
 
     }
@@ -45,6 +47,8 @@ class CompanySignUp extends React.Component {
           email: this.state.email,
           password: this.state.password,
           city: this.state.city, 
+          about: this.state.about,
+          employeeCount: this.state.employeeCount
         }
     
         axios.post('http://localhost:3001/company/add', company)
@@ -88,6 +92,12 @@ class CompanySignUp extends React.Component {
                 </ListItem>
                 <ListItem>
                     <input style={{width: "40%"}} id="city" type="text" value={this.state.city} onChange={this.handleChange.bind(this)} placeholder="Enter city" />
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id="about" type="text" value={this.state.about} onChange={this.handleChange.bind(this)} placeholder="Enter about" />
+                </ListItem>
+                <ListItem>
+                    <input style={{width: "40%"}} id="employeeCount" type="text" value={this.state.employeeCount} onChange={this.handleChange.bind(this)} placeholder="Enter employee count" />
                 </ListItem>
                 <ListItem>
                     <Button onClick={this.onSubmitCompany.bind(this)}>Sign Up</Button>

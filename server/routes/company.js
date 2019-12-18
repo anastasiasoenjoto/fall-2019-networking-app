@@ -15,12 +15,14 @@ router.route('/add').post((req, res) => {
   const password = req.body.password;
   const jobs = [];
   var city = req.body.city;
+  const about = req.body.about; 
+  const employeecount = req.body.employeeCount
 
 
   city = city.toLowerCase();
   city = city.replace(/\s/g,'');
 
-  const newCompany = new Company({companyName, username, email, password, city, jobs });
+  const newCompany = new Company({companyName, username, email, password, city, jobs, about, employeecount });
 
   newCompany.save()
     .then(() => res.json(

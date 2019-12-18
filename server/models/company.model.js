@@ -39,6 +39,14 @@ const companySchema = new Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  about:{
+    type: String,
+    trim: true,
+  },
+  employeeCount:{
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true,
