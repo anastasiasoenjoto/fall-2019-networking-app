@@ -337,10 +337,10 @@ export default function LoggedInNavBar(props) {
                             <div className={classes.sectionDesktop}>
                                 <Button> <Link to={{ pathname: "/DisplayUsers", state: { username: props.username }}}>Search Users</Link> </Button>
                                 <Button> <Link to={{ pathname: "/DisplayJobs", state: { username: props.username }}}>Search Jobs </Link></Button>
-                                <Link to={{ pathname: "/chatRoom", state: { username: props.username } }} className="btn btn-primary"></Link>
+                                <Link to={{ pathname: "/chatRoom", state: { username: props.username } }} className="btn btn-primary">
                                 <IconButton aria-label="show 4 new mails" color="inherit">
                                             <MailIcon/>
-                                </IconButton>
+                                </IconButton></Link>
                                 <IconButton aria-label="show new notifications"
                                     color="inherit"
                                     edge="end"
